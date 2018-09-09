@@ -1,0 +1,65 @@
+<% include ../font-end/layout/header.ejs %>
+
+
+    <div class="content-require ">
+        <form class="form" action="/order-product" method="post">
+            <div class="row ">
+
+                <div class="col-md-6">
+                    <div class="form-group has-feedback input-error">
+                        <label class="control-label"> Họ tên</label>
+                        <input class="form-control input-form-info" placeholder="Họ tên" type="text" displaytext="Họ tên" id="name" name="name" value="" required />
+
+                    </div>
+                    <div class="form-group has-feedback input-error">
+                        <label class=" control-label"> Email </label>
+                        <div class="">
+                            <input class="form-control input-form-info" type="email" placeholder="Email" displaytext="Email " required id="emailname" name="email" value="" />
+
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback input-error">
+                        <label class=" control-label"> Số điện thoại </label>
+                        <div class="">
+                            <input class="form-control input-form-info" type="number" id="phonenumber" placeholder="Số điện thoại" required displaytext="Số điện thoại" name="phonenumber" value="" />
+
+                        </div>
+                    </div>
+                    <div class="form-group has-feedback input-error">
+                        <label class=" control-label"> Địa chỉ </label>
+                        <div class="">
+                            <input class="form-control input-form-info" type="text" placeholder="Địa chỉ" displaytext="address " required id="address" name="address" value="" />
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group has-feedback input-error">
+                        <label class=" control-label"> Ghi chú</label>
+                        <div class="">
+                            <textarea class="form-control input-form-info" rows="5" cols="" name="notes" placeholder="- Ghi chú"></textarea>
+
+                        </div>
+                    </div>
+
+                </div>
+                <input type="hidden" name="idproduct" value="<%=idProduct%>" id="idproduct">
+                <input type="hidden" name="idsizeproduct" value="<%=idSizeProduct%>" id="idsizeproduct">
+                <input type="hidden" name="idproductsync" value="<%=idProductSync%>" id="idproductsync">
+                <input type="hidden" name="sumarymoney" value="<%=sumMoney%>" id="sumarymoney">
+                <input type="hidden" name="soluong" value="<%=soLuong%>" id="soluong">
+                <div class="col-md-12">
+                    <div class="form-group div-btn-infobuild">
+                        <div class="">
+                            <!-- <input type="button"  value="Build android" class="btn btn-primary"> -->
+                            <!-- onclick="send_ajax_build_android()" -->
+                            <button type="submit" id="btn-order-product" class="btn btn-lg btn-info btn-infobuild">Đặt hàng</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <%include ../font-end/layout/footer.ejs%>

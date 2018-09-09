@@ -1,0 +1,23 @@
+<% include ../font-end/layout/header.ejs %>
+    <% include ../font-end/layout/banner.ejs %>
+
+        <div class="col-md-12">
+            <div class="row">
+                <%if(data){%>
+                    <div class="title-news">
+                        <h2>
+                            <%=data.titleNews%>
+                        </h2>
+                    </div>
+                    <div class="desc-news">
+                        <%-data.descriptionNews%>
+                    </div>
+                    <div class="detail-news">
+                        <%-data.detailNews%>
+                    </div>
+                    <%}%>
+            </div>
+        </div>
+
+
+        <%include ../font-end/layout/footer.ejs%>

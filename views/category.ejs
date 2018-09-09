@@ -1,0 +1,306 @@
+<% include ./font-end/layout/header.ejs %>
+
+    <div class="col-md-12">
+        <div class="row">
+            <div class="slider">
+                <div class="col-lg-8 col-md-8 col-xs-12">
+                    <div class="row">
+                        <div>
+                            <div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width: 760px; height: 377.483px;overflow:hidden;visibility:hidden;">
+                                <!-- Loading Screen -->
+                                <div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
+                                    <img style="margin-top:-19px;position:relative;top:50%;width:38px;height:38px;" src="img/spin.svg" />
+                                </div>
+                                <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width: 755px; height: 375px;overflow:hidden;">
+                                    <%BannerSliderData.forEach(function(item){%>
+                                        <div data-p="170.00">
+                                            <a href="<%=item.linkBanner%>" target="_blank">  <img data-u="image" src="/upload/<%=item.imageBanner%>" alt="<%=item.titleBanner%>" title="<%=item.titleBanner%>" /></a>
+                                        </div>
+
+                                        <%})%>
+                                </div>
+                                <!-- Bullet Navigator -->
+                                <div data-u="navigator" class="jssorb051" style="position:absolute;bottom:12px;right:12px;" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
+                                    <div data-u="prototype" class="i" style="width:16px;height:16px;">
+                                        <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                                                <circle class="b" cx="8000" cy="8000" r="5800"></circle>
+                                            </svg>
+                                    </div>
+                                </div>
+                                <!-- Arrow Navigator -->
+                                <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
+                                    <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                                            <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
+                                        </svg>
+                                </div>
+                                <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
+                                    <svg viewbox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                                            <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
+                                        </svg>
+                                </div>
+                            </div>
+
+                            <!-- #endregion Jssor Slider End -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-12 col-xs-6 banner-top" style="max-height: 190px;overflow: hidden;">
+                            <a href="<%=BannerTopData.linkBanner%>" target="_blank"> <img class="img-responsive" style="width:100%;height:100%;" src="/upload/<%=BannerTopData.imageBanner%>" alt=""></a>
+                        </div>
+                        <div class="col-lg-12 col-xs-6 banner-bot" style="max-height: 190px;overflow: hidden;">
+                            <a href="<%=BannerBottomData.linkBanner%>" target="_blank"> <img class="img-responsive" style="width:100%;height:100%;" src="/upload/<%=BannerBottomData.imageBanner%>" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #region Jssor Slider Begin -->
+            <!-- Generator: Jssor Slider Maker -->
+
+            <script type="text/javascript">
+                jssor_1_slider_init = function() {
+
+                    var jssor_1_SlideshowTransitions = [{
+                        $Duration: 800,
+                        $Opacity: 2
+                    }];
+
+                    var jssor_1_options = {
+                        $AutoPlay: 1,
+                        $Cols: 1,
+                        $Align: 0,
+                        $SlideshowOptions: {
+                            $Class: $JssorSlideshowRunner$,
+                            $Transitions: jssor_1_SlideshowTransitions,
+                            $TransitionsOrder: 1
+                        },
+                        $ArrowNavigatorOptions: {
+                            $Class: $JssorArrowNavigator$
+                        },
+                        $BulletNavigatorOptions: {
+                            $Class: $JssorBulletNavigator$
+                        }
+                    };
+
+                    var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+                    /*#region responsive code begin*/
+
+                    var MAX_WIDTH = 980;
+
+                    function ScaleSlider() {
+                        var containerElement = jssor_1_slider.$Elmt.parentNode;
+                        var containerWidth = containerElement.clientWidth;
+
+                        if (containerWidth) {
+
+                            var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth);
+
+                            jssor_1_slider.$ScaleWidth(expectedWidth);
+                        } else {
+                            window.setTimeout(ScaleSlider, 30);
+                        }
+                    }
+
+                    ScaleSlider();
+
+                    $Jssor$.$AddEvent(window, "load", ScaleSlider);
+                    $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+                    $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+                    /*#endregion responsive code end*/
+                };
+            </script>
+            <style>
+                /* jssor slider loading skin spin css */
+                
+                .jssorl-009-spin img {
+                    animation-name: jssorl-009-spin;
+                    animation-duration: 1.6s;
+                    animation-iteration-count: infinite;
+                    animation-timing-function: linear;
+                }
+                
+                @keyframes jssorl-009-spin {
+                    from {
+                        transform: rotate(0deg);
+                    }
+                    to {
+                        transform: rotate(360deg);
+                    }
+                }
+                
+                .jssorb051 .i {
+                    position: absolute;
+                    cursor: pointer;
+                }
+                
+                .jssorb051 .i .b {
+                    fill: #fff;
+                    fill-opacity: 0.5;
+                }
+                
+                .jssorb051 .i:hover .b {
+                    fill-opacity: .7;
+                }
+                
+                .jssorb051 .iav .b {
+                    fill-opacity: 1;
+                }
+                
+                .jssorb051 .i.idn {
+                    opacity: .3;
+                }
+                
+                .jssora051 {
+                    display: block;
+                    position: absolute;
+                    cursor: pointer;
+                }
+                
+                .jssora051 .a {
+                    fill: none;
+                    stroke: #fff;
+                    stroke-width: 360;
+                    stroke-miterlimit: 10;
+                }
+                
+                .jssora051:hover {
+                    opacity: .8;
+                }
+                
+                .jssora051.jssora051dn {
+                    opacity: .5;
+                }
+                
+                .jssora051.jssora051ds {
+                    opacity: .3;
+                    pointer-events: none;
+                }
+            </style>
+
+            <!-- Loading Screen -->
+            <hr>
+
+            <div class="col-lg-8 col-md-8 col-xs-12">
+                <div id="container">
+                    <div id="content" role="main">
+
+                        <div class="row">
+
+                            <%if(dataProduct){ dataProduct.forEach(function(item){%>
+
+                                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                    <div class="row  product-item ">
+                                        <div class="thumbnail">
+
+                                            <a href="/san-pham/<%=item.aliasUrl%>" class=""><img  src="/upload/product/<%=item.imageProduct%>" class="" alt="<%=item.nameProduct%>">
+                                                <h2 class="name-product-thumb"><%=item.nameProduct%></h2>
+                                                                                    <span class="price-text">Giá:</span> <span class="price-value"><%=item.priceProduct.toLocaleString({ style: 'currency', currency: 'VND' });%> ₫</span>
+                                                                                    </span>
+                                                                                </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <%})}else{%>
+                                    <span><----- Không có sản phẩm trong mục này -----></span>
+                                    <%}%>
+                                        <div class="pagination-category">
+                                            <% if (pageCount > 1) { %>
+                                                <ul class="pagination">
+                                                    <% if (currentPage > 1) { %>
+                                                        <li><a href="?page=1">&laquo;</a></li>
+                                                        <% } %>
+                                                            <% var i = 1;
+                                            if (currentPage > 5) {
+                                                i = +currentPage - 4;
+                                            } %>
+                                                                <% if (i !== 1) { %>
+                                                                    <li class="disabled"><a href="#">...</a></li>
+                                                                    <% } %>
+                                                                        <% for (i; i<=pageCount; i++) { %>
+                                                                            <% if (currentPage == i) { %>
+                                                                                <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span>
+                                                                                </li>
+                                                                                <% } else { %>
+                                                                                    <li>
+                                                                                        <a href="?page=<%= i %>">
+                                                                                            <%= i %>
+                                                                                        </a>
+                                                                                    </li>
+                                                                                    <% } %>
+                                                                                        <% if (i == (+currentPage + 4)) { %>
+                                                                                            <li class="disabled"><a href="#">...</a></li>
+                                                                                            <% break; } %>
+                                                                                                <% } %>
+                                                                                                    <% if (currentPage != pageCount) { %>
+                                                                                                        <li><a href="?page=<%= pageCount %>">&raquo;</a></li>
+                                                                                                        <% } %>
+                                                </ul>
+                                                <% } %>
+                                        </div>
+                                        <!-- <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                <div class="row  product-item ">
+                                    <div class="thumbnail">
+
+                                        <a href="http://goxinh.net/san-pham/giuong-ngu-gl" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><img width="250" height="178" src="./upload/product/sp-demo.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                            <h2 class="woocommerce-loop-product__title">Giường ngủ GL</h2>
+                                            <span class="price">Giá <span class="woocommerce-Price-amount amount">5.000.000&nbsp;<span class="woocommerce-Price-currencySymbol">₫</span></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> -->
+                                        <!--  <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                <div class="row  product-item ">
+                                    <div class="thumbnail">
+
+                                        <a href="http://goxinh.net/san-pham/giuong-ngu-gl-copy" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><img width="250" height="178" src="./upload/product/sp-demo.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                            <h2 class="woocommerce-loop-product__title">Giường ngủ GL (Copy)</h2>
+                                            <span class="price">Giá <span class="woocommerce-Price-amount amount">1.000.000&nbsp;<span class="woocommerce-Price-currencySymbol">₫</span></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                <div class="row  product-item last">
+                                    <div class="thumbnail">
+
+                                        <a href="http://goxinh.net/san-pham/giuong-ngu-gl-copy-2" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><img width="250" height="178" src="./upload/product/sp-demo.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                            <h2 class="woocommerce-loop-product__title">Giường ngủ GL (Copy)</h2>
+                                            <span class="price">Giá <span class="woocommerce-Price-amount amount">5.000.000&nbsp;<span class="woocommerce-Price-currencySymbol">₫</span></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                                <div class="row  product-item ">
+                                    <div class="thumbnail">
+
+                                        <a href="http://goxinh.net/san-pham/giuong-ngu-gl-copy-3" class="woocommerce-LoopProduct-link woocommerce-loop-product__link"><img width="250" height="178" src="./upload/product/sp-demo.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="">
+                                            <h2 class="woocommerce-loop-product__title">Giường ngủ GL (Copy)</h2>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        jssor_1_slider_init();
+    </script>
+
+
+
+    <%include ./font-end/layout/footer.ejs%>

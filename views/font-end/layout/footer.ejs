@@ -1,0 +1,77 @@
+<div class="footer">
+    <div class="panel catepro-footer">
+        <span class="text-catefooter">Danh mục sản phẩm</span>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+
+            <ul id="list-cate-children" class="list-unstyled category-list">
+
+            </ul>
+        </div>
+        <div class="col-md-3">
+            <ul class="navbar-right ul-social">
+                <li>
+                    <a href="#"><img width="40px" src="/themes/img/facebook.png" alt="facebook goxinh.net" title="facebook"></a>
+                </li>
+                <li>
+                    <a href="#"><img width="40px" src="/themes/img/youtube.png" alt="youtube goxinh.net" title="youtube"></a>
+                </li>
+                <li>
+                    <a href="#"><img width="40px" src="/themes/img/twitter.png" alt="twitter goxinh.net" title="twitter"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel info-footer">
+        <div class="row">
+            <div class="col-lg-6 col-xs-6"><span class="text-right name-company">CÔNG TY CỔ PHẦN WOODEN VINA</span></div>
+            <div class="col-lg-6 col-xs-6 text-right"><span class="text-right"><span class="text-left">Copyright ©2016</span><span class="name-website"> Goxinh.net</span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="link-info-footer">
+        <div class="nav-b clearfix">
+            <div class="menu-menu-footer-container">
+                <ul class="" id="menu">
+                    <li><a href="/ban-quyen-thuong-hieu">Bản quyền và thương hiệu</a></li>
+                    <li><a href="/bao-ve-thong-tin-ca-nhan">Bảo vệ thông tin cá nhân</a></li>
+                    <li><a href="/lien-he">Liên hệ</a></li>
+                    <li><a href="/">Trang chủ</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).ready(() => {
+        $.post(
+            "/category/get-category-children", {},
+            function(data) {
+                if (data.status) {
+                    data.data.map((item, index) => {
+                        $('#list-cate-children').append(`
+                    <li class="col-md-3 col-sm-6 col-xs-12 icon-list">
+                        <h3><a href="/danh-muc/${item.aliasUrl}" title="${item.nameCategory}"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> 
+                           ${item.nameCategory}
+                            </a></h3>
+                    </li>
+                    `)
+                    })
+
+                }
+            }
+        );
+    })
+</script>
+
+</div>
+
+
+</body>
+
+</html>

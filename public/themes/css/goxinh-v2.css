@@ -1,0 +1,536 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+body {
+    background: #fff;
+    font: 14px/18px Helvetica, Arial, "DejaVu Sans", "Liberation Sans", Freesans, sans-serif;
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    min-width: 1024px;
+    background: #956946;
+    width: 100%;
+    height: 55px;
+}
+
+footer {
+    height: 80px;
+    background: #f0f0f0;
+}
+
+.wrap-main {
+    max-width: 1200px;
+    min-width: 1024px;
+    width: 100%;
+    height: 55px;
+    background: #2d1b1b;
+    margin: auto;
+    position: relative;
+    display: block;
+}
+
+.logo {
+    float: left;
+    width: 165px;
+    display: block;
+    padding: 14px 0 11px 5px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.clr {
+    clear: both;
+}
+
+[class^="icontgdd-"],
+[class*="icontgdd-"],
+[class^="iconmobile-"],
+[class*="iconmobile-"] {
+    background-image: url(https://cdn.thegioididong.com/v2015/Content/desktop/images/V4/icondesktop@1x.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.icontgdd-logo {
+    background-position: 0 0;
+    width: 156px;
+    height: 30px;
+    display: block;
+    margin: auto;
+}
+
+#search-site {
+    float: left;
+    width: 230px;
+    height: 35px;
+    margin: 10px 10px 0 10px;
+    background: #fff;
+    position: relative;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+}
+
+element.style {}
+
+input[type="text"],
+input[type="tel"],
+textarea {
+    -webkit-appearance: none;
+}
+
+.topinput {
+    float: left;
+    width: 162px;
+    margin-left: 8px;
+    padding-top: 3px;
+    border: 0;
+    position: relative;
+    background: #fff;
+    height: 30px;
+    text-indent: 10px;
+    font-size: 13px;
+}
+
+.topinput:active,
+:focus {
+    outline: none;
+}
+
+.btntop {
+    float: right;
+    width: 40px;
+    height: 35px;
+    border: 0;
+    background: none;
+}
+
+.icontgdd-topsearch {
+    background-position: -160px 0;
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: 1px auto 0;
+}
+
+nav {
+    width: 785px;
+    background: #956946;
+    margin: 0;
+    padding: 0;
+    height: 55px;
+    display: table;
+}
+
+nav a:hover,
+nav a.actmenu {
+    background-color: #f5f5f5;
+    color: #000;
+}
+
+.icontgdd-mobile {
+    background-position: -190px 0;
+    width: 16px;
+    height: 25px;
+    display: block;
+    margin: 2px auto 3px;
+}
+
+.icontgdd-tablet {
+    background-position: -209px 0;
+    display: block;
+    margin: 0 auto 5px;
+    width: 33px;
+    height: 22px;
+}
+
+.icontgdd-laptop {
+    background-position: -245px 0;
+    display: block;
+    margin: 0 auto 5px;
+    width: 39px;
+    height: 21px;
+}
+
+.icontgdd-phukien {
+    background-position: -288px 0;
+    display: block;
+    margin: 0 auto 5px;
+    width: 22px;
+    height: 22px;
+}
+
+nav a.mobile {
+    width: 70px;
+}
+
+nav a {
+    display: table-cell;
+    width: 75px;
+    height: 44px;
+    padding: 3px 0 4px;
+    color: #fff;
+    background: #956946;
+    font-size: 11px;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+nav a.cardsim,
+nav a.utility {
+    text-transform: none;
+    font-size: 13px;
+    padding: 0;
+    vertical-align: middle;
+    line-height: 19px;
+    padding-top: 6px;
+}
+
+
+/* Body content */
+
+.section {
+    max-width: 1200px;
+    width: 100%;
+    min-width: 980px;
+    margin: 65px auto 0;
+}
+
+.homebanner {
+    float: left;
+    width: 65.834%;
+    height: 340px;
+    overflow: hidden;
+    position: relative;
+    background: #f0f0f0;
+    margin-bottom: 10px;
+}
+
+.homenews {
+    float: right;
+    width: 33.2%;
+    height: 340px;
+    overflow: hidden;
+}
+
+.homenews figure {
+    display: block;
+    overflow: hidden;
+    border-bottom: 1px solid #efefef;
+    background: #fff;
+}
+
+.homenews h2 {
+    float: left;
+    padding: 10px 20px 10px 10px;
+    background: #fdd504;
+    line-height: 1.3em;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    text-transform: uppercase;
+    text-align: center;
+    position: relative;
+}
+
+.homenews h2:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-right: 12px solid #fff;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.homenews h2 a {
+    font-weight: 600;
+}
+
+.liveevent {
+    position: relative;
+    color: #f33;
+    font-size: 12px;
+    padding-left: 20px;
+    display: inline-block;
+    width: 220px;
+    vertical-align: middle;
+    height: 38px;
+    line-height: 38px;
+    float: right;
+}
+
+.liveevent .text {
+    line-height: 1.4;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.homenews ul {
+    display: block;
+    overflow: hidden;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+.homenews li {
+    display: block;
+    padding: 10px 10px 5px;
+    border-bottom: 1px solid #ededed;
+    background: #fff;
+}
+
+.homenews li a {
+    display: block;
+    overflow: hidden;
+}
+
+.twobanner {
+    display: block;
+    overflow: hidden;
+}
+
+.twobanner a {
+    display: block;
+    overflow: hidden;
+    /* margin-top: 10px; */
+    margin-bottom: 5px;
+}
+
+.homenews li img {
+    float: left;
+    width: 100px;
+    height: 57px;
+    margin: 0 10px 0 0;
+}
+
+.homenews li h3 {
+    display: block;
+    overflow: hidden;
+    height: 36px;
+    line-height: 1.3em;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.homenews li span {
+    float: left;
+    font-size: 12px;
+    color: #999;
+    margin-right: 10px;
+}
+
+aside {
+    display: block;
+}
+
+#sync2 {
+    display: block;
+    width: 100%;
+    background: #fff;
+    height: 41px;
+}
+
+#sync2 .owl-item {
+    height: 41px;
+    position: relative;
+    float: left;
+}
+
+#sync2 .item {
+    display: table;
+    width: 98%;
+    vertical-align: middle;
+    position: relative;
+    background: #fff;
+    color: #666;
+    text-align: center;
+    cursor: pointer;
+    height: 41px;
+    font-size: 12px;
+    padding: 0 1%;
+}
+
+#sync2 .item h3 {
+    font-size: 12px;
+    line-height: 1.3em;
+    display: inline-block;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.owl-carousel .owl-wrapper:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+#sync2 .owl-item:after {
+    content: "";
+    float: right;
+    height: 25px;
+    border-right: 1px solid #e5e5e5;
+    position: absolute;
+    top: 8px;
+    right: 0;
+}
+
+.promotebanner a {
+    display: block;
+    position: relative;
+    top: -5px;
+    height: 80px;
+}
+
+
+/* Box Sản Phẩm */
+
+.box-img-sanpham {
+    width: 100%;
+}
+
+.box-sanpham {
+    float: left;
+    width: 100%;
+    border-top: 1px solid #eee;
+    border-left: 1px solid #eee;
+}
+
+.item-sanpham {
+    width: 20%;
+    float: left;
+}
+
+.thumbnail-img {
+    max-width: 100%;
+    padding: 10px;
+}
+
+.thumbnail-img:hover {
+    /* padding-top: 0px;
+    padding-top: 0px; */
+}
+
+.sp-it-ft-name {
+    padding: 0px 0px 0px 5px;
+    height: 45px;
+}
+
+.sp-it-ft-name h3 {
+    font-size: 16px;
+    color: #333;
+    margin-top: 6px;
+}
+
+.sp-it-ft-price {
+    color: #868ca7;
+    padding: 0px 0px 10px 5px;
+}
+
+.thumbnail-gia-sp {
+    font-size: 18px;
+    color: #f00;
+}
+
+.box-it-sp {
+    padding: 0px 5px 0px 5px;
+    border-right: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+}
+
+.link-item-sp:hover {
+    background: #f0f0f0;
+}
+
+.footer {
+    float: left;
+    width: 100%;
+}
+
+.box-pagination {
+    float: left;
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    text-align: right;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.title-box-sp-home {
+    width: 100%;
+    float: left;
+    line-height: 50px;
+    margin: 0px 0px 10px 0px;
+}
+
+.text-title-sp-home {
+    padding-left: 15px;
+    text-transform: uppercase;
+}
+
+.text-title-sp-home h1 {
+    font-size: 18px;
+}
+
+.footer-content {
+    height: 100%;
+    width: 33.3333%;
+    float: left;
+}
+
+.ul-menu-footer {
+    padding-left: 75px;
+    padding-top: 20px;
+}
+
+.ul-menu-footer li {
+    line-height: 35px;
+}
+
+.footer-info-company {
+    padding-left: 21px;
+    padding-top: 20px;
+}
+
+.menu-footer-info-company li {
+    line-height: 35px;
+}
+
+.link-info-footer {
+    margin-bottom: 10px;
+}
+
+.info-footer {
+    margin-bottom: 8px;
+}

@@ -1,0 +1,130 @@
+<% include ../playout/header.ejs %>
+    <!-- END TOPBAR -->
+    <!-- START CONTAINER -->
+    <div class="page-container row-fluid container-fluid">
+        <!-- SIDEBAR - START -->
+
+        <% include ../playout/menu.ejs %>
+
+
+            <!--  SIDEBAR - END -->
+            <!-- START CONTENT -->
+            <section id="main-content" class=" ">
+                <section class="wrapper main-wrapper row" style=''>
+                    <div class='col-xs-12'>
+                        <div class="page-title">
+                            <div class="pull-left">
+                                <h1 class="title">Danh Sách Sản Phẩm</h1>
+                            </div>
+                            <div class="pull-right hidden-xs">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-lg-12">
+                        <section class="box ">
+                            <header class="panel_header">
+                                <h2 class="title pull-left">Tất cả Sản Phẩm</h2>
+                                <div class=" pull-right box-btn-add-category">
+                                    <a href="/admin/product/add.html" class="btn btn-info btn-add-gox">Thêm Sản phẩm</a>
+                                    <a href="/admin/product/import-excel" class="btn btn-success btn-plus" type="button"><i class="fa fa-plus-square"></i>&nbsp;&nbsp;<span class="bold">Import excel</span></a>
+                                    <!-- <a href="javascript:void(0)" id="deletemulti" class="btn btn-danger btn-plus" type="button"><i class="fa fa-remove"></i>&nbsp;&nbsp;<span class="bold">Xóa</span></a> -->
+                                </div>
+                            </header>
+                            <div class="content-body">
+                                <div class="row">
+                                    <% if(success_msg != ''){ %>
+                                        <div class="alert alert-success">
+                                            <%= success_msg%>
+                                        </div>
+                                        <% } %>
+                                            <% if(error_msg != ''){ %>
+                                                <div class="alert alert-danger">
+                                                    <%= error_msg%>
+                                                </div>
+                                                <% } %>
+                                                    <div class="col-xs-12">
+                                                        <!-- ********************************************** -->
+                                                        <table id="example" class="display table table-hover table-condensed">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>STT</th>
+                                                                    <th>Mã</th>
+                                                                    <th>Tên</th>
+                                                                    <th>Giá</th>
+                                                                    <th>Hình</th>
+                                                                    <th>Danh mục</th>
+                                                                    <th>SP đồng bộ</th>
+
+                                                                    <th>Hành động</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% var id = 0 %>
+                                                                    <% product.forEach(function(item){ id ++ %>
+                                                                        <tr>
+                                                                            <td>
+                                                                                <%= id%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= item.codeProduct%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= item.nameProduct%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%= item.priceProduct%>
+                                                                            </td>
+                                                                            <td> <img src="upload/product/<%= item.imageProduct%>" width="80px" alt=""></td>
+                                                                            <td>
+                                                                                <%=  item.cateProduct[0].nameCategory%>
+                                                                            </td>
+                                                                            <td>
+                                                                                <%if(item.productSync){%>
+                                                                                    Đồng bộ
+                                                                                    <%}else{ %>
+                                                                                        Không đồng bộ
+                                                                                        <%}%>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <!-- onclick="delete_product('<%= item._id %>','<%= item.codeProduct %>')" -->
+                                                                                <a href="/admin/product/del/<%= item._id %>"><img src="/upload/delete-icon.png" alt="delete"></a>
+                                                                                <a href="/admin/product/edit/<%= item._id %>"><img src="/upload/edit-icon.png" alt="edit"></a>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <%})%>
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- ********************************************** -->
+                                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </section>
+            <!-- END CONTENT -->
+            <div class="chatapi-windows ">
+
+            </div>
+
+            <% include ../playout/footer.ejs %>
+                <script type="text/javascript">
+                    function delete_product(id, code) {
+                        alert(id);
+                        var checkConfirm = confirm("Bạn có muốn xóa bản ghi: " + code);
+                        if (checkConfirm) {
+                            // alert('bạn đã xóa');
+                            $.get('/admin/product/del/' + id);
+                        } else {
+                            alert('bạn hủy xóa');
+                        }
+                    }
+                </script>
+
+                <script src="TT_Admin/assets/plugins/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+                <script src="TT_Admin/assets/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js" type="text/javascript"></script>
+                <script src="TT_Admin/assets/plugins/datatables/extensions/Responsive/js/dataTables.responsive.min.js" type="text/javascript"></script>
+                <script src="TT_Admin/assets/plugins/datatables/extensions/Responsive/bootstrap/3/dataTables.bootstrap.js" type="text/javascript"></script>

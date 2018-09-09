@@ -1,0 +1,154 @@
+<% include ../playout/header.ejs %>
+    <!-- END TOPBAR -->
+    <!-- START CONTAINER -->
+    <div class="page-container row-fluid container-fluid">
+        <!-- SIDEBAR - START -->
+
+        <% include ../playout/menu.ejs %>
+
+
+            <!--  SIDEBAR - END -->
+            <!-- START CONTENT -->
+            <section id="main-content" class=" ">
+                <section class="wrapper main-wrapper row" style=''>
+                    <div class='col-xs-12'>
+                        <div class="page-title">
+                            <div class="pull-left">
+                                <h1 class="title">Chi tiết hàng đặt</h1>
+                            </div>
+                            <div class="pull-right hidden-xs">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="col-xs-12">
+                        <section class="box ">
+                            <header class="panel_header">
+                                <h2 class="title pull-left">Thông Tin</h2>
+                                <div class="actions panel_actions pull-right">
+                                    <!-- <a class="box_toggle fa fa-chevron-down"></a>
+                <a class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></a>
+                <a class="box_close fa fa-times"></a> -->
+                                </div>
+                            </header>
+                            <div class="content-body">
+                                <div class="row">
+                                    <% if(success_msg != ''){ %>
+                                        <div class="alert alert-success">
+                                            <%= success_msg%>
+                                        </div>
+                                        <% } %>
+                                            <% if(error_msg != ''){%>
+                                                <div class="alert alert-danger">
+                                                    <%= error_msg%>
+                                                </div>
+                                                <%}%>
+                                                    <% if(errors) { %>
+                                                        <div class="alert alert-danger">
+                                                            <% errors.forEach(function(e){ %>
+
+                                                                <%= e.msg %> <br/>
+                                                                    <%});%>
+
+                                                        </div>
+                                                        <% };%>
+                                                            <form action="" method="post">
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="field-120334">Họ tên </label>
+                                                                        <span class="desc"></span>
+                                                                        <div class="controls">
+                                                                            <input type="text" id="name" value="<%= dataOne.name%>" class="form-control" name="name">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="field-120334">Email</label>
+                                                                        <span class="desc"></span>
+                                                                        <div class="controls">
+                                                                            <input type="text" id="email" value="<%= dataOne.email%>" class="form-control" name="email">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="field-120334">Số điện thoại</label>
+                                                                        <span class="desc"></span>
+                                                                        <div class="controls">
+                                                                            <input type="text" id="phonenumber" value="<%= dataOne.phoneNumber%>" class="form-control" name="phonenumber">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="field-120334">Ảnh </label>
+                                                                        <span class="desc"></span><br>
+                                                                        <%if(dataOne.image){%>
+                                                                            <img src="/upload/order/<%= dataOne.image%>">
+                                                                            <%}%>
+                                                                                <div class="controls">
+                                                                                    <a href="/download-image-order/<%= dataOne.image%>">[tải về]</a>
+                                                                                </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 ">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="">Nội dung </label>
+                                                                        <span class="desc"></span>
+                                                                        <div class="controls">
+                                                                            <textarea class="form-control" cols="" id="content" name="content" rows="10"><%= dataOne.content%></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="field-120334">Ghi chú </label>
+                                                                        <span class="desc"></span>
+                                                                        <div class="controls">
+                                                                            <textarea class="form-control" cols="80" id="notes" name="notes" rows="5">
+                                                                                <%= dataOne.Notes%>
+                                                                                </textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="field-120334">Ngày tạo</label>
+                                                                        <span class="desc"></span>
+                                                                        <div class="controls">
+                                                                            <input type="text" id="date" value=" <%=moment(dataOne.dateCreate).format('HH:mm DD/MM/YYYY')  %>" class="form-control" name="date">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label" for="field-120334">Trạng thái</label>
+                                                                        <span class="desc"></span>
+                                                                        <div class="controls">
+
+
+                                                                            <label><input type="radio" name="statusradio" value="true" <% if(dataOne.status){ %> checked="checked" <% } %> >Đã check</label>
+                                                                            <label class="panel-radio-add-banner"><input type="radio" value="false"  <% if(!dataOne.status){ %> checked="checked" <% } %> name="statusradio">chưa check</label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-12 col-sm-9 col-md-8 padding-bottom-30">
+                                                                    <div class="text-left">
+                                                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                                                        <a href="admin/product-order/list.html" class="btn">Hủy</a>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+            </section>
+            <!-- END CONTENT -->
+            <div class="chatapi-windows ">
+            </div>
+            <% include ../playout/footer.ejs %>
