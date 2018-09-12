@@ -25,7 +25,6 @@ router.get("/index", async (req, res) => {
       .limit(pageSize)
       .exec();
 
-    console.log(dataProduct);
     totalData = await ProductModel.find({
       status: true,
       productSync: false

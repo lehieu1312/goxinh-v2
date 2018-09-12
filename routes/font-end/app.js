@@ -59,6 +59,558 @@ function makename() {
   return text;
 }
 
+router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
+  try {
+    var currentPage = 1,
+      totalData,
+      pageSize = 15,
+      pageCount;
+    var dataArray = [];
+    var dataList = [];
+    let dataProduct = [];
+    if (typeof req.query.page !== "undefined") {
+      currentPage = +req.query.page;
+    }
+    let dataCate = await CategoryModel.findOne({
+      code: "phongkhach",
+      status: true
+    }).exec();
+    if (dataCate) {
+      dataProduct = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        }
+      ])
+        .sort({ viewCounter: -1 })
+        .skip(pageSize * currentPage - pageSize)
+        .limit(pageSize)
+        .exec();
+
+      totalData = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        },
+        { $count: "myCount" }
+      ]).exec();
+      totalData = totalData[0].myCount;
+      pageCount = Math.ceil(totalData / pageSize).toFixed();
+    }
+
+    var BannerSliderData = await BannerModel.find({
+      locationBanner: 0,
+      status: true
+    })
+      .sort({ numberOrder: -1 })
+      .exec();
+
+    res.render("font-end/category-menu", {
+      title: "Nội thất phòng khách",
+      dataProduct,
+      currentPage,
+      totalData,
+      pageSize,
+      pageCount,
+      alias: "danh-muc/noi-that-phong-khach",
+      titlePanel: "Nội thất phòng khách",
+      BannerSliderData
+    });
+  } catch (error) {
+    res.json({ status: false, message: error + "" });
+  }
+});
+
+router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
+  try {
+    var currentPage = 1,
+      totalData,
+      pageSize = 15,
+      pageCount;
+    var dataArray = [];
+    var dataList = [];
+    let dataProduct = [];
+    if (typeof req.query.page !== "undefined") {
+      currentPage = +req.query.page;
+    }
+    let dataCate = await CategoryModel.findOne({
+      code: "phongngu",
+      status: true
+    }).exec();
+    if (dataCate) {
+      dataProduct = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        }
+      ])
+        .sort({ viewCounter: -1 })
+        .skip(pageSize * currentPage - pageSize)
+        .limit(pageSize)
+        .exec();
+
+      totalData = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        },
+        { $count: "myCount" }
+      ]).exec();
+      totalData = totalData[0].myCount;
+      pageCount = Math.ceil(totalData / pageSize).toFixed();
+    }
+
+    var BannerSliderData = await BannerModel.find({
+      locationBanner: 0,
+      status: true
+    })
+      .sort({ numberOrder: -1 })
+      .exec();
+
+    res.render("font-end/category-menu", {
+      title: "Nội thất phòng ngủ",
+      dataProduct,
+      currentPage,
+      totalData,
+      pageSize,
+      pageCount,
+      alias: "danh-muc/noi-that-phong-ngu",
+      titlePanel: "Nội thất phòng ngủ",
+      BannerSliderData
+    });
+  } catch (error) {
+    res.json({ status: false, message: error + "" });
+  }
+});
+
+router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
+  try {
+    var currentPage = 1,
+      totalData,
+      pageSize = 15,
+      pageCount;
+    var dataArray = [];
+    var dataList = [];
+    let dataProduct = [];
+    if (typeof req.query.page !== "undefined") {
+      currentPage = +req.query.page;
+    }
+    let dataCate = await CategoryModel.findOne({
+      code: "nhabep",
+      status: true
+    }).exec();
+    if (dataCate) {
+      dataProduct = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        }
+      ])
+        .sort({ viewCounter: -1 })
+        .skip(pageSize * currentPage - pageSize)
+        .limit(pageSize)
+        .exec();
+
+      totalData = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        },
+        { $count: "myCount" }
+      ]).exec();
+      totalData = totalData[0].myCount;
+      pageCount = Math.ceil(totalData / pageSize).toFixed();
+    }
+
+    var BannerSliderData = await BannerModel.find({
+      locationBanner: 0,
+      status: true
+    })
+      .sort({ numberOrder: -1 })
+      .exec();
+
+    res.render("font-end/category-menu", {
+      title: "Nội thất phòng nhà bếp",
+      dataProduct,
+      currentPage,
+      totalData,
+      pageSize,
+      pageCount,
+      alias: "danh-muc/noi-that-nha-bep",
+      titlePanel: "Nội thất nhà bếp",
+      BannerSliderData
+    });
+  } catch (error) {
+    res.json({ status: false, message: error + "" });
+  }
+});
+
+router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
+  try {
+    var currentPage = 1,
+      totalData,
+      pageSize = 15,
+      pageCount;
+    var dataArray = [];
+    var dataList = [];
+    let dataProduct = [];
+    if (typeof req.query.page !== "undefined") {
+      currentPage = +req.query.page;
+    }
+    let dataCate = await CategoryModel.findOne({
+      code: "hamruou",
+      status: true
+    }).exec();
+    if (dataCate) {
+      dataProduct = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        }
+      ])
+        .sort({ viewCounter: -1 })
+        .skip(pageSize * currentPage - pageSize)
+        .limit(pageSize)
+        .exec();
+
+      totalData = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        },
+        { $count: "myCount" }
+      ]).exec();
+      totalData = totalData[0].myCount;
+      pageCount = Math.ceil(totalData / pageSize).toFixed();
+    }
+
+    var BannerSliderData = await BannerModel.find({
+      locationBanner: 0,
+      status: true
+    })
+      .sort({ numberOrder: -1 })
+      .exec();
+
+    res.render("font-end/category-menu", {
+      title: "Trang trí hầm rượu",
+      dataProduct,
+      currentPage,
+      totalData,
+      pageSize,
+      pageCount,
+      alias: "danh-muc/trang-tri-ham-ruou",
+      titlePanel: "Trang trí hầm rượu",
+      BannerSliderData
+    });
+  } catch (error) {
+    res.json({ status: false, message: error + "" });
+  }
+});
+
+router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
+  try {
+    var currentPage = 1,
+      totalData,
+      pageSize = 15,
+      pageCount;
+    var dataArray = [];
+    var dataList = [];
+    let dataProduct = [];
+    if (typeof req.query.page !== "undefined") {
+      currentPage = +req.query.page;
+    }
+    let dataCate = await CategoryModel.findOne({
+      code: "dogoxuatkhau",
+      status: true
+    }).exec();
+    if (dataCate) {
+      dataProduct = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        }
+      ])
+        .sort({ viewCounter: -1 })
+        .skip(pageSize * currentPage - pageSize)
+        .limit(pageSize)
+        .exec();
+
+      totalData = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        },
+        { $count: "myCount" }
+      ]).exec();
+      totalData = totalData[0].myCount;
+      pageCount = Math.ceil(totalData / pageSize).toFixed();
+    }
+
+    var BannerSliderData = await BannerModel.find({
+      locationBanner: 0,
+      status: true
+    })
+      .sort({ numberOrder: -1 })
+      .exec();
+
+    res.render("font-end/category-menu", {
+      title: "Đồ gỗ xuất khẩu",
+      dataProduct,
+      currentPage,
+      totalData,
+      pageSize,
+      pageCount,
+      alias: "danh-muc/do-go-xuat-khau",
+      titlePanel: "Đồ gỗ xuất khẩu",
+      BannerSliderData
+    });
+  } catch (error) {
+    res.json({ status: false, message: error + "" });
+  }
+});
+
+router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
+  try {
+    var currentPage = 1,
+      totalData,
+      pageSize = 15,
+      pageCount;
+    var dataArray = [];
+    var dataList = [];
+    let dataProduct = [];
+    if (typeof req.query.page !== "undefined") {
+      currentPage = +req.query.page;
+    }
+    let dataCate = await CategoryModel.findOne({
+      code: "phongtho",
+      status: true
+    }).exec();
+    if (dataCate) {
+      dataProduct = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        }
+      ])
+        .sort({ viewCounter: -1 })
+        .skip(pageSize * currentPage - pageSize)
+        .limit(pageSize)
+        .exec();
+
+      totalData = await CategoryModel.aggregate([
+        {
+          $match: {
+            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+          }
+        },
+        {
+          $lookup: {
+            from: "product",
+            localField: "_id",
+            foreignField: "categoryID",
+            as: "products"
+          }
+        },
+        {
+          $unwind: "$products"
+        },
+        {
+          $replaceRoot: { newRoot: "$products" }
+        },
+        { $count: "myCount" }
+      ]).exec();
+      totalData = totalData[0].myCount;
+      pageCount = Math.ceil(totalData / pageSize).toFixed();
+    }
+
+    var BannerSliderData = await BannerModel.find({
+      locationBanner: 0,
+      status: true
+    })
+      .sort({ numberOrder: -1 })
+      .exec();
+
+    res.render("font-end/category-menu", {
+      title: "Nội thất phòng thờ",
+      dataProduct,
+      currentPage,
+      totalData,
+      pageSize,
+      pageCount,
+      alias: "danh-muc/noi-that-phong-tho",
+      titlePanel: "Nội thất phòng thờ",
+      BannerSliderData
+    });
+  } catch (error) {
+    res.json({ status: false, message: error + "" });
+  }
+});
+
 router.get("/danh-muc/:alias", function(req, res) {
   try {
     var totalProduct,
