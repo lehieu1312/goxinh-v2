@@ -61,6 +61,18 @@ a {
     vertical-align: middle;
 }
 
+.icon-menu-parent {
+    width: 50px;
+    height: 25px;
+    display: block;
+    margin: 0 auto 2px;
+    margin-top: 3px;
+}
+
+.icon-guide-banner {
+    width: 20px;
+}
+
 .icontgdd-logo {
     background-position: 0 0;
     width: 156px;
@@ -371,7 +383,7 @@ aside {
 }
 
 #sync2 .item h3 {
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.3em;
     display: inline-block;
     vertical-align: middle;
