@@ -1,7 +1,9 @@
 var express = require("express");
 var router = express.Router();
 var bodyParser = require("body-parser");
-var urlencodeParser = bodyParser.urlencoded({ extended: false });
+var urlencodeParser = bodyParser.urlencoded({
+  extended: false
+});
 var md5 = require("md5");
 var path = require("path");
 var fs = require("fs");
@@ -16,15 +18,17 @@ var CategoryModel = require("../../models/category");
 var AliasUrlModel = require("../../models/aliasurl");
 var multer = require("multer");
 var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, "./public/upload/product");
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, Date.now() + "_" + file.originalname);
   }
 });
 
-var upload = multer({ storage: storage }).single("imageproduct");
+var upload = multer({
+  storage: storage
+}).single("imageproduct");
 
 function bodauTiengViet(str) {
   str = str.toLowerCase();
@@ -51,23 +55,32 @@ function makename() {
   return text;
 }
 
-router.get("/list.html", checkAdmin, function(req, res) {
-  ProductModel.aggregate(
-    [
-      {
+router.get("/list.html", checkAdmin, function (req, res) {
+  try {
+    console.log('vao ham');
+    ProductModel.aggregate(
+      [{
         $lookup: {
           from: "category", // other table name
           localField: "categoryID", // name of users table field
           foreignField: "_id", // name of userinfo table field
           as: "cateProduct" // alias for userinfo table
         }
-      }
-    ].sort({ codeProduct: -1 })
-  ).then(function(pro) {
-    // console.log(data);
-    res.render("admin/product/list", { product: pro });
-  });
+      }]
+    ).sort({
+      codeProduct: -1
+    }).then(pro => {
+      console.log(pro);
+      res.render("admin/product/list", {
+        product: pro
+      });
+    });
+  } catch (error) {
+    console.log(error)
+  }
+
 });
+
 router.get("/add.html", checkAdmin, (req, res) => {
   ProductModel.find().then(proData => {
     CategoryModel.find().then(data => {
@@ -79,7 +92,7 @@ router.get("/add.html", checkAdmin, (req, res) => {
     });
   });
 });
-router.post("/add.html", checkAdmin, multipartMiddleware, function(
+router.post("/add.html", checkAdmin, multipartMiddleware, function (
   req,
   res,
   next
@@ -101,7 +114,10 @@ router.post("/add.html", checkAdmin, multipartMiddleware, function(
     req.checkBody("code", "Mã sản phẩm không được để trống").notEmpty();
     req
       .checkBody("code", "Mã sản phẩm phải có từ 3 đến 32 ký tự")
-      .isLength({ min: 3, max: 32 });
+      .isLength({
+        min: 3,
+        max: 32
+      });
     req.checkBody("unit", "Đơn vị sản phẩm không được để trống").notEmpty();
     // req.checkBody('unit', 'Mã sản phẩm phải có từ 3 đến 32 ký tự').isLength({ min: 3, max: 32 });
     req.checkBody("detail", "Chi tiết sản phẩm không được để trống").notEmpty();
@@ -270,19 +286,19 @@ router.post("/add.html", checkAdmin, multipartMiddleware, function(
             categoryID: req.body.category,
             search: bodauTiengViet(
               nameProduct +
-                " " +
-                codeProduct +
-                " " +
-                unitProduct +
-                " " +
-                description +
-                " " +
-                detailProduct
+              " " +
+              codeProduct +
+              " " +
+              unitProduct +
+              " " +
+              description +
+              " " +
+              detailProduct
             ),
             status: req.body.statusradio
           });
 
-          Products.save().then(function(idP) {
+          Products.save().then(function (idP) {
             console.log("idP: " + idP);
             var AliasU = new AliasUrlModel({
               aliasUrl: bodauTiengViet(req.body.name + " " + req.body.code),
@@ -324,7 +340,9 @@ router.post("/add.html", checkAdmin, multipartMiddleware, function(
 router.get("/edit/:id", (req, res) => {
   try {
     var idProduct = req.params.id;
-    ProductModel.findById({ _id: idProduct }, function(err, dataOnePro) {
+    ProductModel.findById({
+      _id: idProduct
+    }, function (err, dataOnePro) {
       try {
         if (err) {
           console.log("err: " + err + "");
@@ -348,7 +366,10 @@ router.get("/edit/:id", (req, res) => {
     });
   } catch (error) {
     console.log("Get platform: " + error);
-    res.render("error", { error, title: "Error Data" });
+    res.render("error", {
+      error,
+      title: "Error Data"
+    });
   }
 });
 router.post("/edit/:id", checkAdmin, multipartMiddleware, (req, res) => {
@@ -357,7 +378,10 @@ router.post("/edit/:id", checkAdmin, multipartMiddleware, (req, res) => {
     req.checkBody("code", "Mã sản phẩm không được để trống").notEmpty();
     req
       .checkBody("code", "Mã sản phẩm phải có từ 3 đến 32 ký tự")
-      .isLength({ min: 3, max: 32 });
+      .isLength({
+        min: 3,
+        max: 32
+      });
     req.checkBody("unit", "Đơn vị sản phẩm không được để trống").notEmpty();
     req.checkBody("detail", "Chi tiết sản phẩm không được để trống").notEmpty();
     var errors = req.validationErrors();
@@ -366,7 +390,9 @@ router.post("/edit/:id", checkAdmin, multipartMiddleware, (req, res) => {
       // req.flash('errors', errors);
       // res.redirect('/admin/product/edit/' + req.params.id);
       // req.flash('errors', errors);
-      ProductModel.findById({ _id: req.params.id }, function(err, dataOnePro) {
+      ProductModel.findById({
+        _id: req.params.id
+      }, function (err, dataOnePro) {
         try {
           if (err) {
             console.log("err: " + err + "");
@@ -415,7 +441,9 @@ router.post("/edit/:id", checkAdmin, multipartMiddleware, (req, res) => {
         uploadImageThree,
         uploadImageFour,
         uploadImageFive;
-      ProductModel.findOne({ _id: req.params.id }, function(err, dataProduct) {
+      ProductModel.findOne({
+        _id: req.params.id
+      }, function (err, dataProduct) {
         if (err) {
           console.log(err);
           req.flash("error_msg", "Error find Database");
@@ -427,14 +455,18 @@ router.post("/edit/:id", checkAdmin, multipartMiddleware, (req, res) => {
         nameImageThreeOld = dataProduct.imageThree;
         nameImageFourOld = dataProduct.imageFour;
         nameImageFiveOld = dataProduct.imageFive;
-        AliasUrlModel.find(
-          {
-            $and: [
-              { aliasUrl: bodauTiengViet(req.body.name + " " + req.body.code) },
-              { aliasUrl: { $ne: dataProduct.aliasUrl } }
+        AliasUrlModel.find({
+            $and: [{
+                aliasUrl: bodauTiengViet(req.body.name + " " + req.body.code)
+              },
+              {
+                aliasUrl: {
+                  $ne: dataProduct.aliasUrl
+                }
+              }
             ]
           },
-          function(err, dataFindAlias) {
+          function (err, dataFindAlias) {
             if (err) {
               console.log(err);
               req.flash("error_msg", "Error find Database");
@@ -589,14 +621,14 @@ router.post("/edit/:id", checkAdmin, multipartMiddleware, (req, res) => {
               dataProduct.status = req.body.statusradio;
               dataProduct.search = bodauTiengViet(
                 req.body.name +
-                  " " +
-                  req.body.code +
-                  " " +
-                  req.body.unit +
-                  " " +
-                  req.body.description +
-                  " " +
-                  req.body.detail
+                " " +
+                req.body.code +
+                " " +
+                req.body.unit +
+                " " +
+                req.body.description +
+                " " +
+                req.body.detail
               );
               dataProduct.save().then(oneProduct => {
                 // AliasUrlModel.findOne(
@@ -718,9 +750,11 @@ router.post("/edit/:id", checkAdmin, multipartMiddleware, (req, res) => {
     return res.redirect("/admin/product/edit.html");
   }
 });
-router.get("/del/:id", checkAdmin, function(req, res, next) {
+router.get("/del/:id", checkAdmin, function (req, res, next) {
   try {
-    ProductModel.findById({ _id: req.params.id }, function(err, data) {
+    ProductModel.findById({
+      _id: req.params.id
+    }, function (err, data) {
       var fileImageProduct = "./public/upload/product/" + data.imageProduct;
       if (data.imageProduct != "" && fs.existsSync(fileImageProduct)) {
         console.log(fileImageProduct);
@@ -746,7 +780,9 @@ router.get("/del/:id", checkAdmin, function(req, res, next) {
       var fileImageFive = "./public/upload/product/" + data.imageFive;
       if (data.imageFive != "" && fs.existsSync(fileImageFive))
         fs.unlinkSync(fileImageFive);
-      ProductModel.findById({ _id: req.params.id }).remove(function() {
+      ProductModel.findById({
+        _id: req.params.id
+      }).remove(function () {
         AliasUrlModel.findOne({
           idParent: req.params.id,
           type: "product"
@@ -842,29 +878,26 @@ router.post(
                       }
                       categoryID = categoryData._id;
                       ///////////////// UPDATE PRODUCT
-                      await ProductModel.update(
-                        {
-                          codeProduct: xlData[j].MSP
-                        },
-                        {
-                          $set: {
-                            nameProduct: xlData[j].TSP,
-                            aliasUrl: bodauTiengViet(
-                              xlData[j].TSP + " " + xlData[j].MSP
-                            ),
-                            unitProduct: xlData[j].DVT,
-                            detailProduct: xlData[j].TTSP,
-                            priceProduct: xlData[j].GB,
-                            imageProduct: xlData[j].ASP,
-                            imageOne: xlData[j].A1,
-                            imageTwo: xlData[j].A2,
-                            imageThree: xlData[j].A3,
-                            imageFour: xlData[j].A4,
-                            imageFive: xlData[j].A5,
-                            categoryID: categoryID
-                          }
+                      await ProductModel.update({
+                        codeProduct: xlData[j].MSP
+                      }, {
+                        $set: {
+                          nameProduct: xlData[j].TSP,
+                          aliasUrl: bodauTiengViet(
+                            xlData[j].TSP + " " + xlData[j].MSP
+                          ),
+                          unitProduct: xlData[j].DVT,
+                          detailProduct: xlData[j].TTSP,
+                          priceProduct: xlData[j].GB,
+                          imageProduct: xlData[j].ASP,
+                          imageOne: xlData[j].A1,
+                          imageTwo: xlData[j].A2,
+                          imageThree: xlData[j].A3,
+                          imageFour: xlData[j].A4,
+                          imageFive: xlData[j].A5,
+                          categoryID: categoryID
                         }
-                      ).exec((err, data) => {
+                      }).exec((err, data) => {
                         if (err) {
                           console.log(err + "");
                         }
@@ -883,8 +916,7 @@ router.post(
                           .exec();
                       }
                       categoryID = categoryData._id;
-                      await ProductModel.insertMany(
-                        {
+                      await ProductModel.insertMany({
                           id: md5(Date.now()),
                           nameProduct: xlData[j].TSP,
                           codeProduct: xlData[j].MSP,
@@ -940,28 +972,24 @@ router.post(
                       .exec();
                     if (checkProductSize) {
                       await sizeProductModel
-                        .update(
-                          {
-                            idProduct: productDataCheck._id
-                          },
-                          {
-                            $set: {
-                              sizeLength: xlData[t].CD,
-                              sizeWidth: xlData[t].CR,
-                              sizeHeight: xlData[t].CC,
-                              priceProduct: xlData[t].GB,
-                              status: true
-                            }
+                        .update({
+                          idProduct: productDataCheck._id
+                        }, {
+                          $set: {
+                            sizeLength: xlData[t].CD,
+                            sizeWidth: xlData[t].CR,
+                            sizeHeight: xlData[t].CC,
+                            priceProduct: xlData[t].GB,
+                            status: true
                           }
-                        )
+                        })
                         .exec((err, data) => {
                           if (err) {
                             console.log(err + "");
                           }
                         });
                     } else {
-                      await sizeProductModel.insertMany(
-                        {
+                      await sizeProductModel.insertMany({
                           idProduct: productDataCheck._id,
                           sizeLength: xlData[t].CD,
                           sizeWidth: xlData[t].CR,

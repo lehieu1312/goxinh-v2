@@ -18,10 +18,10 @@ var multer = require("multer");
 var multipart = require("connect-multiparty");
 var multipartMiddleware = multipart();
 var storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, path.join(appRoot, "public", "upload", "order"));
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     cb(false, file.originalname);
   }
 });
@@ -76,36 +76,46 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
       status: true
     }).exec();
     if (dataCate) {
-      dataProduct = await CategoryModel.aggregate([
-        {
-          $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+      dataProduct = await CategoryModel.aggregate([{
+            $match: {
+              $or: [{
+                _id: dataCate._id
+              }, {
+                categoryParent: dataCate._id
+              }]
+            }
+          },
+          {
+            $lookup: {
+              from: "product",
+              localField: "_id",
+              foreignField: "categoryID",
+              as: "products"
+            }
+          },
+          {
+            $unwind: "$products"
+          },
+          {
+            $replaceRoot: {
+              newRoot: "$products"
+            }
           }
-        },
-        {
-          $lookup: {
-            from: "product",
-            localField: "_id",
-            foreignField: "categoryID",
-            as: "products"
-          }
-        },
-        {
-          $unwind: "$products"
-        },
-        {
-          $replaceRoot: { newRoot: "$products" }
-        }
-      ])
-        .sort({ viewCounter: -1 })
+        ])
+        .sort({
+          viewCounter: -1
+        })
         .skip(pageSize * currentPage - pageSize)
         .limit(pageSize)
         .exec();
 
-      totalData = await CategoryModel.aggregate([
-        {
+      totalData = await CategoryModel.aggregate([{
           $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+            $or: [{
+              _id: dataCate._id
+            }, {
+              categoryParent: dataCate._id
+            }]
           }
         },
         {
@@ -120,19 +130,25 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
           $unwind: "$products"
         },
         {
-          $replaceRoot: { newRoot: "$products" }
+          $replaceRoot: {
+            newRoot: "$products"
+          }
         },
-        { $count: "myCount" }
+        {
+          $count: "myCount"
+        }
       ]).exec();
       totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/category-menu", {
@@ -147,7 +163,10 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -168,36 +187,46 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
       status: true
     }).exec();
     if (dataCate) {
-      dataProduct = await CategoryModel.aggregate([
-        {
-          $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+      dataProduct = await CategoryModel.aggregate([{
+            $match: {
+              $or: [{
+                _id: dataCate._id
+              }, {
+                categoryParent: dataCate._id
+              }]
+            }
+          },
+          {
+            $lookup: {
+              from: "product",
+              localField: "_id",
+              foreignField: "categoryID",
+              as: "products"
+            }
+          },
+          {
+            $unwind: "$products"
+          },
+          {
+            $replaceRoot: {
+              newRoot: "$products"
+            }
           }
-        },
-        {
-          $lookup: {
-            from: "product",
-            localField: "_id",
-            foreignField: "categoryID",
-            as: "products"
-          }
-        },
-        {
-          $unwind: "$products"
-        },
-        {
-          $replaceRoot: { newRoot: "$products" }
-        }
-      ])
-        .sort({ viewCounter: -1 })
+        ])
+        .sort({
+          viewCounter: -1
+        })
         .skip(pageSize * currentPage - pageSize)
         .limit(pageSize)
         .exec();
 
-      totalData = await CategoryModel.aggregate([
-        {
+      totalData = await CategoryModel.aggregate([{
           $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+            $or: [{
+              _id: dataCate._id
+            }, {
+              categoryParent: dataCate._id
+            }]
           }
         },
         {
@@ -212,19 +241,25 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
           $unwind: "$products"
         },
         {
-          $replaceRoot: { newRoot: "$products" }
+          $replaceRoot: {
+            newRoot: "$products"
+          }
         },
-        { $count: "myCount" }
+        {
+          $count: "myCount"
+        }
       ]).exec();
       totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/category-menu", {
@@ -239,7 +274,10 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -260,36 +298,46 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
       status: true
     }).exec();
     if (dataCate) {
-      dataProduct = await CategoryModel.aggregate([
-        {
-          $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+      dataProduct = await CategoryModel.aggregate([{
+            $match: {
+              $or: [{
+                _id: dataCate._id
+              }, {
+                categoryParent: dataCate._id
+              }]
+            }
+          },
+          {
+            $lookup: {
+              from: "product",
+              localField: "_id",
+              foreignField: "categoryID",
+              as: "products"
+            }
+          },
+          {
+            $unwind: "$products"
+          },
+          {
+            $replaceRoot: {
+              newRoot: "$products"
+            }
           }
-        },
-        {
-          $lookup: {
-            from: "product",
-            localField: "_id",
-            foreignField: "categoryID",
-            as: "products"
-          }
-        },
-        {
-          $unwind: "$products"
-        },
-        {
-          $replaceRoot: { newRoot: "$products" }
-        }
-      ])
-        .sort({ viewCounter: -1 })
+        ])
+        .sort({
+          viewCounter: -1
+        })
         .skip(pageSize * currentPage - pageSize)
         .limit(pageSize)
         .exec();
 
-      totalData = await CategoryModel.aggregate([
-        {
+      totalData = await CategoryModel.aggregate([{
           $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+            $or: [{
+              _id: dataCate._id
+            }, {
+              categoryParent: dataCate._id
+            }]
           }
         },
         {
@@ -304,19 +352,25 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
           $unwind: "$products"
         },
         {
-          $replaceRoot: { newRoot: "$products" }
+          $replaceRoot: {
+            newRoot: "$products"
+          }
         },
-        { $count: "myCount" }
+        {
+          $count: "myCount"
+        }
       ]).exec();
       totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/category-menu", {
@@ -331,7 +385,10 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -352,36 +409,46 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
       status: true
     }).exec();
     if (dataCate) {
-      dataProduct = await CategoryModel.aggregate([
-        {
-          $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+      dataProduct = await CategoryModel.aggregate([{
+            $match: {
+              $or: [{
+                _id: dataCate._id
+              }, {
+                categoryParent: dataCate._id
+              }]
+            }
+          },
+          {
+            $lookup: {
+              from: "product",
+              localField: "_id",
+              foreignField: "categoryID",
+              as: "products"
+            }
+          },
+          {
+            $unwind: "$products"
+          },
+          {
+            $replaceRoot: {
+              newRoot: "$products"
+            }
           }
-        },
-        {
-          $lookup: {
-            from: "product",
-            localField: "_id",
-            foreignField: "categoryID",
-            as: "products"
-          }
-        },
-        {
-          $unwind: "$products"
-        },
-        {
-          $replaceRoot: { newRoot: "$products" }
-        }
-      ])
-        .sort({ viewCounter: -1 })
+        ])
+        .sort({
+          viewCounter: -1
+        })
         .skip(pageSize * currentPage - pageSize)
         .limit(pageSize)
         .exec();
 
-      totalData = await CategoryModel.aggregate([
-        {
+      totalData = await CategoryModel.aggregate([{
           $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+            $or: [{
+              _id: dataCate._id
+            }, {
+              categoryParent: dataCate._id
+            }]
           }
         },
         {
@@ -396,19 +463,25 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
           $unwind: "$products"
         },
         {
-          $replaceRoot: { newRoot: "$products" }
+          $replaceRoot: {
+            newRoot: "$products"
+          }
         },
-        { $count: "myCount" }
+        {
+          $count: "myCount"
+        }
       ]).exec();
       totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/category-menu", {
@@ -423,7 +496,10 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -444,36 +520,46 @@ router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
       status: true
     }).exec();
     if (dataCate) {
-      dataProduct = await CategoryModel.aggregate([
-        {
-          $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+      dataProduct = await CategoryModel.aggregate([{
+            $match: {
+              $or: [{
+                _id: dataCate._id
+              }, {
+                categoryParent: dataCate._id
+              }]
+            }
+          },
+          {
+            $lookup: {
+              from: "product",
+              localField: "_id",
+              foreignField: "categoryID",
+              as: "products"
+            }
+          },
+          {
+            $unwind: "$products"
+          },
+          {
+            $replaceRoot: {
+              newRoot: "$products"
+            }
           }
-        },
-        {
-          $lookup: {
-            from: "product",
-            localField: "_id",
-            foreignField: "categoryID",
-            as: "products"
-          }
-        },
-        {
-          $unwind: "$products"
-        },
-        {
-          $replaceRoot: { newRoot: "$products" }
-        }
-      ])
-        .sort({ viewCounter: -1 })
+        ])
+        .sort({
+          viewCounter: -1
+        })
         .skip(pageSize * currentPage - pageSize)
         .limit(pageSize)
         .exec();
 
-      totalData = await CategoryModel.aggregate([
-        {
+      totalData = await CategoryModel.aggregate([{
           $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+            $or: [{
+              _id: dataCate._id
+            }, {
+              categoryParent: dataCate._id
+            }]
           }
         },
         {
@@ -488,19 +574,25 @@ router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
           $unwind: "$products"
         },
         {
-          $replaceRoot: { newRoot: "$products" }
+          $replaceRoot: {
+            newRoot: "$products"
+          }
         },
-        { $count: "myCount" }
+        {
+          $count: "myCount"
+        }
       ]).exec();
       totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/category-menu", {
@@ -515,7 +607,10 @@ router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -525,8 +620,7 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
       totalData,
       pageSize = 15,
       pageCount;
-    var dataArray = [];
-    var dataList = [];
+
     let dataProduct = [];
     if (typeof req.query.page !== "undefined") {
       currentPage = +req.query.page;
@@ -536,36 +630,46 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
       status: true
     }).exec();
     if (dataCate) {
-      dataProduct = await CategoryModel.aggregate([
-        {
-          $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+      dataProduct = await CategoryModel.aggregate([{
+            $match: {
+              $or: [{
+                _id: dataCate._id
+              }, {
+                categoryParent: dataCate._id
+              }]
+            }
+          },
+          {
+            $lookup: {
+              from: "product",
+              localField: "_id",
+              foreignField: "categoryID",
+              as: "products"
+            }
+          },
+          {
+            $unwind: "$products"
+          },
+          {
+            $replaceRoot: {
+              newRoot: "$products"
+            }
           }
-        },
-        {
-          $lookup: {
-            from: "product",
-            localField: "_id",
-            foreignField: "categoryID",
-            as: "products"
-          }
-        },
-        {
-          $unwind: "$products"
-        },
-        {
-          $replaceRoot: { newRoot: "$products" }
-        }
-      ])
-        .sort({ viewCounter: -1 })
+        ])
+        .sort({
+          viewCounter: -1
+        })
         .skip(pageSize * currentPage - pageSize)
         .limit(pageSize)
         .exec();
 
-      totalData = await CategoryModel.aggregate([
-        {
+      totalData = await CategoryModel.aggregate([{
           $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+            $or: [{
+              _id: dataCate._id
+            }, {
+              categoryParent: dataCate._id
+            }]
           }
         },
         {
@@ -580,19 +684,26 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
           $unwind: "$products"
         },
         {
-          $replaceRoot: { newRoot: "$products" }
+          $replaceRoot: {
+            newRoot: "$products"
+          }
         },
-        { $count: "myCount" }
+        {
+          $count: "myCount"
+        }
       ]).exec();
+
       totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/category-menu", {
@@ -607,28 +718,71 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
-router.get("/danh-muc/:alias", function(req, res) {
+router.get("/danh-muc/:alias", async (req, res) => {
   try {
-    var totalProduct,
-      pageSize = 16,
-      pageCount,
-      productList = [],
-      productArray = [],
-      currentPage = 1;
-    CategoryModel.findOne({
+    var currentPage = 1,
+      totalData,
+      pageSize = 2,
+      pageCount;
+
+    let dataProduct = [];
+    let titlePanel = 'Goxinh.net';
+    if (typeof req.query.page !== "undefined") {
+      currentPage = +req.query.page;
+    }
+
+    let dataCate = await CategoryModel.findOne({
       aliasUrl: req.params.alias,
       status: true
-    }).then(dataCate => {
-      console.log("dataCate: " + dataCate);
-      // CategoryModel.findOne({ categoryParent: dataCate._id }).then((dataCateParID) => {
-      CategoryModel.aggregate([
-        {
+    }).exec();
+    if (dataCate) {
+      console.log(dataCate);
+      titlePanel = dataCate.nameCategory;
+      dataProduct = await CategoryModel.aggregate([{
+            $match: {
+              $or: [{
+                _id: dataCate._id
+              }, {
+                categoryParent: dataCate._id
+              }]
+            }
+          },
+          {
+            $lookup: {
+              from: "product",
+              localField: "_id",
+              foreignField: "categoryID",
+              as: "products"
+            }
+          },
+          {
+            $unwind: "$products"
+          },
+          {
+            $replaceRoot: {
+              newRoot: "$products"
+            }
+          }
+        ]).sort({
+          viewCounter: -1
+        })
+        .skip(pageSize * currentPage - pageSize)
+        .limit(pageSize).exec();
+      console.log(dataProduct);
+      totalData = await CategoryModel.aggregate([{
           $match: {
-            $or: [{ _id: dataCate._id }, { categoryParent: dataCate._id }]
+            $or: [{
+              _id: dataCate._id
+            }, {
+              categoryParent: dataCate._id
+            }]
           }
         },
         {
@@ -643,96 +797,74 @@ router.get("/danh-muc/:alias", function(req, res) {
           $unwind: "$products"
         },
         {
-          $replaceRoot: { newRoot: "$products" }
+          $replaceRoot: {
+            newRoot: "$products"
+          }
+        },
+        {
+          $count: "myCount"
         }
-      ]).then(dataProduct => {
-        // ProductModel.find({ $and: [{ $or: [{ categoryID: dataCate._id }] }, { status: true }, { productSync: false }] }).then((dataProduct) => {
-        console.log(
-          "=============================== " + JSON.stringify(dataProduct)
-        );
-        CategoryModel.find({
-          $and: [{ categoryParent: null }, { status: true }]
-        }).then(dataCateParent => {
-          console.log("dataCateParent: " + dataCateParent);
-          CategoryModel.find({
-            $and: [{ categoryParent: { $ne: null } }, { status: true }]
-          }).then(dataCateChildren => {
-            console.log("dataCateChildren: " + dataCateChildren);
-            NewsModel.find({ typeNews: 0, status: true }).then(dataNews => {
-              console.log("dataNews: " + dataNews);
-              BannerModel.findOne({ locationBanner: 1, status: true })
-                .sort({ numberOrder: -1 })
-                .then(BannerTopData => {
-                  console.log("BannerTopData: " + BannerTopData);
-                  BannerModel.findOne({ locationBanner: 2, status: true })
-                    .sort({ numberOrder: -1 })
-                    .then(BannerBottomData => {
-                      console.log("BannerBottomData: " + BannerBottomData);
-                      BannerModel.findOne({ locationBanner: 3, status: true })
-                        .sort({ numberOrder: -1 })
-                        .then(BannerRightData => {
-                          console.log("BannerRightData: " + BannerRightData);
-                          BannerModel.find({ locationBanner: 0, status: true })
-                            .sort({ numberOrder: -1 })
-                            .then(BannerSliderData => {
-                              console.log(
-                                "BannerSliderData: " + BannerSliderData
-                              );
-                              totalProduct = dataProduct.length;
-                              pageCount = Math.ceil(
-                                totalProduct / pageSize
-                              ).toFixed();
-                              if (typeof req.query.page !== "undefined") {
-                                currentPage = +req.query.page;
-                              }
-                              while (dataProduct.length > 0) {
-                                productArray.push(
-                                  dataProduct.splice(0, pageSize)
-                                );
-                              }
-                              productList = productArray[+currentPage - 1];
-                              console.log("productList: " + productList);
-                              res.render("category", {
-                                title: dataCate.nameCategory,
-                                dataProduct: productList,
-                                totalProduct,
-                                pageCount,
-                                pageSize,
-                                currentPage,
-                                dataNews: dataNews,
-                                dataCateParent: dataCateParent,
-                                dataCateChildren: dataCateChildren,
-                                BannerTopData: BannerTopData,
-                                BannerBottomData: BannerBottomData,
-                                BannerRightData: BannerRightData,
-                                BannerSliderData: BannerSliderData
-                              });
-                            });
-                        });
-                    });
-                });
-            });
-          });
-        });
-      });
+      ]).exec();
+      console.log(totalData);
+      if (totalData.length > 0) {
+        totalData = totalData[0].myCount;
+        pageCount = Math.ceil(totalData / pageSize).toFixed();
+      }
+
+    }
+
+    var BannerSliderData = await BannerModel.find({
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
+      .exec();
+
+    res.render("font-end/category", {
+      title: titlePanel,
+      dataProduct,
+      currentPage,
+      totalData,
+      pageSize,
+      pageCount,
+      titlePanel,
+      BannerSliderData
     });
+
+
   } catch (error) {
     console.log(error);
-    res.render("error", { title: "Error Data" });
+    res.render("error", {
+      title: "Error Data"
+    });
   }
 });
 router.get("/san-pham/:alias", (req, res) => {
   var sAliasUrl = req.params.alias;
   try {
     CategoryModel.find({
-      $and: [{ categoryParent: null }, { status: true }]
+      $and: [{
+        categoryParent: null
+      }, {
+        status: true
+      }]
     }).then(dataCateParent => {
       // console.log("dataCateParent: " + dataCateParent);
       CategoryModel.find({
-        $and: [{ categoryParent: { $ne: null } }, { status: true }]
+        $and: [{
+          categoryParent: {
+            $ne: null
+          }
+        }, {
+          status: true
+        }]
       }).then(dataCateChildren => {
         // console.log('dataCateChildren: ' + dataCateChildren);
-        ProductModel.findOne({ aliasUrl: sAliasUrl }).then(dataOneProduct => {
+        ProductModel.findOne({
+          aliasUrl: sAliasUrl
+        }).then(dataOneProduct => {
           // console.log('dataOneProduct.viewCounter: ' + dataOneProduct.viewCounter);
           if (
             typeof dataOneProduct.viewCounter == "undefined" ||
@@ -747,17 +879,28 @@ router.get("/san-pham/:alias", (req, res) => {
             dataOneProduct.save().then(() => {
               if (dataOneProduct) {
                 ProductModel.find({
-                  $and: [
-                    { categoryID: dataOneProduct.categoryID },
-                    { _id: { $ne: dataOneProduct._id } },
-                    { productSync: false }
-                  ]
-                })
-                  .sort({ viewCounter: -1 })
+                    $and: [{
+                        categoryID: dataOneProduct.categoryID
+                      },
+                      {
+                        _id: {
+                          $ne: dataOneProduct._id
+                        }
+                      },
+                      {
+                        productSync: false
+                      }
+                    ]
+                  })
+                  .sort({
+                    viewCounter: -1
+                  })
                   .limit(5)
                   .then(productInvolve => {
                     // console.log('productInvolve: ' + productInvolve);
-                    ProductModel.find({ productIDSync: dataOneProduct._id })
+                    ProductModel.find({
+                        productIDSync: dataOneProduct._id
+                      })
                       .limit(3)
                       .then(productSync => {
                         if (productSync) {
@@ -769,8 +912,7 @@ router.get("/san-pham/:alias", (req, res) => {
                             dataCateParent: dataCateParent,
                             dataSizeProduct: dataSizeProduct,
                             dataCateChildren: dataCateChildren,
-                            descriptions:
-                              dataOneProduct.nameProduct +
+                            descriptions: dataOneProduct.nameProduct +
                               ", " +
                               dataOneProduct.codeProduct +
                               ", " +
@@ -783,7 +925,9 @@ router.get("/san-pham/:alias", (req, res) => {
                               "nội thất trang trí,gỗ trang trí,nội thất gỗ xinh,nội thất,gỗ nội thất,gỗ xinh,goxinh.net"
                           });
                         } else {
-                          ProductModel.find({ productSync: true })
+                          ProductModel.find({
+                              productSync: true
+                            })
                             .limit(3)
                             .then(productSync => {
                               // console.log('productSync: ' + productSync);
@@ -794,8 +938,7 @@ router.get("/san-pham/:alias", (req, res) => {
                                 productInvolve: productInvolve,
                                 dataCateParent: dataCateParent,
                                 dataCateChildren: dataCateChildren,
-                                descriptions:
-                                  dataOneProduct.nameProduct +
+                                descriptions: dataOneProduct.nameProduct +
                                   ", " +
                                   dataOneProduct.codeProduct +
                                   ", " +
@@ -812,7 +955,9 @@ router.get("/san-pham/:alias", (req, res) => {
                       });
                   });
               } else {
-                res.render("404", { title: "Page Not Found" });
+                res.render("404", {
+                  title: "Page Not Found"
+                });
               }
             });
           });
@@ -822,10 +967,13 @@ router.get("/san-pham/:alias", (req, res) => {
   } catch (error) {
     console.log(error);
     req.flash("error_msg", error + "");
-    res.render("error", { title: "Error Data", error: error + "" });
+    res.render("error", {
+      title: "Error Data",
+      error: error + ""
+    });
   }
 });
-router.get("/tim-kiem", function(req, res) {
+router.get("/tim-kiem", function (req, res) {
   try {
     var totalProduct,
       pageSize = 16,
@@ -860,39 +1008,81 @@ router.get("/tim-kiem", function(req, res) {
       // ]).then((dataProduct) => {
 
       ProductModel.find({
-        $and: [
-          { $or: [{ aliasUrl: { $regex: sSearch } }] },
-          { status: true },
-          { productSync: false }
+        $and: [{
+            $or: [{
+              aliasUrl: {
+                $regex: sSearch
+              }
+            }]
+          },
+          {
+            status: true
+          },
+          {
+            productSync: false
+          }
         ]
       }).then(dataProduct => {
         console.log(
           "=============================== " + JSON.stringify(dataProduct)
         );
         CategoryModel.find({
-          $and: [{ categoryParent: null }, { status: true }]
+          $and: [{
+            categoryParent: null
+          }, {
+            status: true
+          }]
         }).then(dataCateParent => {
           console.log("dataCateParent: " + dataCateParent);
           CategoryModel.find({
-            $and: [{ categoryParent: { $ne: null } }, { status: true }]
+            $and: [{
+              categoryParent: {
+                $ne: null
+              }
+            }, {
+              status: true
+            }]
           }).then(dataCateChildren => {
             console.log("dataCateChildren: " + dataCateChildren);
-            NewsModel.find({ typeNews: 0, status: true }).then(dataNews => {
+            NewsModel.find({
+              typeNews: 0,
+              status: true
+            }).then(dataNews => {
               console.log("dataNews: " + dataNews);
-              BannerModel.findOne({ locationBanner: 1, status: true })
-                .sort({ numberOrder: -1 })
+              BannerModel.findOne({
+                  locationBanner: 1,
+                  status: true
+                })
+                .sort({
+                  numberOrder: -1
+                })
                 .then(BannerTopData => {
                   console.log("BannerTopData: " + BannerTopData);
-                  BannerModel.findOne({ locationBanner: 2, status: true })
-                    .sort({ numberOrder: -1 })
+                  BannerModel.findOne({
+                      locationBanner: 2,
+                      status: true
+                    })
+                    .sort({
+                      numberOrder: -1
+                    })
                     .then(BannerBottomData => {
                       console.log("BannerBottomData: " + BannerBottomData);
-                      BannerModel.findOne({ locationBanner: 3, status: true })
-                        .sort({ numberOrder: -1 })
+                      BannerModel.findOne({
+                          locationBanner: 3,
+                          status: true
+                        })
+                        .sort({
+                          numberOrder: -1
+                        })
                         .then(BannerRightData => {
                           console.log("BannerRightData: " + BannerRightData);
-                          BannerModel.find({ locationBanner: 0, status: true })
-                            .sort({ numberOrder: -1 })
+                          BannerModel.find({
+                              locationBanner: 0,
+                              status: true
+                            })
+                            .sort({
+                              numberOrder: -1
+                            })
                             .then(BannerSliderData => {
                               console.log(
                                 "BannerSliderData: " + BannerSliderData
@@ -939,7 +1129,9 @@ router.get("/tim-kiem", function(req, res) {
     }
   } catch (error) {
     console.log(error);
-    res.render("error", { title: "Error Data" });
+    res.render("error", {
+      title: "Error Data"
+    });
   }
 });
 router.post("/order-on-request", multipartMiddleware, (req, res) => {
@@ -959,18 +1151,33 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
     var errors = req.validationErrors();
     if (errors) {
       // console.log('1: ' + errors);
-      CategoryModel.find(
-        { $and: [{ categoryParent: null }, { status: true }] },
-        function(err, dataCateParent) {
+      CategoryModel.find({
+          $and: [{
+            categoryParent: null
+          }, {
+            status: true
+          }]
+        },
+        function (err, dataCateParent) {
           if (err) {
             console.log("1");
             // console.log(err);
-            return res.render("error", { title: "Error Get Data", error: err });
+            return res.render("error", {
+              title: "Error Get Data",
+              error: err
+            });
           }
           console.log("dataCateParent: " + dataCateParent);
-          CategoryModel.find(
-            { $and: [{ categoryParent: { $ne: null } }, { status: true }] },
-            function(error, dataCateChildren) {
+          CategoryModel.find({
+              $and: [{
+                categoryParent: {
+                  $ne: null
+                }
+              }, {
+                status: true
+              }]
+            },
+            function (error, dataCateChildren) {
               if (error) {
                 console.log(error);
                 return res.render("error", {
@@ -994,9 +1201,14 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
       // return res.render('admin/product/add', { errors: errors });
     } else {
       if (imageOrder.size > 8000000) {
-        CategoryModel.find(
-          { $and: [{ categoryParent: null }, { status: true }] },
-          function(err, dataCateParent) {
+        CategoryModel.find({
+            $and: [{
+              categoryParent: null
+            }, {
+              status: true
+            }]
+          },
+          function (err, dataCateParent) {
             if (err) {
               console.log(err);
               return res.render("error", {
@@ -1005,9 +1217,16 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
               });
             }
             console.log("dataCateParent: " + dataCateParent);
-            CategoryModel.find(
-              { $and: [{ categoryParent: { $ne: null } }, { status: true }] },
-              function(error, dataCateChildren) {
+            CategoryModel.find({
+                $and: [{
+                  categoryParent: {
+                    $ne: null
+                  }
+                }, {
+                  status: true
+                }]
+              },
+              function (error, dataCateChildren) {
                 if (error) {
                   console.log(error);
                   return res.render("error", {
@@ -1020,8 +1239,7 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
                   title: "Đặt hàng yêu cầu",
                   dataCateParent: dataCateParent,
                   dataCateChildren: dataCateChildren,
-                  error_msg:
-                    "Bạn đã đặt hàng không thành công do tệp tải lên quá kích cỡ(8Mb)"
+                  error_msg: "Bạn đã đặt hàng không thành công do tệp tải lên quá kích cỡ(8Mb)"
                 });
               }
             );
@@ -1052,9 +1270,14 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
         status: false
       });
       orderProduct.save().then(() => {
-        CategoryModel.find(
-          { $and: [{ categoryParent: null }, { status: true }] },
-          function(err, dataCateParent) {
+        CategoryModel.find({
+            $and: [{
+              categoryParent: null
+            }, {
+              status: true
+            }]
+          },
+          function (err, dataCateParent) {
             if (err) {
               console.log(err);
               return res.render("error", {
@@ -1063,9 +1286,16 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
               });
             }
             console.log("dataCateParent: " + dataCateParent);
-            CategoryModel.find(
-              { $and: [{ categoryParent: { $ne: null } }, { status: true }] },
-              function(error, dataCateChildren) {
+            CategoryModel.find({
+                $and: [{
+                  categoryParent: {
+                    $ne: null
+                  }
+                }, {
+                  status: true
+                }]
+              },
+              function (error, dataCateChildren) {
                 if (error) {
                   console.log(error);
                   return res.render("error", {
@@ -1089,7 +1319,10 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.render("error", { title: "Error Data", error: error + "" });
+    res.render("error", {
+      title: "Error Data",
+      error: error + ""
+    });
   }
 });
 router.get("/download-image-order/:image", (req, res) => {
@@ -1105,11 +1338,16 @@ router.get("/download-image-order/:image", (req, res) => {
       res.download(pathFile);
     } else {
       console.log("Not Find Folder");
-      res.render("not-find-file", { title: "Not find file" });
+      res.render("not-find-file", {
+        title: "Not find file"
+      });
     }
   } catch (error) {
     console.log(error);
-    res.render("error", { title: "Error Data", error: error });
+    res.render("error", {
+      title: "Error Data",
+      error: error
+    });
   }
 });
 router.post("/getprice-sizeproduct", (req, res) => {
@@ -1118,14 +1356,23 @@ router.post("/getprice-sizeproduct", (req, res) => {
   // req.checkBody('name', 'Name 5 đến 32 ký tự').isLength({ min: 3, max: 32 });
   var errors = req.validationErrors();
   if (errors) {
-    return res.json({ status: 3, data: errors });
+    return res.json({
+      status: 3,
+      data: errors
+    });
   }
 
   SizeProductModel.findById(req.body.idSizeProduct).then(data => {
     if (data) {
-      return res.json({ status: 1, data: data });
+      return res.json({
+        status: 1,
+        data: data
+      });
     } else {
-      return res.json({ status: 3, data: data });
+      return res.json({
+        status: 3,
+        data: data
+      });
     }
     // console.log(data);
   });
@@ -1136,15 +1383,24 @@ router.post("/getprice-productsync", (req, res) => {
   // req.checkBody('name', 'Name 5 đến 32 ký tự').isLength({ min: 3, max: 32 });
   var errors = req.validationErrors();
   if (errors) {
-    return res.json({ status: 3, data: errors });
+    return res.json({
+      status: 3,
+      data: errors
+    });
   }
 
   ProductModel.findById(req.body.idProductSync).then(data => {
     // console.log(data);
     if (data) {
-      return res.json({ status: 1, data: data });
+      return res.json({
+        status: 1,
+        data: data
+      });
     } else {
-      return res.json({ status: 3, data: data });
+      return res.json({
+        status: 3,
+        data: data
+      });
     }
   });
 });
@@ -1160,17 +1416,32 @@ router.get("/order-product", (req, res) => {
   sumMoney = req.query.su;
 
   if (!idProduct || !soLuong) {
-    CategoryModel.find(
-      { $and: [{ categoryParent: null }, { status: true }] },
-      function(err, dataCateParent) {
+    CategoryModel.find({
+        $and: [{
+          categoryParent: null
+        }, {
+          status: true
+        }]
+      },
+      function (err, dataCateParent) {
         if (err) {
           console.log(err);
-          return res.render("error", { title: "Error Get Data", error: err });
+          return res.render("error", {
+            title: "Error Get Data",
+            error: err
+          });
         }
         console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find(
-          { $and: [{ categoryParent: { $ne: null } }, { status: true }] },
-          function(error, dataCateChildren) {
+        CategoryModel.find({
+            $and: [{
+              categoryParent: {
+                $ne: null
+              }
+            }, {
+              status: true
+            }]
+          },
+          function (error, dataCateChildren) {
             if (error) {
               console.log(error);
               return res.render("error", {
@@ -1191,17 +1462,32 @@ router.get("/order-product", (req, res) => {
       }
     );
   } else {
-    CategoryModel.find(
-      { $and: [{ categoryParent: null }, { status: true }] },
-      function(err, dataCateParent) {
+    CategoryModel.find({
+        $and: [{
+          categoryParent: null
+        }, {
+          status: true
+        }]
+      },
+      function (err, dataCateParent) {
         if (err) {
           console.log(err);
-          return res.render("error", { title: "Error Get Data", error: err });
+          return res.render("error", {
+            title: "Error Get Data",
+            error: err
+          });
         }
         console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find(
-          { $and: [{ categoryParent: { $ne: null } }, { status: true }] },
-          function(error, dataCateChildren) {
+        CategoryModel.find({
+            $and: [{
+              categoryParent: {
+                $ne: null
+              }
+            }, {
+              status: true
+            }]
+          },
+          function (error, dataCateChildren) {
             if (error) {
               console.log(error);
               return res.render("error", {
@@ -1249,13 +1535,13 @@ router.post("/order-product", async (req, res) => {
       req.flash("errors", errors);
       return res.redirect(
         "/order-product?idp=" +
-          req.body.idproduct +
-          "&idps=" +
-          req.body.idproductsync +
-          "&idsip=" +
-          req.body.idsizeproduc +
-          "&sl=" +
-          req.body.soluong
+        req.body.idproduct +
+        "&idps=" +
+        req.body.idproductsync +
+        "&idsip=" +
+        req.body.idsizeproduc +
+        "&sl=" +
+        req.body.soluong
       );
     }
 
@@ -1312,18 +1598,16 @@ router.post("/order-product", async (req, res) => {
         "dataProductOne.priceProduct: " + dataProductOne.priceProduct
       );
       // giaSanPham = dataProductOne.priceProduct;
-      cartProduct = [
-        {
-          id: req.body.idproduct,
-          name: dataProductOne.nameProduct,
-          idSize: idsizep,
-          size: sizeProduct,
-          price: dataProductOne.priceProduct,
-          image: dataProductOne.imageProduct,
-          quanlity: req.body.soluong,
-          money: req.body.soluong * dataProductOne.priceProduct
-        }
-      ];
+      cartProduct = [{
+        id: req.body.idproduct,
+        name: dataProductOne.nameProduct,
+        idSize: idsizep,
+        size: sizeProduct,
+        price: dataProductOne.priceProduct,
+        image: dataProductOne.imageProduct,
+        quanlity: req.body.soluong,
+        money: req.body.soluong * dataProductOne.priceProduct
+      }];
       if (req.body.idproductsync) {
         var checkArrproduct = req.body.idproductsync.split(";");
 
@@ -1369,9 +1653,14 @@ router.post("/order-product", async (req, res) => {
         status: false
       });
       orderBuyProductModel.save().then(() => {
-        CategoryModel.find(
-          { $and: [{ categoryParent: null }, { status: true }] },
-          function(err, dataCateParent) {
+        CategoryModel.find({
+            $and: [{
+              categoryParent: null
+            }, {
+              status: true
+            }]
+          },
+          function (err, dataCateParent) {
             if (err) {
               console.log(err);
               return res.render("error", {
@@ -1380,9 +1669,16 @@ router.post("/order-product", async (req, res) => {
               });
             }
             console.log("dataCateParent: " + dataCateParent);
-            CategoryModel.find(
-              { $and: [{ categoryParent: { $ne: null } }, { status: true }] },
-              function(error, dataCateChildren) {
+            CategoryModel.find({
+                $and: [{
+                  categoryParent: {
+                    $ne: null
+                  }
+                }, {
+                  status: true
+                }]
+              },
+              function (error, dataCateChildren) {
                 if (error) {
                   console.log(error);
                   return res.render("error", {
