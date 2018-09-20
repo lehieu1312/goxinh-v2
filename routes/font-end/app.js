@@ -776,6 +776,7 @@ router.get("/danh-muc/:alias", async (req, res) => {
         .skip(pageSize * currentPage - pageSize)
         .limit(pageSize).exec();
       console.log(dataProduct);
+
       totalData = await CategoryModel.aggregate([{
           $match: {
             $or: [{
@@ -841,6 +842,99 @@ router.get("/danh-muc/:alias", async (req, res) => {
     });
   }
 });
+
+
+router.get("/tim-kiem", async (req, res) => {
+  try {
+    var currentPage = 1,
+      totalData,
+      pageSize = 2,
+      pageCount;
+
+    let dataProduct = [];
+
+    if (typeof req.query.page !== "undefined")
+      currentPage = +req.query.page;
+
+    var sSearch = "";
+    if (req.query.search) {
+      sSearch = req.query.search;
+
+      dataProduct = await ProductModel.find({
+          $and: [{
+              $or: [{
+                search: {
+                  $regex: sSearch
+                }
+              }]
+            },
+            {
+              status: true
+            },
+            {
+              productSync: false
+            }
+          ]
+        }).sort({
+          viewCounter: -1
+        })
+        .skip(pageSize * currentPage - pageSize)
+        .limit(pageSize).exec();
+
+      totalData = await ProductModel.find({
+        $and: [{
+            $or: [{
+              search: {
+                $regex: sSearch
+              }
+            }]
+          },
+          {
+            status: true
+          },
+          {
+            productSync: false
+          }
+        ]
+      }).count().exec();
+      console.log(totalData);
+
+      if (totalData > 0) {
+        pageCount = Math.ceil(totalData / pageSize).toFixed();
+      }
+
+      var BannerSliderData = await BannerModel.find({
+          locationBanner: 0,
+          status: true
+        })
+        .sort({
+          numberOrder: -1
+        })
+        .exec();
+
+      res.render("font-end/search", {
+        title: "Tìm kiếm",
+        dataProduct,
+        currentPage,
+        totalData,
+        pageSize,
+        pageCount,
+        url: "tim-kiem?search=" + sSearch,
+        titlePanel: "Tìm kiếm",
+        BannerSliderData
+      });
+
+    } else {
+      res.redirect("/");
+    }
+  } catch (error) {
+    console.log(error);
+    res.render("error", {
+      title: "Error Data"
+    });
+  }
+});
+
 router.get("/san-pham/:alias", (req, res) => {
   var sAliasUrl = req.params.alias;
   try {
@@ -973,167 +1067,7 @@ router.get("/san-pham/:alias", (req, res) => {
     });
   }
 });
-router.get("/tim-kiem", function (req, res) {
-  try {
-    var totalProduct,
-      pageSize = 16,
-      pageCount,
-      productList = [],
-      productArray = [],
-      currentPage = 1;
-    var sSearch = "";
-    if (req.query.search) {
-      sSearch = req.query.search;
 
-      // CategoryModel.findOne({ aliasUrl: req.params.alias }).then((dataCate) => {
-      // console.log('dataCate: ' + dataCate);
-      // CategoryModel.findOne({ categoryParent: dataCate._id }).then((dataCateParID) => {
-      // CategoryModel.aggregate([{
-      //         $match: { $or: [{ '_id': dataCate._id }, { 'categoryParent': dataCate._id }] }
-      //     },
-      //     {
-      //         $lookup: {
-      //             from: 'product',
-      //             localField: '_id',
-      //             foreignField: 'categoryID',
-      //             as: 'products'
-      //         }
-      //     },
-      //     {
-      //         $unwind: '$products'
-      //     },
-      //     {
-      //         $replaceRoot: { newRoot: "$products" }
-      //     }
-      // ]).then((dataProduct) => {
-
-      ProductModel.find({
-        $and: [{
-            $or: [{
-              aliasUrl: {
-                $regex: sSearch
-              }
-            }]
-          },
-          {
-            status: true
-          },
-          {
-            productSync: false
-          }
-        ]
-      }).then(dataProduct => {
-        console.log(
-          "=============================== " + JSON.stringify(dataProduct)
-        );
-        CategoryModel.find({
-          $and: [{
-            categoryParent: null
-          }, {
-            status: true
-          }]
-        }).then(dataCateParent => {
-          console.log("dataCateParent: " + dataCateParent);
-          CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          }).then(dataCateChildren => {
-            console.log("dataCateChildren: " + dataCateChildren);
-            NewsModel.find({
-              typeNews: 0,
-              status: true
-            }).then(dataNews => {
-              console.log("dataNews: " + dataNews);
-              BannerModel.findOne({
-                  locationBanner: 1,
-                  status: true
-                })
-                .sort({
-                  numberOrder: -1
-                })
-                .then(BannerTopData => {
-                  console.log("BannerTopData: " + BannerTopData);
-                  BannerModel.findOne({
-                      locationBanner: 2,
-                      status: true
-                    })
-                    .sort({
-                      numberOrder: -1
-                    })
-                    .then(BannerBottomData => {
-                      console.log("BannerBottomData: " + BannerBottomData);
-                      BannerModel.findOne({
-                          locationBanner: 3,
-                          status: true
-                        })
-                        .sort({
-                          numberOrder: -1
-                        })
-                        .then(BannerRightData => {
-                          console.log("BannerRightData: " + BannerRightData);
-                          BannerModel.find({
-                              locationBanner: 0,
-                              status: true
-                            })
-                            .sort({
-                              numberOrder: -1
-                            })
-                            .then(BannerSliderData => {
-                              console.log(
-                                "BannerSliderData: " + BannerSliderData
-                              );
-                              totalProduct = dataProduct.length;
-                              pageCount = Math.ceil(
-                                totalProduct / pageSize
-                              ).toFixed();
-                              if (typeof req.query.page !== "undefined") {
-                                currentPage = +req.query.page;
-                              }
-                              while (dataProduct.length > 0) {
-                                productArray.push(
-                                  dataProduct.splice(0, pageSize)
-                                );
-                              }
-                              productList = productArray[+currentPage - 1];
-                              console.log("productList: " + productList);
-                              res.render("category", {
-                                title: "Tìm kiếm",
-                                dataProduct: productList,
-                                totalProduct,
-                                pageCount,
-                                pageSize,
-                                currentPage,
-                                dataNews: dataNews,
-                                dataCateParent: dataCateParent,
-                                dataCateChildren: dataCateChildren,
-                                BannerTopData: BannerTopData,
-                                BannerBottomData: BannerBottomData,
-                                BannerRightData: BannerRightData,
-                                BannerSliderData: BannerSliderData
-                              });
-                            });
-                        });
-                    });
-                });
-            });
-          });
-        });
-      });
-    } else {
-      res.redirect("/");
-    }
-  } catch (error) {
-    console.log(error);
-    res.render("error", {
-      title: "Error Data"
-    });
-  }
-});
 router.post("/order-on-request", multipartMiddleware, (req, res) => {
   console.log("==================da vao================");
   try {
