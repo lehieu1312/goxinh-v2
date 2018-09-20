@@ -848,7 +848,7 @@ router.get("/tim-kiem", async (req, res) => {
   try {
     var currentPage = 1,
       totalData,
-      pageSize = 2,
+      pageSize = 20,
       pageCount;
 
     let dataProduct = [];
