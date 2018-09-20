@@ -729,7 +729,7 @@ router.get("/danh-muc/:alias", async (req, res) => {
   try {
     var currentPage = 1,
       totalData,
-      pageSize = 2,
+      pageSize = 20,
       pageCount;
 
     let dataProduct = [];
