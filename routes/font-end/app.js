@@ -866,6 +866,14 @@ router.get("/tim-kiem", async (req, res) => {
                 search: {
                   $regex: sSearch
                 }
+              }, {
+                aliasUrl: {
+                  $regex: sSearch
+                }
+              }, {
+                nameProduct: {
+                  $regex: sSearch
+                }
               }]
             },
             {
