@@ -17,28 +17,43 @@ router.get("/index", async (req, res) => {
     }
 
     var dataProduct = await ProductModel.find({
-      status: true,
-      productSync: false
-    })
-      .sort({ viewCounter: -1 })
+        status: true,
+        productSync: false
+      })
+      .sort({
+        viewCounter: -1
+      })
       .skip(pageSize * currentPage - pageSize)
       .limit(pageSize)
       .exec();
 
     totalData = await ProductModel.find({
-      status: true,
-      productSync: false
-    })
+        status: true,
+        productSync: false
+      })
       .count()
       .exec();
 
     pageCount = Math.ceil(totalData / pageSize).toFixed();
 
+    var dataProductNew = await ProductModel.find({
+        status: true,
+        productSync: false
+      })
+      .sort({
+        dateCreate: -1
+      })
+      .skip(0)
+      .limit(5)
+      .exec();
+
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("index", {
@@ -47,12 +62,16 @@ router.get("/index", async (req, res) => {
       currentPage,
       totalData,
       pageSize,
+      dataProductNew,
       pageCount,
       BannerSliderData
     });
   } catch (error) {
     console.log(error);
-    res.render("error", { title: "Error Data", error: error + "" });
+    res.render("error", {
+      title: "Error Data",
+      error: error + ""
+    });
   }
 });
 
@@ -61,7 +80,10 @@ router.get("/", async (req, res) => {
     res.redirect("/index");
   } catch (error) {
     console.log(error);
-    res.render("error", { title: "Error Data", error: error + "" });
+    res.render("error", {
+      title: "Error Data",
+      error: error + ""
+    });
   }
 });
 
@@ -76,10 +98,12 @@ router.get("/tin-tuc/:alias", async (req, res) => {
     }).exec();
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/news", {
@@ -88,19 +112,27 @@ router.get("/tin-tuc/:alias", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.get("/gioi-thieu", async (req, res) => {
   try {
-    let data = await NewsModel.findOne({ typeNews: 1, status: true }).exec();
+    let data = await NewsModel.findOne({
+      typeNews: 1,
+      status: true
+    }).exec();
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/news", {
@@ -109,19 +141,27 @@ router.get("/gioi-thieu", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.get("/cach-mua-hang", async (req, res) => {
   try {
-    let data = await NewsModel.findOne({ typeNews: 2, status: true }).exec();
+    let data = await NewsModel.findOne({
+      typeNews: 2,
+      status: true
+    }).exec();
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/news", {
@@ -130,19 +170,27 @@ router.get("/cach-mua-hang", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.get("/huong-dan-thanh-toan", async (req, res) => {
   try {
-    let data = await NewsModel.findOne({ typeNews: 3, status: true }).exec();
+    let data = await NewsModel.findOne({
+      typeNews: 3,
+      status: true
+    }).exec();
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/news", {
@@ -151,19 +199,27 @@ router.get("/huong-dan-thanh-toan", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.get("/giao-hang", async (req, res) => {
   try {
-    let data = await NewsModel.findOne({ typeNews: 4, status: true }).exec();
+    let data = await NewsModel.findOne({
+      typeNews: 4,
+      status: true
+    }).exec();
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/news", {
@@ -172,19 +228,27 @@ router.get("/giao-hang", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.get("/bao-hanh", async (req, res) => {
   try {
-    let data = await NewsModel.findOne({ typeNews: 5, status: true }).exec();
+    let data = await NewsModel.findOne({
+      typeNews: 5,
+      status: true
+    }).exec();
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/news", {
@@ -193,19 +257,27 @@ router.get("/bao-hanh", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.get("/ban-quyen-thuong-hieu", async (req, res) => {
   try {
-    let data = await NewsModel.findOne({ typeNews: 6, status: true }).exec();
+    let data = await NewsModel.findOne({
+      typeNews: 6,
+      status: true
+    }).exec();
 
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/news", {
@@ -214,18 +286,26 @@ router.get("/ban-quyen-thuong-hieu", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.get("/bao-ve-thong-tin-ca-nhan", async (req, res) => {
   try {
-    let data = await NewsModel.findOne({ typeNews: 7, status: true }).exec();
-    var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
+    let data = await NewsModel.findOne({
+      typeNews: 7,
       status: true
-    })
-      .sort({ numberOrder: -1 })
+    }).exec();
+    var BannerSliderData = await BannerModel.find({
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/news", {
@@ -234,17 +314,22 @@ router.get("/bao-ve-thong-tin-ca-nhan", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.get("/lien-he", async (req, res) => {
   try {
     var BannerSliderData = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.render("font-end/contact", {
@@ -252,28 +337,46 @@ router.get("/lien-he", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
-    res.render("error", { title: "Error Data", error });
+    res.render("error", {
+      title: "Error Data",
+      error
+    });
   }
 });
 
 router.post("/category/get-category-children", async (req, res) => {
   try {
     let data = await CategoryModel.find({
-      $and: [{ categoryParent: { $ne: null } }, { status: true }]
+      $and: [{
+        categoryParent: {
+          $ne: null
+        }
+      }, {
+        status: true
+      }]
     }).exec();
-    res.json({ status: true, message: "Success", data });
+    res.json({
+      status: true,
+      message: "Success",
+      data
+    });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
 router.post("/banner/get-slider", async (req, res) => {
   try {
     var data = await BannerModel.find({
-      locationBanner: 0,
-      status: true
-    })
-      .sort({ numberOrder: -1 })
+        locationBanner: 0,
+        status: true
+      })
+      .sort({
+        numberOrder: -1
+      })
       .exec();
 
     res.json({
@@ -282,7 +385,10 @@ router.post("/banner/get-slider", async (req, res) => {
       message: "getBannerRightTopSuccess"
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -298,7 +404,10 @@ router.post("/banner/get-right-top", async (req, res) => {
       message: "getBannerRightTopSuccess"
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -314,7 +423,10 @@ router.post("/banner/get-right-bottom", async (req, res) => {
       message: "getBannerRightBottomSuccess"
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -330,7 +442,10 @@ router.post("/banner/get-right-center", async (req, res) => {
       message: "getBannerRightCenterSuccess"
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 
@@ -346,7 +461,10 @@ router.post("/banner/get-center-bottom", async (req, res) => {
       message: "getBannerCenterBottomSuccess"
     });
   } catch (error) {
-    res.json({ status: false, message: error + "" });
+    res.json({
+      status: false,
+      message: error + ""
+    });
   }
 });
 module.exports = router;

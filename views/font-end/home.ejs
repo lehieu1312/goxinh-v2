@@ -1,71 +1,112 @@
 <% include ../font-end/layout/banner.ejs %>
-
-    <div class="title-box-sp-home">
-        <div class="text-title-sp-home">
-            <h1>Sản phẩm bán chạy</h1>
-        </div>
-
+<div class="title-box-sp-home">
+    <div class="text-title-sp-home">
+        <h1>Sản phẩm bán mới</h1>
     </div>
 
-    <div class="box-sanpham">
-        <%if(dataProduct.length>0){ dataProduct.forEach(function(item){%>
-            <div class="item-sanpham">
-                <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp">
-                    <div class="box-it-sp">
-                        <div class="box-img-sanpham">
-                            <img src="/upload/product/<%=item.imageProduct%>" class="thumbnail-img" alt="<%=item.nameProduct%>" title="<%=item.nameProduct%>">
-                        </div>
-                        <div class="sp-it-footer">
-                            <div class="sp-it-ft-name">
-                                <h3>
-                                    <%=item.nameProduct%>
-                                </h3>
-                            </div>
-                            <div class="sp-it-ft-price">
-                                <span class="txt-gia-sp">Giá: </span> <span class="thumbnail-gia-sp"><%=item.priceProduct.toLocaleString({ style: 'currency', currency: 'VND' });%> </span>₫
-                            </div>
-                        </div>
+</div>
+
+<div class="box-sanpham">
+    <%if(dataProductNew.length>0){ dataProductNew.forEach(function(item){%>
+    <div class="item-sanpham">
+        <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp">
+            <div class="box-it-sp">
+                <div class="box-img-sanpham">
+                    <img src="/upload/product/<%=item.imageProduct%>" class="thumbnail-img" alt="<%=item.nameProduct%>"
+                        title="<%=item.nameProduct%>">
+                </div>
+                <div class="sp-it-footer">
+                    <div class="sp-it-ft-name">
+                        <h3>
+                            <%=item.nameProduct%>
+                        </h3>
                     </div>
-                </a>
+                    <div class="sp-it-ft-price">
+                        <span class="txt-gia-sp">Giá: </span> <span class="thumbnail-gia-sp">
+                            <%=item.priceProduct.toLocaleString({ style: 'currency', currency: 'VND' });%> </span>₫
+                    </div>
+                </div>
             </div>
-            <%})}else{%>
-                <span><----- Không có sản phẩm trong mục này -----></span>
-                <%}%>
-
+        </a>
     </div>
-    <div class="box-pagination">
-        <div class="pagi_footer">
-            <% if (pageCount > 1) { %>
-                <ul class="pagination">
-                    <% if (currentPage > 1) { %>
-                        <li><a href="/index?page=1">&laquo;</a></li>
-                        <% } %>
-                            <% var i = 1;
+    <%})}else{%>
+    <span>
+        <----- Không có sản phẩm trong mục này ----->
+    </span>
+    <%}%>
+
+</div>
+<div class="title-box-sp-home">
+    <div class="text-title-sp-home">
+        <h1>Sản phẩm bán chạy</h1>
+    </div>
+
+</div>
+
+<div class="box-sanpham">
+    <%if(dataProduct.length>0){ dataProduct.forEach(function(item){%>
+    <div class="item-sanpham">
+        <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp">
+            <div class="box-it-sp">
+                <div class="box-img-sanpham">
+                    <img src="/upload/product/<%=item.imageProduct%>" class="thumbnail-img" alt="<%=item.nameProduct%>"
+                        title="<%=item.nameProduct%>">
+                </div>
+                <div class="sp-it-footer">
+                    <div class="sp-it-ft-name">
+                        <h3>
+                            <%=item.nameProduct%>
+                        </h3>
+                    </div>
+                    <div class="sp-it-ft-price">
+                        <span class="txt-gia-sp">Giá: </span> <span class="thumbnail-gia-sp">
+                            <%=item.priceProduct.toLocaleString({ style: 'currency', currency: 'VND' });%> </span>₫
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <%})}else{%>
+    <span>
+        <----- Không có sản phẩm trong mục này ----->
+    </span>
+    <%}%>
+
+</div>
+<div class="box-pagination">
+    <div class="pagi_footer">
+        <% if (pageCount > 1) { %>
+        <ul class="pagination">
+            <% if (currentPage > 1) { %>
+            <li><a href="/index?page=1">&laquo;</a></li>
+            <% } %>
+            <% var i = 1;
                             if (currentPage > 5) {
                                 i = +currentPage - 4;
                             } %>
-                                <% if (i !== 1) { %>
-                                    <li class="disabled"><a href="#">...</a></li>
-                                    <% } %>
-                                        <% for (i; i<=pageCount; i++) { %>
-                                            <% if (currentPage == i) { %>
-                                                <li class="active"><span><%= i %> <span class="sr-only">(current)</span></span>
-                                                </li>
-                                                <% } else { %>
-                                                    <li>
-                                                        <a href="/index?page=<%= i %>">
-                                                            <%= i %>
-                                                        </a>
-                                                    </li>
-                                                    <% } %>
-                                                        <% if (i == (+currentPage + 4)) { %>
-                                                            <li class="disabled"><a href="#">...</a></li>
-                                                            <% break; } %>
-                                                                <% } %>
-                                                                    <% if (currentPage != pageCount) { %>
-                                                                        <li><a href="/index?page=<%= pageCount %>">&raquo;</a></li>
-                                                                        <% } %>
-                </ul>
-                <% } %>
-        </div>
+            <% if (i !== 1) { %>
+            <li class="disabled"><a href="#">...</a></li>
+            <% } %>
+            <% for (i; i<=pageCount; i++) { %>
+            <% if (currentPage == i) { %>
+            <li class="active"><span>
+                    <%= i %> <span class="sr-only">(current)</span></span>
+            </li>
+            <% } else { %>
+            <li>
+                <a href="/index?page=<%= i %>">
+                    <%= i %>
+                </a>
+            </li>
+            <% } %>
+            <% if (i == (+currentPage + 4)) { %>
+            <li class="disabled"><a href="#">...</a></li>
+            <% break; } %>
+            <% } %>
+            <% if (currentPage != pageCount) { %>
+            <li><a href="/index?page=<%= pageCount %>">&raquo;</a></li>
+            <% } %>
+        </ul>
+        <% } %>
     </div>
+</div>
