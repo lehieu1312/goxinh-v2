@@ -17,9 +17,9 @@ router.get("/index", async (req, res) => {
     }
 
     var dataProduct = await ProductModel.find({
-        status: true,
-        productSync: false
-      })
+      status: true,
+      productSync: false
+    })
       .sort({
         viewCounter: -1
       })
@@ -28,18 +28,18 @@ router.get("/index", async (req, res) => {
       .exec();
 
     totalData = await ProductModel.find({
-        status: true,
-        productSync: false
-      })
+      status: true,
+      productSync: false
+    })
       .count()
       .exec();
 
     pageCount = Math.ceil(totalData / pageSize).toFixed();
 
     var dataProductNew = await ProductModel.find({
-        status: true,
-        productSync: false
-      })
+      status: true,
+      productSync: false
+    })
       .sort({
         dateCreate: -1
       })
@@ -48,9 +48,9 @@ router.get("/index", async (req, res) => {
       .exec();
 
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -98,9 +98,9 @@ router.get("/tin-tuc/:alias", async (req, res) => {
     }).exec();
 
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -127,9 +127,9 @@ router.get("/gioi-thieu", async (req, res) => {
     }).exec();
 
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -156,9 +156,9 @@ router.get("/cach-mua-hang", async (req, res) => {
     }).exec();
 
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -185,9 +185,9 @@ router.get("/huong-dan-thanh-toan", async (req, res) => {
     }).exec();
 
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -214,9 +214,9 @@ router.get("/giao-hang", async (req, res) => {
     }).exec();
 
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -243,9 +243,9 @@ router.get("/bao-hanh", async (req, res) => {
     }).exec();
 
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -272,9 +272,9 @@ router.get("/ban-quyen-thuong-hieu", async (req, res) => {
     }).exec();
 
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -300,9 +300,9 @@ router.get("/bao-ve-thong-tin-ca-nhan", async (req, res) => {
       status: true
     }).exec();
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -324,9 +324,9 @@ router.get("/bao-ve-thong-tin-ca-nhan", async (req, res) => {
 router.get("/lien-he", async (req, res) => {
   try {
     var BannerSliderData = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })
@@ -347,13 +347,16 @@ router.get("/lien-he", async (req, res) => {
 router.post("/category/get-category-children", async (req, res) => {
   try {
     let data = await CategoryModel.find({
-      $and: [{
-        categoryParent: {
-          $ne: null
+      $and: [
+        {
+          categoryParent: {
+            $ne: null
+          }
+        },
+        {
+          status: true
         }
-      }, {
-        status: true
-      }]
+      ]
     }).exec();
     res.json({
       status: true,
@@ -371,9 +374,9 @@ router.post("/category/get-category-children", async (req, res) => {
 router.post("/banner/get-slider", async (req, res) => {
   try {
     var data = await BannerModel.find({
-        locationBanner: 0,
-        status: true
-      })
+      locationBanner: 0,
+      status: true
+    })
       .sort({
         numberOrder: -1
       })

@@ -430,6 +430,29 @@ aside {
     border-left: 1px solid #eee;
 }
 
+.box-sanpham-new {
+    float: left;
+    width: 100%;
+    border: 1px solid #ff4d00;
+    margin-top: 30px;
+    overflow: visible;
+    padding-top: 20px;
+}
+
+.box-sanpham-new::before {
+    content: ' ';
+    display: block;
+    background: url(/images/gsct.png) no-repeat center center;
+    background-size: 309px 38px;
+    width: 309px;
+    height: 38px;
+    position: absolute;
+    left: 50%;
+    margin-top: -39px;
+    margin-left: -154px;
+    z-index: 9;
+}
+
 .item-sanpham {
     width: 20%;
     float: left;
@@ -441,8 +464,8 @@ aside {
 }
 
 .thumbnail-img:hover {
-    /* padding-top: 0px;
-    padding-top: 0px; */
+    transform: translateY(-3px);
+    transition: all ease 300ms;
 }
 
 .sp-it-ft-name {
@@ -470,6 +493,10 @@ aside {
     padding: 0px 5px 0px 5px;
     border-right: 1px solid #eee;
     border-bottom: 1px solid #eee;
+}
+
+.box-it-sp-new {
+    padding: 0px 5px 0px 5px;
 }
 
 .link-item-sp:hover {
