@@ -135,7 +135,7 @@ textarea {
     margin: 1px auto 0;
 }
 
-nav {
+/* nav {
     width: 785px;
     background: #956946;
     margin: 0;
@@ -148,7 +148,7 @@ nav a:hover,
 nav a.actmenu {
     background-color: #f5f5f5;
     color: #000;
-}
+} */
 
 .icontgdd-mobile {
     background-position: -190px 0;
@@ -182,14 +182,66 @@ nav a.actmenu {
     height: 22px;
 }
 
+.navbar {
+    border-radius: 0px;
+}
+
+.navbar-default {
+    background-color: #956946;
+    /* color: #fff; */
+    margin-bottom: 10px;
+}
+
+.navbar-header {
+    background-color: #2d1b1b;
+}
+
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
+
+.navbar-default .navbar-nav>a {
+    padding: 3px 3px;
+}
+
+.navbar-nav {
+    margin: 0px
+}
+
+
+.navbar-default .navbar-nav>li>a {
+    padding: 2px 16px;
+    white-space: nowrap;
+}
+
+.navbar-default .navbar-nav>li>a:hover,
+.navbar-default .navbar-nav>li>a:focus {
+    background-color: #f5f5f5;
+    color: #000;
+
+}
+
+
 nav a.mobile {
     width: 70px;
 }
 
-nav a {
-    display: table-cell;
-    width: 75px;
-    height: 44px;
+.container-menu {
+    padding-left: 0px;
+    padding-right: 0px;
+    max-width: 1200px;
+    width: 100%;
+    min-width: 980px;
+}
+
+nav .navbar-nav a {
+    /* display: table-cell; */
+    /* width: 75px; */
+    height: 100%;
     padding: 3px 0 4px;
     color: #fff;
     background: #956946;
@@ -217,7 +269,7 @@ nav a.utility {
     max-width: 1200px;
     width: 100%;
     min-width: 980px;
-    margin: 65px auto 0;
+    margin: 10px auto 0;
 }
 
 .homebanner {
@@ -572,4 +624,10 @@ aside {
 
 .info-footer {
     margin-bottom: 8px;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1200px;
+    }
 }

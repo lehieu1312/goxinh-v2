@@ -36,10 +36,65 @@
 </head>
 
 <body class="" cz-shortcut-listen="true">
-    <div class="header">
+    <nav class="navbar navbar-default ">
+        <div class="container container-menu">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Goxinh.net</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="logo" title="Về trang chủ goxinh.net" href="/">
+                    <img src="/images/logo.png" alt="">
+                </a>
+                <form id="search-site" method="get" action="/tim-kiem" onsubmit="return submitSearchForm();"
+                    autocomplete="off">
+                    <input type="text" class="topinput" placeholder="Bạn tìm gì..." name="search" value="" autocomplete="off"
+                        maxlength="50">
+                    <button type="submit" class="btntop" aria-label="tìm kiếm"><i class="icontgdd-topsearch"></i></button>
+                </form>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class=""> <a href="/danh-muc/noi-that-phong-khach" class="phongkhach" title="=Phòng khách">
+                            <img class="icon-menu-parent" src="/images/2_icon_phongkhach_edit.png" alt="Phòng khách">
+                            Phòng
+                            khách
+                        </a></li>
+                    <li> <a href="/danh-muc/noi-that-phong-ngu" class="phongngu" title="Phòng ngủ">
+                            <img class="icon-menu-parent" src="/images/4_icon_phongngu_edit.png" alt="Phòng ngủ">Phòng
+                            ngủ
+                        </a></li>
+                    <li> <a href="/danh-muc/noi-that-nha-bep" class="nhabep" title="Nhà bếp">
+                            <img class="icon-menu-parent" src="/images/5_icon_nhabep_edit.png" alt="Nhà bếp">Nhà bếp
+                        </a></li>
+                    <li> <a href="/danh-muc/trang-tri-ham-ruou" class="hamruou" title="Hầm rượu">
+                            <img class="icon-menu-parent" src="/images/3_icon_hamruou_edit.png" alt="Hầm rượu"> Hầm
+                            rượu
+                        </a></li>
+                    <li> <a href="/danh-muc/do-go-xuat-khau" class="dogoxuatkhau" title="Đồ gỗ xuất khẩu">
+                            <img class="icon-menu-parent" src="/images/6_icon_goxuatkhau_edit.png" alt="Gỗ xuất khẩu">Đồ
+                            gỗ
+                            xuất khẩu
+                        </a></li>
+                    <li> <a href="/danh-muc/noi-that-phong-tho" class="phongtho">
+                            <img class="icon-menu-parent" src="/images/1_icon_phongtho_edit.png" alt="Phòng thờ"> Phòng
+                            thờ
+                        </a></li>
+                    <li> <a href="/lien-he" class="lienhe">
+                            <img class="icon-menu-parent" src="/images/7_icon_lienhe_edit.png" alt="Liên hệ"> Liên hệ
+                        </a></li>
+                </ul>
+
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+    <!-- <div class="header">
         <div class="wrap-main">
-            <a class="logo" title="Về trang chủ goxinh.net" href="/">
-                <!-- <i class="icontgdd-logo"></i> -->
+        <a class="logo" title="Về trang chủ goxinh.net" href="/">
                 <img src="/images/logo.png" alt="">
             </a>
             <form id="search-site" method="get" action="/tim-kiem" onsubmit="return submitSearchForm();" autocomplete="off">
@@ -47,15 +102,10 @@
                     maxlength="50">
                 <button type="submit" class="btntop" aria-label="tìm kiếm"><i class="icontgdd-topsearch"></i></button>
             </form>
-            <!-- <form id="search-site" action="/tim-kiem" method="get" onsubmit="return submitSearchForm();" autocomplete="off">
-                <input class="topinput" name="key" type="text" aria-label="Bạn tìm gì..." placeholder="Bạn tìm gì..." autocomplete="off" maxlength="50">
-                <button class="btntop" type="submit" aria-label="tìm kiếm"><i class="icontgdd-topsearch"></i></button>
-            </form> -->
             <nav>
                 <a href="/danh-muc/noi-that-phong-khach" class="phongkhach" title="=Phòng khách">
                     <img class="icon-menu-parent" src="/images/2_icon_phongkhach_edit.png" alt="Phòng khách"> Phòng
                     khách
-                    <!-- <i class="icontgdd-mobile"></i> -->
                 </a>
                 <a href="/danh-muc/noi-that-phong-ngu" class="phongngu" title="Phòng ngủ">
                     <img class="icon-menu-parent" src="/images/4_icon_phongngu_edit.png" alt="Phòng ngủ">Phòng ngủ
@@ -79,6 +129,7 @@
             </nav>
         </div>
     </div>
+     -->
     <!-- <script>
         $(document).ready(() => {
             function submitSearchForm() {
