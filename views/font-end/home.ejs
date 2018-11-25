@@ -17,9 +17,9 @@
 <div class="box-sanpham-new carousel slide " id="carousel-example" data-ride="carousel">
     <div class="carousel-inner">
 
-        <%if(dataProductNew.length>0){ dataProductNew.forEach(function(item){%>
-        <div class="item active">
+        <%if(dataProductNew.length>0){ dataProductNew.forEach(function(item,index){%>
 
+        <div class="item active">
             <div class="item-sanpham ">
                 <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp">
                     <div class="box-it-sp-new">
@@ -61,7 +61,8 @@
 </div>
 
 <div class="box-sanpham">
-    <%if(dataProduct.length>0){ dataProduct.forEach(function(item){%>
+    <%if(dataProduct.length>0){ dataProduct.forEach(function(item,index){%>
+    <%-(index>0 && index%5===0) ? `<div style="float:none;clear:both"></div>`: ''; %>
     <div class="item-sanpham">
         <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp">
             <div class="box-it-sp">

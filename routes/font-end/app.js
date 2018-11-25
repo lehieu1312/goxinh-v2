@@ -76,6 +76,7 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
       status: true
     }).exec();
     if (dataCate) {
+      
       dataProduct = await CategoryModel.aggregate([{
             $match: {
               $or: [{
@@ -845,208 +846,182 @@ router.get("/danh-muc/:alias", async (req, res) => {
 
 
 router.get("/tim-kiem", async (req, res) => {
-  try {
-    var currentPage = 1,
-      totalData,
-      pageSize = 20,
-      pageCount;
+      try {
+        var currentPage = 1,
+          totalData,
+          pageSize = 20,
+          pageCount;
 
-    let dataProduct = [];
+        let dataProduct = [];
 
-    if (typeof req.query.page !== "undefined")
-      currentPage = +req.query.page;
+        if (typeof req.query.page !== "undefined")
+          currentPage = +req.query.page;
 
-    var sSearch = "";
-    if (req.query.search) {
-      sSearch = req.query.search;
+        var sSearch = "";
+        if (req.query.search) {
+          sSearch = req.query.search;
 
-      dataProduct = await ProductModel.find({
-          $and: [{
-              $or: [{
-                search: {
-                  $regex: sSearch
+          dataProduct = await ProductModel.find({
+              $and: [{
+                  $or: [{
+                    search: {
+                      $regex: sSearch
+                    }
+                  }, {
+                    aliasUrl: {
+                      $regex: sSearch
+                    }
+                  }, {
+                    nameProduct: {
+                      $regex: sSearch
+                    }
+                  }]
+                },
+                {
+                  status: true
+                },
+                {
+                  productSync: false
                 }
-              }, {
-                aliasUrl: {
-                  $regex: sSearch
-                }
-              }, {
-                nameProduct: {
-                  $regex: sSearch
-                }
-              }]
-            },
-            {
-              status: true
-            },
-            {
-              productSync: false
+              ]
+            }).sort({
+              viewCounter: -1
+            })
+            .skip(pageSize * currentPage - pageSize)
+            .limit(pageSize).exec();
+
+          totalData = await ProductModel.find({
+              $and: [{
+                  $or: [{
+                      search: {
+                        $regex: sSearch
+                      }
+                    }, {
+                      aliasUrl: {
+                        $regex: sSearch
+                      }
+                    }, {
+                      nameProduct: {
+                        $regex: sSearch
+                        }
+                      }]
+                  },
+                  {
+                    status: true
+                  },
+                  {
+                    productSync: false
+                  }
+                ]
+              }).count().exec(); console.log(totalData);
+
+            if (totalData > 0) {
+              pageCount = Math.ceil(totalData / pageSize).toFixed();
             }
-          ]
-        }).sort({
-          viewCounter: -1
-        })
-        .skip(pageSize * currentPage - pageSize)
-        .limit(pageSize).exec();
 
-      totalData = await ProductModel.find({
-        $and: [{
-            $or: [{
-              search: {
-                $regex: sSearch
-              }
-            }, {
-              aliasUrl: {
-                $regex: sSearch
-              }
-            }, {
-              nameProduct: {
-                $regex: sSearch
-              }
-            }]
-          },
-          {
-            status: true
-          },
-          {
-            productSync: false
+            var BannerSliderData = await BannerModel.find({
+                locationBanner: 0,
+                status: true
+              })
+              .sort({
+                numberOrder: -1
+              })
+              .exec();
+
+            res.render("font-end/search", {
+              title: "Tìm kiếm",
+              dataProduct,
+              currentPage,
+              totalData,
+              pageSize,
+              pageCount,
+              url: "tim-kiem?search=" + sSearch,
+              titlePanel: "Tìm kiếm",
+              BannerSliderData
+            });
+
           }
-        ]
-      }).count().exec();
-      console.log(totalData);
-
-      if (totalData > 0) {
-        pageCount = Math.ceil(totalData / pageSize).toFixed();
-      }
-
-      var BannerSliderData = await BannerModel.find({
-          locationBanner: 0,
-          status: true
-        })
-        .sort({
-          numberOrder: -1
-        })
-        .exec();
-
-      res.render("font-end/search", {
-        title: "Tìm kiếm",
-        dataProduct,
-        currentPage,
-        totalData,
-        pageSize,
-        pageCount,
-        url: "tim-kiem?search=" + sSearch,
-        titlePanel: "Tìm kiếm",
-        BannerSliderData
+          else {
+            res.redirect("/");
+          }
+        } catch (error) {
+          console.log(error);
+          res.render("error", {
+            title: "Error Data"
+          });
+        }
       });
 
-    } else {
-      res.redirect("/");
-    }
-  } catch (error) {
-    console.log(error);
-    res.render("error", {
-      title: "Error Data"
-    });
-  }
-});
-
-router.get("/san-pham/:alias", (req, res) => {
-  var sAliasUrl = req.params.alias;
-  try {
-    CategoryModel.find({
-      $and: [{
-        categoryParent: null
-      }, {
-        status: true
-      }]
-    }).then(dataCateParent => {
-      // console.log("dataCateParent: " + dataCateParent);
-      CategoryModel.find({
-        $and: [{
-          categoryParent: {
-            $ne: null
-          }
-        }, {
-          status: true
-        }]
-      }).then(dataCateChildren => {
-        // console.log('dataCateChildren: ' + dataCateChildren);
-        ProductModel.findOne({
-          aliasUrl: sAliasUrl
-        }).then(dataOneProduct => {
-          // console.log('dataOneProduct.viewCounter: ' + dataOneProduct.viewCounter);
-          if (
-            typeof dataOneProduct.viewCounter == "undefined" ||
-            dataOneProduct.viewCounter == null
-          )
-            dataOneProduct.viewCounter = 0;
-          dataOneProduct.viewCounter = parseInt(dataOneProduct.viewCounter) + 1;
-          SizeProductModel.find({
-            idProduct: dataOneProduct._id
-          }).then(dataSizeProduct => {
-            // console.log("dataSizeProduct: " + dataSizeProduct);
-            dataOneProduct.save().then(() => {
-              if (dataOneProduct) {
-                ProductModel.find({
-                    $and: [{
-                        categoryID: dataOneProduct.categoryID
-                      },
-                      {
-                        _id: {
-                          $ne: dataOneProduct._id
-                        }
-                      },
-                      {
-                        productSync: false
-                      }
-                    ]
-                  })
-                  .sort({
-                    viewCounter: -1
-                  })
-                  .limit(5)
-                  .then(productInvolve => {
-                    // console.log('productInvolve: ' + productInvolve);
+    router.get("/san-pham/:alias", (req, res) => {
+      var sAliasUrl = req.params.alias;
+      try {
+        CategoryModel.find({
+          $and: [{
+            categoryParent: null
+          }, {
+            status: true
+          }]
+        }).then(dataCateParent => {
+          // console.log("dataCateParent: " + dataCateParent);
+          CategoryModel.find({
+            $and: [{
+              categoryParent: {
+                $ne: null
+              }
+            }, {
+              status: true
+            }]
+          }).then(dataCateChildren => {
+            // console.log('dataCateChildren: ' + dataCateChildren);
+            ProductModel.findOne({
+              aliasUrl: sAliasUrl
+            }).then(dataOneProduct => {
+              // console.log('dataOneProduct.viewCounter: ' + dataOneProduct.viewCounter);
+              if (
+                typeof dataOneProduct.viewCounter == "undefined" ||
+                dataOneProduct.viewCounter == null
+              )
+                dataOneProduct.viewCounter = 0;
+              dataOneProduct.viewCounter = parseInt(dataOneProduct.viewCounter) + 1;
+              SizeProductModel.find({
+                idProduct: dataOneProduct._id
+              }).then(dataSizeProduct => {
+                // console.log("dataSizeProduct: " + dataSizeProduct);
+                dataOneProduct.save().then(() => {
+                  if (dataOneProduct) {
                     ProductModel.find({
-                        productIDSync: dataOneProduct._id
+                        $and: [{
+                            categoryID: dataOneProduct.categoryID
+                          },
+                          {
+                            _id: {
+                              $ne: dataOneProduct._id
+                            }
+                          },
+                          {
+                            productSync: false
+                          }
+                        ]
                       })
-                      .limit(3)
-                      .then(productSync => {
-                        if (productSync) {
-                          res.render("font-end/product", {
-                            title: dataOneProduct.nameProduct,
-                            dataOneProduct: dataOneProduct,
-                            productSync: productSync,
-                            productInvolve: productInvolve,
-                            dataCateParent: dataCateParent,
-                            dataSizeProduct: dataSizeProduct,
-                            dataCateChildren: dataCateChildren,
-                            descriptions: dataOneProduct.nameProduct +
-                              ", " +
-                              dataOneProduct.codeProduct +
-                              ", " +
-                              dataOneProduct.nameProduct +
-                              " " +
-                              dataOneProduct.codeProduct +
-                              ", " +
-                              dataOneProduct.description +
-                              ", " +
-                              "nội thất trang trí,gỗ trang trí,nội thất gỗ xinh,nội thất,gỗ nội thất,gỗ xinh,goxinh.net"
-                          });
-                        } else {
-                          ProductModel.find({
-                              productSync: true
-                            })
-                            .limit(3)
-                            .then(productSync => {
-                              // console.log('productSync: ' + productSync);
+                      .sort({
+                        viewCounter: -1
+                      })
+                      .limit(5)
+                      .then(productInvolve => {
+                        // console.log('productInvolve: ' + productInvolve);
+                        ProductModel.find({
+                            productIDSync: dataOneProduct._id
+                          })
+                          .limit(3)
+                          .then(productSync => {
+                            if (productSync) {
                               res.render("font-end/product", {
                                 title: dataOneProduct.nameProduct,
                                 dataOneProduct: dataOneProduct,
                                 productSync: productSync,
                                 productInvolve: productInvolve,
                                 dataCateParent: dataCateParent,
+                                dataSizeProduct: dataSizeProduct,
                                 dataCateChildren: dataCateChildren,
                                 descriptions: dataOneProduct.nameProduct +
                                   ", " +
@@ -1060,549 +1035,334 @@ router.get("/san-pham/:alias", (req, res) => {
                                   ", " +
                                   "nội thất trang trí,gỗ trang trí,nội thất gỗ xinh,nội thất,gỗ nội thất,gỗ xinh,goxinh.net"
                               });
-                            });
-                        }
+                            } else {
+                              ProductModel.find({
+                                  productSync: true
+                                })
+                                .limit(3)
+                                .then(productSync => {
+                                  // console.log('productSync: ' + productSync);
+                                  res.render("font-end/product", {
+                                    title: dataOneProduct.nameProduct,
+                                    dataOneProduct: dataOneProduct,
+                                    productSync: productSync,
+                                    productInvolve: productInvolve,
+                                    dataCateParent: dataCateParent,
+                                    dataCateChildren: dataCateChildren,
+                                    descriptions: dataOneProduct.nameProduct +
+                                      ", " +
+                                      dataOneProduct.codeProduct +
+                                      ", " +
+                                      dataOneProduct.nameProduct +
+                                      " " +
+                                      dataOneProduct.codeProduct +
+                                      ", " +
+                                      dataOneProduct.description +
+                                      ", " +
+                                      "nội thất trang trí,gỗ trang trí,nội thất gỗ xinh,nội thất,gỗ nội thất,gỗ xinh,goxinh.net"
+                                  });
+                                });
+                            }
+                          });
                       });
-                  });
-              } else {
-                res.render("404", {
-                  title: "Page Not Found"
+                  } else {
+                    res.render("404", {
+                      title: "Page Not Found"
+                    });
+                  }
                 });
-              }
+              });
             });
           });
         });
-      });
+      } catch (error) {
+        console.log(error);
+        req.flash("error_msg", error + "");
+        res.render("error", {
+          title: "Error Data",
+          error: error + ""
+        });
+      }
     });
-  } catch (error) {
-    console.log(error);
-    req.flash("error_msg", error + "");
-    res.render("error", {
-      title: "Error Data",
-      error: error + ""
-    });
-  }
-});
 
-router.post("/order-on-request", multipartMiddleware, (req, res) => {
-  console.log("==================da vao================");
-  try {
-    // console.log(req.files);
-    var imageOrder = req.files.image;
-    req.checkBody("name", "Tên  không được để trống").notEmpty();
-    req.checkBody("email", "Email không được để trống").notEmpty();
-    // req.checkBody('email', 'Email nhập không đúng').isEmail();
-    req
-      .checkBody("phonenumber", "Số điện thoại không được để trống")
-      .notEmpty();
-    // req.checkBody('phonenumber', 'Số điện thoại phải là số').isNumeric();
-    req.checkBody("content", "Nội dung không được để trống").notEmpty();
+    router.post("/order-on-request", multipartMiddleware, (req, res) => {
+      console.log("==================da vao================");
+      try {
+        // console.log(req.files);
+        var imageOrder = req.files.image;
+        req.checkBody("name", "Tên  không được để trống").notEmpty();
+        req.checkBody("email", "Email không được để trống").notEmpty();
+        // req.checkBody('email', 'Email nhập không đúng').isEmail();
+        req
+          .checkBody("phonenumber", "Số điện thoại không được để trống")
+          .notEmpty();
+        // req.checkBody('phonenumber', 'Số điện thoại phải là số').isNumeric();
+        req.checkBody("content", "Nội dung không được để trống").notEmpty();
 
-    var errors = req.validationErrors();
-    if (errors) {
-      // console.log('1: ' + errors);
-      CategoryModel.find({
-          $and: [{
-            categoryParent: null
-          }, {
-            status: true
-          }]
-        },
-        function (err, dataCateParent) {
-          if (err) {
-            console.log("1");
-            // console.log(err);
-            return res.render("error", {
-              title: "Error Get Data",
-              error: err
-            });
-          }
-          console.log("dataCateParent: " + dataCateParent);
+        var errors = req.validationErrors();
+        if (errors) {
+          // console.log('1: ' + errors);
           CategoryModel.find({
               $and: [{
-                categoryParent: {
-                  $ne: null
-                }
+                categoryParent: null
               }, {
                 status: true
               }]
             },
-            function (error, dataCateChildren) {
-              if (error) {
-                console.log(error);
+            function (err, dataCateParent) {
+              if (err) {
+                console.log("1");
+                // console.log(err);
                 return res.render("error", {
                   title: "Error Get Data",
-                  error: error
+                  error: err
                 });
               }
-              // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-              return res.render("font-end/checkok", {
-                title: "Đặt hàng yêu cầu",
-                dataCateParent: dataCateParent,
-                dataCateChildren: dataCateChildren,
-                error_msg: "Bạn đã đặt hàng không thành công",
-                errors: errors
-              });
+              console.log("dataCateParent: " + dataCateParent);
+              CategoryModel.find({
+                  $and: [{
+                    categoryParent: {
+                      $ne: null
+                    }
+                  }, {
+                    status: true
+                  }]
+                },
+                function (error, dataCateChildren) {
+                  if (error) {
+                    console.log(error);
+                    return res.render("error", {
+                      title: "Error Get Data",
+                      error: error
+                    });
+                  }
+                  // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
+                  return res.render("font-end/checkok", {
+                    title: "Đặt hàng yêu cầu",
+                    dataCateParent: dataCateParent,
+                    dataCateChildren: dataCateChildren,
+                    error_msg: "Bạn đã đặt hàng không thành công",
+                    errors: errors
+                  });
+                }
+              );
             }
           );
-        }
-      );
-      // req.flash('errors', errors);
-      // return res.render('admin/product/add', { errors: errors });
-    } else {
-      if (imageOrder.size > 8000000) {
-        CategoryModel.find({
-            $and: [{
-              categoryParent: null
-            }, {
-              status: true
-            }]
-          },
-          function (err, dataCateParent) {
-            if (err) {
-              console.log(err);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: err
-              });
-            }
-            console.log("dataCateParent: " + dataCateParent);
+          // req.flash('errors', errors);
+          // return res.render('admin/product/add', { errors: errors });
+        } else {
+          if (imageOrder.size > 8000000) {
             CategoryModel.find({
                 $and: [{
-                  categoryParent: {
-                    $ne: null
-                  }
+                  categoryParent: null
                 }, {
                   status: true
                 }]
               },
-              function (error, dataCateChildren) {
-                if (error) {
-                  console.log(error);
+              function (err, dataCateParent) {
+                if (err) {
+                  console.log(err);
                   return res.render("error", {
                     title: "Error Get Data",
-                    error: error
+                    error: err
                   });
                 }
-                // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-                return res.render("font-end/checkok", {
-                  title: "Đặt hàng yêu cầu",
-                  dataCateParent: dataCateParent,
-                  dataCateChildren: dataCateChildren,
-                  error_msg: "Bạn đã đặt hàng không thành công do tệp tải lên quá kích cỡ(8Mb)"
-                });
+                console.log("dataCateParent: " + dataCateParent);
+                CategoryModel.find({
+                    $and: [{
+                      categoryParent: {
+                        $ne: null
+                      }
+                    }, {
+                      status: true
+                    }]
+                  },
+                  function (error, dataCateChildren) {
+                    if (error) {
+                      console.log(error);
+                      return res.render("error", {
+                        title: "Error Get Data",
+                        error: error
+                      });
+                    }
+                    // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
+                    return res.render("font-end/checkok", {
+                      title: "Đặt hàng yêu cầu",
+                      dataCateParent: dataCateParent,
+                      dataCateChildren: dataCateChildren,
+                      error_msg: "Bạn đã đặt hàng không thành công do tệp tải lên quá kích cỡ(8Mb)"
+                    });
+                  }
+                );
               }
             );
           }
-        );
-      }
-      // if ()
+          // if ()
 
-      var nameImage;
-      var pathUpload = path.join(appRoot, "public", "upload", "order");
-      if (
-        typeof imageOrder != "undefined" &&
-        imageOrder.originalFilename != ""
-      ) {
-        nameImage = md5(Date.now()) + "." + imageOrder.name.split(".").pop();
-        console.log("ten: " + nameImage);
-        var dataImage = fs.readFileSync(imageOrder.path);
-        console.log("dataImage: " + dataImage);
-        fs.writeFileSync(path.join(pathUpload, nameImage), dataImage);
-      }
-      var orderProduct = new OrderProductModel({
-        name: req.body.name,
-        email: req.body.email,
-        phoneNumber: req.body.phonenumber,
-        image: nameImage,
-        content: req.body.content.trim(),
-        dateCreate: Date.now(),
-        status: false
-      });
-      orderProduct.save().then(() => {
-        CategoryModel.find({
-            $and: [{
-              categoryParent: null
-            }, {
-              status: true
-            }]
-          },
-          function (err, dataCateParent) {
-            if (err) {
-              console.log(err);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: err
-              });
-            }
-            console.log("dataCateParent: " + dataCateParent);
+          var nameImage;
+          var pathUpload = path.join(appRoot, "public", "upload", "order");
+          if (
+            typeof imageOrder != "undefined" &&
+            imageOrder.originalFilename != ""
+          ) {
+            nameImage = md5(Date.now()) + "." + imageOrder.name.split(".").pop();
+            console.log("ten: " + nameImage);
+            var dataImage = fs.readFileSync(imageOrder.path);
+            console.log("dataImage: " + dataImage);
+            fs.writeFileSync(path.join(pathUpload, nameImage), dataImage);
+          }
+          var orderProduct = new OrderProductModel({
+            name: req.body.name,
+            email: req.body.email,
+            phoneNumber: req.body.phonenumber,
+            image: nameImage,
+            content: req.body.content.trim(),
+            dateCreate: Date.now(),
+            status: false
+          });
+          orderProduct.save().then(() => {
             CategoryModel.find({
                 $and: [{
-                  categoryParent: {
-                    $ne: null
-                  }
+                  categoryParent: null
                 }, {
                   status: true
                 }]
               },
-              function (error, dataCateChildren) {
-                if (error) {
-                  console.log(error);
+              function (err, dataCateParent) {
+                if (err) {
+                  console.log(err);
                   return res.render("error", {
                     title: "Error Get Data",
-                    error: error
+                    error: err
                   });
                 }
-                // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-                return res.render("font-end/checkok", {
-                  title: "Đặt hàng yêu cầu",
-                  dataCateParent: dataCateParent,
-                  dataCateChildren: dataCateChildren,
-                  success_msg: "Bạn đã đặt hàng thành công",
-                  errors: null
-                });
+                console.log("dataCateParent: " + dataCateParent);
+                CategoryModel.find({
+                    $and: [{
+                      categoryParent: {
+                        $ne: null
+                      }
+                    }, {
+                      status: true
+                    }]
+                  },
+                  function (error, dataCateChildren) {
+                    if (error) {
+                      console.log(error);
+                      return res.render("error", {
+                        title: "Error Get Data",
+                        error: error
+                      });
+                    }
+                    // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
+                    return res.render("font-end/checkok", {
+                      title: "Đặt hàng yêu cầu",
+                      dataCateParent: dataCateParent,
+                      dataCateChildren: dataCateChildren,
+                      success_msg: "Bạn đã đặt hàng thành công",
+                      errors: null
+                    });
+                  }
+                );
               }
             );
-          }
-        );
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    res.render("error", {
-      title: "Error Data",
-      error: error + ""
-    });
-  }
-});
-router.get("/download-image-order/:image", (req, res) => {
-  try {
-    var pathFile = path.join(
-      appRoot,
-      "public",
-      "upload",
-      "order",
-      req.params.image
-    );
-    if (fs.existsSync(pathFile)) {
-      res.download(pathFile);
-    } else {
-      console.log("Not Find Folder");
-      res.render("not-find-file", {
-        title: "Not find file"
-      });
-    }
-  } catch (error) {
-    console.log(error);
-    res.render("error", {
-      title: "Error Data",
-      error: error
-    });
-  }
-});
-router.post("/getprice-sizeproduct", (req, res) => {
-  req.checkBody("idSizeProduct", "Có giá trị để trống").notEmpty();
-  // req.checkBody('hinh', 'Giá Trị "hinh" không được rổng').notEmpty();
-  // req.checkBody('name', 'Name 5 đến 32 ký tự').isLength({ min: 3, max: 32 });
-  var errors = req.validationErrors();
-  if (errors) {
-    return res.json({
-      status: 3,
-      data: errors
-    });
-  }
-
-  SizeProductModel.findById(req.body.idSizeProduct).then(data => {
-    if (data) {
-      return res.json({
-        status: 1,
-        data: data
-      });
-    } else {
-      return res.json({
-        status: 3,
-        data: data
-      });
-    }
-    // console.log(data);
-  });
-});
-router.post("/getprice-productsync", (req, res) => {
-  req.checkBody("idProductSync", "Có giá trị để trống").notEmpty();
-  // req.checkBody('hinh', 'Giá Trị "hinh" không được rổng').notEmpty();
-  // req.checkBody('name', 'Name 5 đến 32 ký tự').isLength({ min: 3, max: 32 });
-  var errors = req.validationErrors();
-  if (errors) {
-    return res.json({
-      status: 3,
-      data: errors
-    });
-  }
-
-  ProductModel.findById(req.body.idProductSync).then(data => {
-    // console.log(data);
-    if (data) {
-      return res.json({
-        status: 1,
-        data: data
-      });
-    } else {
-      return res.json({
-        status: 3,
-        data: data
-      });
-    }
-  });
-});
-router.get("/order-product", (req, res) => {
-  var idProduct, idProductSync, idSizeProduct, soLuong, sumMoney;
-  idProduct = req.query.idp;
-  console.log(idProduct);
-  idSizeProduct = req.query.idsip;
-  console.log(idSizeProduct);
-  idProductSync = req.query.idps;
-  console.log(idProductSync);
-  soLuong = req.query.sl;
-  sumMoney = req.query.su;
-
-  if (!idProduct || !soLuong) {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
           });
         }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-            return res.render("font-end/checkok", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              error_msg: "Không có sản phẩm để đặt hàng",
-              errors: null
-            });
-          }
-        );
+      } catch (error) {
+        console.log(error);
+        res.render("error", {
+          title: "Error Data",
+          error: error + ""
+        });
       }
-    );
-  } else {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
+    }); router.get("/download-image-order/:image", (req, res) => {
+      try {
+        var pathFile = path.join(
+          appRoot,
+          "public",
+          "upload",
+          "order",
+          req.params.image
+        );
+        if (fs.existsSync(pathFile)) {
+          res.download(pathFile);
+        } else {
+          console.log("Not Find Folder");
+          res.render("not-find-file", {
+            title: "Not find file"
           });
         }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            console.log("dataCateChildren: " + dataCateChildren);
-
-            res.render("font-end/info-order", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              idProduct,
-              idSizeProduct,
-              soLuong,
-              sumMoney,
-              idProductSync
-            });
-          }
-        );
+      } catch (error) {
+        console.log(error);
+        res.render("error", {
+          title: "Error Data",
+          error: error
+        });
       }
-    );
-  }
-  // res.render('font-end/info-order', { idProduct, idSizeProduct, soLuong, idProductSync });
-});
-router.post("/order-product", async (req, res) => {
-  try {
-    req.checkBody("name", "Tên không được để trống").notEmpty();
-    req.checkBody("email", "Email không được để trống").notEmpty();
-    req
-      .checkBody("phonenumber", "Số điện thoại không được để trống")
-      .notEmpty();
-    req
-      .checkBody("phonenumber", "Số điện thoại không được để trống")
-      .isNumeric();
-    req.checkBody("address", "Địa chỉ không được để trống").notEmpty();
-    req.checkBody("idproduct", "Chưa chọn sản phẩm").notEmpty();
-    req.checkBody("soluong", "chưa chọn số lượng").notEmpty();
-    // req.checkBody('priceproduct', 'chưa chọn giá sản phẩm').notEmpty();
+    }); router.post("/getprice-sizeproduct", (req, res) => {
+      req.checkBody("idSizeProduct", "Có giá trị để trống").notEmpty();
+      // req.checkBody('hinh', 'Giá Trị "hinh" không được rổng').notEmpty();
+      // req.checkBody('name', 'Name 5 đến 32 ký tự').isLength({ min: 3, max: 32 });
+      var errors = req.validationErrors();
+      if (errors) {
+        return res.json({
+          status: 3,
+          data: errors
+        });
+      }
 
-    var errors = req.validationErrors();
-    if (errors) {
-      console.log(JSON.stringify(errors));
-      req.flash("errors", errors);
-      return res.redirect(
-        "/order-product?idp=" +
-        req.body.idproduct +
-        "&idps=" +
-        req.body.idproductsync +
-        "&idsip=" +
-        req.body.idsizeproduc +
-        "&sl=" +
-        req.body.soluong
-      );
-    }
+      SizeProductModel.findById(req.body.idSizeProduct).then(data => {
+        if (data) {
+          return res.json({
+            status: 1,
+            data: data
+          });
+        } else {
+          return res.json({
+            status: 3,
+            data: data
+          });
+        }
+        // console.log(data);
+      });
+    }); router.post("/getprice-productsync", (req, res) => {
+      req.checkBody("idProductSync", "Có giá trị để trống").notEmpty();
+      // req.checkBody('hinh', 'Giá Trị "hinh" không được rổng').notEmpty();
+      // req.checkBody('name', 'Name 5 đến 32 ký tự').isLength({ min: 3, max: 32 });
+      var errors = req.validationErrors();
+      if (errors) {
+        return res.json({
+          status: 3,
+          data: errors
+        });
+      }
 
-    var getProduct = (id, arrID) => {
-      return new Promise(async (resolve, reject) => {
-        try {
-          var dataProductSync = await ProductModel.findById(id).exec();
-          console.log("dataProductSync: " + dataProductSync);
-          var tmpProduct = {
-            id: dataProductSync._id,
-            name: dataProductSync.nameProduct,
-            idSize: null,
-            size: null,
-            price: dataProductSync.priceProduct,
-            image: dataProductSync.imageProduct,
-            quanlity: 1,
-            money: dataProductSync.priceProduct
-          };
-
-          arrID.push(tmpProduct);
-          resolve("success");
-          // console.log('arrIDProduct---: ' + JSON.stringify(arrIDProduct));
-        } catch (error) {
-          reject(error);
+      ProductModel.findById(req.body.idProductSync).then(data => {
+        // console.log(data);
+        if (data) {
+          return res.json({
+            status: 1,
+            data: data
+          });
+        } else {
+          return res.json({
+            status: 3,
+            data: data
+          });
         }
       });
-    };
-    // var tenKH = req.body.name;
-    // var emailKH = req.body.email;
-    // var phoneNumberKH = req.body.phonenumber;
-    // var diaChiKH = req.body.address;
-    // var ghiChuKH = req.body.notes;
-    // var idProduct = req.body.idproduct;
-    // var soLuong = req.body.soluong;
-    // var idProductSync = req.body.idproductsync;
-    // var idSizeProduct = req.body.idsizeproduct;
-    var idsizep = null;
-    var sizeProduct = "";
-    if (req.body.idsizeproduct != 0 && req.body.idsizeproduct != "") {
-      idsizep = req.body.idsizeproduct;
-      var dataProductsize = await SizeProductModel.findById(idsizep).exec();
-      sizeProduct =
-        dataProductsize.sizeLength +
-        "x" +
-        dataProductsize.sizeWidth +
-        "x" +
-        dataProductsize.sizeHeight;
-    }
+    }); router.get("/order-product", (req, res) => {
+      var idProduct, idProductSync, idSizeProduct, soLuong, sumMoney;
+      idProduct = req.query.idp;
+      console.log(idProduct);
+      idSizeProduct = req.query.idsip;
+      console.log(idSizeProduct);
+      idProductSync = req.query.idps;
+      console.log(idProductSync);
+      soLuong = req.query.sl;
+      sumMoney = req.query.su;
 
-    var cartProduct = [];
-    var giaSanPham;
-    ProductModel.findById(req.body.idproduct).then(async dataProductOne => {
-      console.log(
-        "dataProductOne.priceProduct: " + dataProductOne.priceProduct
-      );
-      // giaSanPham = dataProductOne.priceProduct;
-      cartProduct = [{
-        id: req.body.idproduct,
-        name: dataProductOne.nameProduct,
-        idSize: idsizep,
-        size: sizeProduct,
-        price: dataProductOne.priceProduct,
-        image: dataProductOne.imageProduct,
-        quanlity: req.body.soluong,
-        money: req.body.soluong * dataProductOne.priceProduct
-      }];
-      if (req.body.idproductsync) {
-        var checkArrproduct = req.body.idproductsync.split(";");
-
-        for (let kq of checkArrproduct) {
-          console.log("kq 1: " + kq);
-          // console.log('kq: ' + checkArrproduct[kq]);
-          if (kq) {
-            await getProduct(kq, cartProduct);
-          }
-        }
-      }
-      // async.each(checkArrproduct, async(kq) => {
-      //     console.log('kq: ' + kq);
-      //     if (kq) {
-      //         let dataProductSync = await ProductModel.findById(kq).exec();
-      //         var tmpProduct = {
-      //             idProduct: dataProductSync._id,
-      //             idSize: null,
-      //             price: dataProductSync.priceProduct,
-      //             quanlity: 1
-      //         };
-      //         arrIDProduct.push(tmpPro);
-
-      //     }
-      // });
-
-      // async.each(checkArrproduct, function(kq) {
-      //     console.log('kq: ' + kq);
-
-      // });
-      console.log("arrIDProduct: " + cartProduct);
-      console.log("arrIDProduct: " + JSON.stringify(cartProduct));
-      var orderBuyProductModel = new OrderBuyProductModel({
-        name: req.body.name,
-        email: req.body.email,
-        phoneNumber: req.body.phonenumber,
-        address: req.body.address,
-        notes: req.body.notes,
-        cartProduct: cartProduct,
-        summaryMoney: req.body.sumarymoney,
-        dateCreate: moment(Date.now()).format(),
-        statusOrder: 0,
-        status: false
-      });
-      orderBuyProductModel.save().then(() => {
+      if (!idProduct || !soLuong) {
         CategoryModel.find({
             $and: [{
               categoryParent: null
@@ -1641,65 +1401,300 @@ router.post("/order-product", async (req, res) => {
                   title: "Đặt hàng",
                   dataCateParent: dataCateParent,
                   dataCateChildren: dataCateChildren,
-                  success_msg: "Bạn đã đặt hàng thành công",
-                  errors: errors
+                  error_msg: "Không có sản phẩm để đặt hàng",
+                  errors: null
                 });
               }
             );
           }
         );
-        // req.flash('success_msg', 'Đã Thêm Thành Công');
-        // return res.render('/admin/news/list.html');
-      });
+      } else {
+        CategoryModel.find({
+            $and: [{
+              categoryParent: null
+            }, {
+              status: true
+            }]
+          },
+          function (err, dataCateParent) {
+            if (err) {
+              console.log(err);
+              return res.render("error", {
+                title: "Error Get Data",
+                error: err
+              });
+            }
+            console.log("dataCateParent: " + dataCateParent);
+            CategoryModel.find({
+                $and: [{
+                  categoryParent: {
+                    $ne: null
+                  }
+                }, {
+                  status: true
+                }]
+              },
+              function (error, dataCateChildren) {
+                if (error) {
+                  console.log(error);
+                  return res.render("error", {
+                    title: "Error Get Data",
+                    error: error
+                  });
+                }
+                console.log("dataCateChildren: " + dataCateChildren);
 
-      // else {
-      //     console.log('arrIDProduct: ' + arrIDProduct);
-      //     console.log('arrIDProduct: ' + JSON.stringify(arrIDProduct));
-      //     var orderBuyProductModel = new OrderBuyProductModel({
-      //         name: req.body.name,
-      //         email: req.body.email,
-      //         phoneNumber: req.body.phonenumber,
-      //         address: req.body.address,
-      //         Notes: req.body.notes,
-      //         arrIDProduct: arrIDProduct,
-      //         summaryMoney: req.body.sumarymoney,
-      //         dateCreate: Date.now(),
-      //         statusOrder: 0,
-      //         status: false
-      //     })
-      //     orderBuyProductModel.save().then(() => {
-      //         CategoryModel.find({ $and: [{ categoryParent: null }, { status: true }] }, function(err, dataCateParent) {
-      //                 if (err) {
-      //                     console.log(err);
-      //                     return res.render('error', { title: 'Error Get Data', error: err });
-      //                 }
-      //                 console.log('dataCateParent: ' + dataCateParent);
-      //                 CategoryModel.find({ $and: [{ categoryParent: { $ne: null } }, { status: true }] }, function(error, dataCateChildren) {
-      //                     if (error) {
-      //                         console.log(error);
-      //                         return res.render('error', { title: 'Error Get Data', error: error });
-      //                     }
-      //                     // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-      //                     return res.render('font-end/checkok', {
-      //                         title: 'Đặt hàng',
-      //                         dataCateParent: dataCateParent,
-      //                         dataCateChildren: dataCateChildren,
-      //                         success_msg: 'Bạn đã đặt hàng thành công',
-      //                         errors: errors
-      //                     });
-      //                 })
-      //             })
-      //             // req.flash('success_msg', 'Đã Thêm Thành Công');
-      //             // return res.render('/admin/news/list.html');
-      //     })
-      // }
-    });
+                res.render("font-end/info-order", {
+                  title: "Đặt hàng",
+                  dataCateParent: dataCateParent,
+                  dataCateChildren: dataCateChildren,
+                  idProduct,
+                  idSizeProduct,
+                  soLuong,
+                  sumMoney,
+                  idProductSync
+                });
+              }
+            );
+          }
+        );
+      }
+      // res.render('font-end/info-order', { idProduct, idSizeProduct, soLuong, idProductSync });
+    }); router.post("/order-product", async (req, res) => {
+      try {
+        req.checkBody("name", "Tên không được để trống").notEmpty();
+        req.checkBody("email", "Email không được để trống").notEmpty();
+        req
+          .checkBody("phonenumber", "Số điện thoại không được để trống")
+          .notEmpty();
+        req
+          .checkBody("phonenumber", "Số điện thoại không được để trống")
+          .isNumeric();
+        req.checkBody("address", "Địa chỉ không được để trống").notEmpty();
+        req.checkBody("idproduct", "Chưa chọn sản phẩm").notEmpty();
+        req.checkBody("soluong", "chưa chọn số lượng").notEmpty();
+        // req.checkBody('priceproduct', 'chưa chọn giá sản phẩm').notEmpty();
 
-    // console.log(tenKH);
-  } catch (error) {
-    console.log(error);
-    req.flash("error_msg", "Lỗi: " + error + "");
-    return res.redirect("/admin/product/edit.html");
-  }
-});
-module.exports = router;
+        var errors = req.validationErrors();
+        if (errors) {
+          console.log(JSON.stringify(errors));
+          req.flash("errors", errors);
+          return res.redirect(
+            "/order-product?idp=" +
+            req.body.idproduct +
+            "&idps=" +
+            req.body.idproductsync +
+            "&idsip=" +
+            req.body.idsizeproduc +
+            "&sl=" +
+            req.body.soluong
+          );
+        }
+
+        var getProduct = (id, arrID) => {
+          return new Promise(async (resolve, reject) => {
+            try {
+              var dataProductSync = await ProductModel.findById(id).exec();
+              console.log("dataProductSync: " + dataProductSync);
+              var tmpProduct = {
+                id: dataProductSync._id,
+                name: dataProductSync.nameProduct,
+                idSize: null,
+                size: null,
+                price: dataProductSync.priceProduct,
+                image: dataProductSync.imageProduct,
+                quanlity: 1,
+                money: dataProductSync.priceProduct
+              };
+
+              arrID.push(tmpProduct);
+              resolve("success");
+              // console.log('arrIDProduct---: ' + JSON.stringify(arrIDProduct));
+            } catch (error) {
+              reject(error);
+            }
+          });
+        };
+        // var tenKH = req.body.name;
+        // var emailKH = req.body.email;
+        // var phoneNumberKH = req.body.phonenumber;
+        // var diaChiKH = req.body.address;
+        // var ghiChuKH = req.body.notes;
+        // var idProduct = req.body.idproduct;
+        // var soLuong = req.body.soluong;
+        // var idProductSync = req.body.idproductsync;
+        // var idSizeProduct = req.body.idsizeproduct;
+        var idsizep = null;
+        var sizeProduct = "";
+        if (req.body.idsizeproduct != 0 && req.body.idsizeproduct != "") {
+          idsizep = req.body.idsizeproduct;
+          var dataProductsize = await SizeProductModel.findById(idsizep).exec();
+          sizeProduct =
+            dataProductsize.sizeLength +
+            "x" +
+            dataProductsize.sizeWidth +
+            "x" +
+            dataProductsize.sizeHeight;
+        }
+
+        var cartProduct = [];
+        var giaSanPham;
+        ProductModel.findById(req.body.idproduct).then(async dataProductOne => {
+          console.log(
+            "dataProductOne.priceProduct: " + dataProductOne.priceProduct
+          );
+          // giaSanPham = dataProductOne.priceProduct;
+          cartProduct = [{
+            id: req.body.idproduct,
+            name: dataProductOne.nameProduct,
+            idSize: idsizep,
+            size: sizeProduct,
+            price: dataProductOne.priceProduct,
+            image: dataProductOne.imageProduct,
+            quanlity: req.body.soluong,
+            money: req.body.soluong * dataProductOne.priceProduct
+          }];
+          if (req.body.idproductsync) {
+            var checkArrproduct = req.body.idproductsync.split(";");
+
+            for (let kq of checkArrproduct) {
+              console.log("kq 1: " + kq);
+              // console.log('kq: ' + checkArrproduct[kq]);
+              if (kq) {
+                await getProduct(kq, cartProduct);
+              }
+            }
+          }
+          // async.each(checkArrproduct, async(kq) => {
+          //     console.log('kq: ' + kq);
+          //     if (kq) {
+          //         let dataProductSync = await ProductModel.findById(kq).exec();
+          //         var tmpProduct = {
+          //             idProduct: dataProductSync._id,
+          //             idSize: null,
+          //             price: dataProductSync.priceProduct,
+          //             quanlity: 1
+          //         };
+          //         arrIDProduct.push(tmpPro);
+
+          //     }
+          // });
+
+          // async.each(checkArrproduct, function(kq) {
+          //     console.log('kq: ' + kq);
+
+          // });
+          console.log("arrIDProduct: " + cartProduct);
+          console.log("arrIDProduct: " + JSON.stringify(cartProduct));
+          var orderBuyProductModel = new OrderBuyProductModel({
+            name: req.body.name,
+            email: req.body.email,
+            phoneNumber: req.body.phonenumber,
+            address: req.body.address,
+            notes: req.body.notes,
+            cartProduct: cartProduct,
+            summaryMoney: req.body.sumarymoney,
+            dateCreate: moment(Date.now()).format(),
+            statusOrder: 0,
+            status: false
+          });
+          orderBuyProductModel.save().then(() => {
+            CategoryModel.find({
+                $and: [{
+                  categoryParent: null
+                }, {
+                  status: true
+                }]
+              },
+              function (err, dataCateParent) {
+                if (err) {
+                  console.log(err);
+                  return res.render("error", {
+                    title: "Error Get Data",
+                    error: err
+                  });
+                }
+                console.log("dataCateParent: " + dataCateParent);
+                CategoryModel.find({
+                    $and: [{
+                      categoryParent: {
+                        $ne: null
+                      }
+                    }, {
+                      status: true
+                    }]
+                  },
+                  function (error, dataCateChildren) {
+                    if (error) {
+                      console.log(error);
+                      return res.render("error", {
+                        title: "Error Get Data",
+                        error: error
+                      });
+                    }
+                    // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
+                    return res.render("font-end/checkok", {
+                      title: "Đặt hàng",
+                      dataCateParent: dataCateParent,
+                      dataCateChildren: dataCateChildren,
+                      success_msg: "Bạn đã đặt hàng thành công",
+                      errors: errors
+                    });
+                  }
+                );
+              }
+            );
+            // req.flash('success_msg', 'Đã Thêm Thành Công');
+            // return res.render('/admin/news/list.html');
+          });
+
+          // else {
+          //     console.log('arrIDProduct: ' + arrIDProduct);
+          //     console.log('arrIDProduct: ' + JSON.stringify(arrIDProduct));
+          //     var orderBuyProductModel = new OrderBuyProductModel({
+          //         name: req.body.name,
+          //         email: req.body.email,
+          //         phoneNumber: req.body.phonenumber,
+          //         address: req.body.address,
+          //         Notes: req.body.notes,
+          //         arrIDProduct: arrIDProduct,
+          //         summaryMoney: req.body.sumarymoney,
+          //         dateCreate: Date.now(),
+          //         statusOrder: 0,
+          //         status: false
+          //     })
+          //     orderBuyProductModel.save().then(() => {
+          //         CategoryModel.find({ $and: [{ categoryParent: null }, { status: true }] }, function(err, dataCateParent) {
+          //                 if (err) {
+          //                     console.log(err);
+          //                     return res.render('error', { title: 'Error Get Data', error: err });
+          //                 }
+          //                 console.log('dataCateParent: ' + dataCateParent);
+          //                 CategoryModel.find({ $and: [{ categoryParent: { $ne: null } }, { status: true }] }, function(error, dataCateChildren) {
+          //                     if (error) {
+          //                         console.log(error);
+          //                         return res.render('error', { title: 'Error Get Data', error: error });
+          //                     }
+          //                     // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
+          //                     return res.render('font-end/checkok', {
+          //                         title: 'Đặt hàng',
+          //                         dataCateParent: dataCateParent,
+          //                         dataCateChildren: dataCateChildren,
+          //                         success_msg: 'Bạn đã đặt hàng thành công',
+          //                         errors: errors
+          //                     });
+          //                 })
+          //             })
+          //             // req.flash('success_msg', 'Đã Thêm Thành Công');
+          //             // return res.render('/admin/news/list.html');
+          //     })
+          // }
+        });
+
+        // console.log(tenKH);
+      } catch (error) {
+        console.log(error);
+        req.flash("error_msg", "Lỗi: " + error + "");
+        return res.redirect("/admin/product/edit.html");
+      }
+    }); module.exports = router;
