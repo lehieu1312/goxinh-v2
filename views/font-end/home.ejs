@@ -32,25 +32,25 @@
         <%if(dataProductNew.length>0){ dataProductNew.forEach(function(item,index){%>
         <li>
             <div class="item-sanpham-new ">
-                <!-- <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp"> -->
-                <div class="box-img-sanpham">
-                    <img src="/upload/product/<%=item.imageProduct%>" class="thumbnail-img" alt="<%=item.nameProduct%>"
-                        title="<%=item.nameProduct%>">
-                </div>
-                <div class="sp-it-footer">
-                    <div class="sp-it-ft-name">
-                        <h3>
-                            <%=item.nameProduct%>
-                        </h3>
+                <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp">
+                    <div class="box-img-sanpham">
+                        <img src="/upload/product/<%=item.imageProduct%>" class="thumbnail-img" alt="<%=item.nameProduct%>"
+                            title="<%=item.nameProduct%>">
                     </div>
-                    <div class="sp-it-ft-price">
-                        <span class="txt-gia-sp">Giá: </span> <span class="thumbnail-gia-sp">
-                            <%=item.priceProduct.toLocaleString({ style: 'currency', currency: 'VND' });%>
-                        </span>₫
+                    <div class="sp-it-footer">
+                        <div class="sp-it-ft-name">
+                            <h3>
+                                <%=item.nameProduct%>
+                            </h3>
+                        </div>
+                        <div class="sp-it-ft-price">
+                            <span class="txt-gia-sp">Giá: </span> <span class="thumbnail-gia-sp">
+                                <%=item.priceProduct.toLocaleString({ style: 'currency', currency: 'VND' });%>
+                            </span>₫
+                        </div>
                     </div>
-                </div>
 
-                <!-- </a> -->
+                </a>
             </div>
             <div style="float:none;clear:both"></div>
         </li>
