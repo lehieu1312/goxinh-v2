@@ -52,12 +52,12 @@ footer {
 .box-home-search-header {
     background-color: #2d1b1b;
     float: left;
+    width: 375px;
 }
 
 /*==Style cho menu===*/
 #menu {
-    width: 1200px;
-    margin: 0 auto;
+    float: left;
 }
 
 #menu ul {
