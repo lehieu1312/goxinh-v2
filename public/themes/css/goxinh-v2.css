@@ -33,6 +33,63 @@ footer {
     display: block;
 }
 
+.box-left {
+    float: left;
+    width: 100%;
+}
+
+#wapper-menu-header {
+    background: #956946;
+    margin-bottom: 5px;
+}
+
+.box-menu-header {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.box-home-search-header {
+    background-color: #2d1b1b;
+    float: left;
+}
+
+/*==Style cho menu===*/
+#menu {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#menu ul {
+    list-style-type: none;
+    text-align: left;
+    margin-bottom: 1px;
+    z-index: 1;
+}
+
+#menu li {
+    color: #f1f1f1;
+    display: inline-block;
+    position: relative;
+    margin-left: -5px;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#menu a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    text-align: center;
+    font-family: Tahoma, Arial, Helvetica;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 13px;
+}
+
+#menu a:hover {
+    background: #fff;
+    color: #5a3a3a;
+}
+
 .logo {
     float: left;
     width: 165px;
