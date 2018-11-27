@@ -4,7 +4,7 @@ var NewsModel = require("../models/news");
 var CategoryModel = require("../models/category");
 var ProductModel = require("../models/product");
 var BannerModel = require("../models/banner");
-router.get("/index", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     var currentPage = 1,
       totalData,
@@ -44,7 +44,7 @@ router.get("/index", async (req, res) => {
         dateCreate: -1
       })
       .skip(0)
-      .limit(5)
+      .limit(15)
       .exec();
 
     var BannerSliderData = await BannerModel.find({
@@ -75,9 +75,9 @@ router.get("/index", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/index", async (req, res) => {
   try {
-    res.redirect("/index");
+    res.redirect("/");
   } catch (error) {
     console.log(error);
     res.render("error", {

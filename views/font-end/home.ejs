@@ -2,7 +2,20 @@
 <!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
 <!-- <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script> -->
-
+<script>
+    $(document).ready(() => {
+        $("#box-product-new-home").lightSlider({
+            item: 5,
+            loop: true,
+            keyPress: true,
+            auto: true,
+            speed: 1500,
+            vertical: false,
+            pause: 3000,
+            pager: false,
+        });
+    })
+</script>
 <div class="title-box-sp-home">
     <div class="controls pull-right hidden-xs">
         <!-- <a class="left fa fa-chevron-left btn btn-success" href="#carousel-example" data-slide="prev"></a><a class="right fa fa-chevron-right btn btn-success"
@@ -15,43 +28,35 @@
 </div>
 
 <div class="box-sanpham-new carousel slide " id="carousel-example" data-ride="carousel">
-    <div class="carousel-inner">
-
+    <ul id="box-product-new-home">
         <%if(dataProductNew.length>0){ dataProductNew.forEach(function(item,index){%>
-
-        <div class="item active">
-            <div class="item-sanpham ">
-                <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp">
-                    <div class="box-it-sp-new">
-                        <div class="box-img-sanpham">
-                            <img src="/upload/product/<%=item.imageProduct%>" class="thumbnail-img" alt="<%=item.nameProduct%>"
-                                title="<%=item.nameProduct%>">
-                        </div>
-                        <div class="sp-it-footer">
-                            <div class="sp-it-ft-name">
-                                <h3>
-                                    <%=item.nameProduct%>
-                                </h3>
-                            </div>
-                            <div class="sp-it-ft-price">
-                                <span class="txt-gia-sp">Giá: </span> <span class="thumbnail-gia-sp">
-                                    <%=item.priceProduct.toLocaleString({ style: 'currency', currency: 'VND' });%>
-                                </span>₫
-                            </div>
-                        </div>
+        <li>
+            <div class="item-sanpham-new ">
+                <!-- <a href="/san-pham/<%=item.aliasUrl%>" class="link-item-sp"> -->
+                <div class="box-img-sanpham">
+                    <img src="/upload/product/<%=item.imageProduct%>" class="thumbnail-img" alt="<%=item.nameProduct%>"
+                        title="<%=item.nameProduct%>">
+                </div>
+                <div class="sp-it-footer">
+                    <div class="sp-it-ft-name">
+                        <h3>
+                            <%=item.nameProduct%>
+                        </h3>
                     </div>
-                </a>
+                    <div class="sp-it-ft-price">
+                        <span class="txt-gia-sp">Giá: </span> <span class="thumbnail-gia-sp">
+                            <%=item.priceProduct.toLocaleString({ style: 'currency', currency: 'VND' });%>
+                        </span>₫
+                    </div>
+                </div>
+
+                <!-- </a> -->
             </div>
+            <div style="float:none;clear:both"></div>
+        </li>
+        <%})}%>
+    </ul>
 
-        </div>
-
-        <%})}else{%>
-        <span>
-            <----- Không có sản phẩm trong mục này ----->
-        </span>
-        <%}%>
-
-    </div>
 </div>
 <div class="title-box-sp-home text-center">
     <div class="text-title-sp-home">
