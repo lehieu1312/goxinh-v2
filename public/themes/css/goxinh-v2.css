@@ -41,7 +41,7 @@ footer {
 #wapper-menu-header {
     background: #956946;
     margin-bottom: 5px;
-    min-width: 1024px;
+    /* min-width: 1024px; */
 }
 
 .box-menu-header {
