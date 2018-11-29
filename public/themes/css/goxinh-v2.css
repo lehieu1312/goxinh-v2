@@ -60,6 +60,14 @@ footer {
     float: left;
 }
 
+#menu ul li {
+    margin-left: -5px;
+}
+
+#menu ul li:first-child {
+    margin-left: 0px;
+}
+
 #menu ul {
     list-style-type: none;
     text-align: left;
