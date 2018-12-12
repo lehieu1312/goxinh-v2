@@ -560,7 +560,7 @@ aside {
 .box-sanpham-new::before {
     content: ' ';
     display: block;
-    background: url(/images/gsct.png) no-repeat center center;
+    background: url(/themes/img/pn-home.jpg) no-repeat center center;
     background-size: 309px 38px;
     width: 309px;
     height: 38px;
@@ -657,7 +657,7 @@ aside {
 }
 
 .text-title-sp-home {
-    padding-left: 15px;
+    /* padding-left: 15px; */
     text-transform: uppercase;
 }
 
