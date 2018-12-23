@@ -1,30 +1,31 @@
 <% include ../font-end/layout/header.ejs %>
-
+<div class="box-success-order">
     <% if(success_msg != ''){ %>
-        <div class="alert alert-success">
-            <h3>
-                <%= success_msg%>
-            </h3>
-            <span>Chúng tôi đã nhận được yêu cầu của bạn,chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.Cảm ơn!</span><br>
-            <a href="/">[Quay lại trang chủ]</a>
-        </div>
+    <div class="alert alert-success">
+        <h3>
+            <%= success_msg%>
+        </h3>
+        <span>Chúng tôi đã nhận được yêu cầu của bạn,chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất.Cảm ơn!</span><br>
+        <a href="/">[Quay lại trang chủ]</a>
+    </div>
 
-        <% } %>
-            <% if(error_msg != ''){ %>
-                <div class="alert alert-danger">
-                    <h4>
-                        <%= error_msg%>
-                    </h4>
-                    <a href="/">[Quay lại trang chủ]</a>
-                </div>
-                <% } %>
-                    <% if(errors) { %>
-                        <div class="alert alert-danger">
-                            <% errors.forEach(function(e){ %>
+    <% } %>
+    <% if(error_msg != ''){ %>
+    <div class="alert alert-danger">
+        <h4>
+            <%= error_msg%>
+        </h4>
+        <a href="/">[Quay lại trang chủ]</a>
+    </div>
+    <% } %>
+    <% if(errors) { %>
+    <div class="alert alert-danger">
+        <% errors.forEach(function(e){ %>
 
-                                <%= e.msg %> <br/>
-                                    <%});%>
+        <%= e.msg %> <br />
+        <%});%>
 
-                        </div>
-                        <% };%>
-                            <%include ../font-end/layout/footer.ejs%>
+    </div>
+    <% };%>
+</div>
+<%include ../font-end/layout/footer.ejs%>

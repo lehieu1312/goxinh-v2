@@ -1,148 +1,156 @@
 <% include ../font-end/layout/header.ejs %>
-    <div class="row">
-        <div class="col-lg-9 col-md-9 col-xs-12">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-xs-12 title-head-product-detail">
-                    <h3 class="font-bold title-name-product-detail">
-                        <%=dataOneProduct.nameProduct%>(
-                            <%=dataOneProduct.codeProduct%>)</h3>
-                    <span>(Đơn vị tính: <%=dataOneProduct.unitProduct%>)</span>
+<div class="row">
+    <div class="col-lg-9 col-md-9 col-xs-12">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 title-head-product-detail">
+                <h3 class="font-bold title-name-product-detail">
+                    <%=dataOneProduct.nameProduct%>(
+                    <%=dataOneProduct.codeProduct%>)</h3>
+                <span>(Đơn vị tính:
+                    <%=dataOneProduct.unitProduct%>)</span>
+            </div>
+            <div class="col-lg-7 col-md-7 col-xs-7">
+                <div class="img-large-product">
+                    <img id="img-main-product" width="100%" src="/upload/product/<%=dataOneProduct.imageProduct%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>" /><br />
                 </div>
-                <div class="col-lg-7 col-md-7 col-xs-7">
-                    <div class="img-large-product">
-                        <img id="img-main-product" width="100%" src="/upload/product/<%=dataOneProduct.imageProduct%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>" /><br/>
-                    </div>
-                    <div class=" margintop-10 img-parent">
+                <div class=" margintop-10 img-parent">
 
-                        <div class="img-list-product">
-                            <% if(dataOneProduct.imageOne){%>
-                                <div class="color-detail">
-                                    <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageOne%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                                </div>
-                                <%}%>
-                                    <% if(dataOneProduct.imageTwo){%>
-                                        <div class="color-detail">
-                                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageTwo%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                                        </div>
-                                        <%}%>
-                                            <% if(dataOneProduct.imageThree){%>
-                                                <div class="color-detail">
-                                                    <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageThree%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                                                </div>
-                                                <%}%>
-                                                    <% if(dataOneProduct.imageFour){%>
-                                                        <div class="color-detail">
-                                                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageFour%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                                                        </div>
-                                                        <%}%>
-                                                            <% if(dataOneProduct.imageFive){%>
-                                                                <div class="color-detail">
-                                                                    <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageFive%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                                                                </div>
-                                                                <%}%>
-
+                    <div class="img-list-product">
+                        <% if(dataOneProduct.imageOne){%>
+                        <div class="color-detail">
+                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageOne%>"
+                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
                         </div>
+                        <%}%>
+                        <% if(dataOneProduct.imageTwo){%>
+                        <div class="color-detail">
+                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageTwo%>"
+                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
+                        </div>
+                        <%}%>
+                        <% if(dataOneProduct.imageThree){%>
+                        <div class="color-detail">
+                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageThree%>"
+                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
+                        </div>
+                        <%}%>
+                        <% if(dataOneProduct.imageFour){%>
+                        <div class="color-detail">
+                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageFour%>"
+                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
+                        </div>
+                        <%}%>
+                        <% if(dataOneProduct.imageFive){%>
+                        <div class="color-detail">
+                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageFive%>"
+                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
+                        </div>
+                        <%}%>
+
                     </div>
                 </div>
+            </div>
 
 
-                <div class="col-lg-5 col-md-5 col-xs-5">
-                    <div class="info-product border-solid-left">
-                        <h4 class="font-bold">Thông tin sản phẩm</h4>
-                    </div>
-                    <div class="detail-info">
-                        <%-dataOneProduct.detailProduct%>
-                            <!-- <p>
+            <div class="col-lg-5 col-md-5 col-xs-5">
+                <div class="info-product border-solid-left">
+                    <h4 class="font-bold">Thông tin sản phẩm</h4>
+                </div>
+                <div class="detail-info">
+                    <%-dataOneProduct.detailProduct%>
+                    <!-- <p>
                             - Bàn học kết hợp giá sách rất thuận tiện cho việc sử dụng,giúp góc học tập trở nên gọn gàng.<br/> - Vật liệu: Ván MDF loại 1 nhập từ phủ lớp melamin vân gỗ chống trầy xước.<br/> - Sản phẩm sản xuất tại Việt Nam xuất qua thị
                             trường Nhật Bản.<br/>
                         </p> -->
-                    </div>
-                    <div class="color-product border-solid-left">
-                        <h4 class="font-bold">Màu sắc vật liệu</h4>
-                    </div>
-                    <div class="color-product">
-                        <div class="color-detail">
-                            <img class="img-responsive" src="/themes/img/mau1.jpg" alt="màu trắng">
-                            <div class="caption">
-                                <p class="text-color">màu trắng</p>
-                            </div>
-                        </div>
-                        <div class="color-detail">
-                            <img class="img-responsive" src="/themes/img/mau2.jpg" alt="màu xám">
-                            <div class="caption">
-                                <p class="text-color">màu xám</p>
-                            </div>
-                        </div>
-                        <div class="color-detail">
-                            <img class="img-responsive" src="/themes/img/mau3.jpg" alt="màu nâu">
-                            <div class="caption">
-                                <p class="text-color">màu nâu</p>
-                            </div>
-                        </div>
-                        <div class="color-detail">
-                            <img class="img-responsive" src="/themes/img/mau5.jpg" alt="sồi nhạt">
-                            <div class="caption">
-                                <p class="text-color">sồi nhạt</p>
-                            </div>
-                        </div>
-                        <div class="color-detail">
-                            <img class="img-responsive" src="/themes/img/mau4.jpg" alt="màu vàng">
-                            <div class="caption">
-                                <p class="text-color">màu vàng</p>
-                            </div>
+                </div>
+                <div class="color-product border-solid-left">
+                    <h4 class="font-bold">Màu sắc vật liệu</h4>
+                </div>
+                <div class="color-product">
+                    <div class="color-detail">
+                        <img class="img-responsive" src="/themes/img/mau1.jpg" alt="màu trắng">
+                        <div class="caption">
+                            <p class="text-color">màu trắng</p>
                         </div>
                     </div>
-                    <div class="size-produt border-solid-left">
-                        <h4 class="font-bold margin-top-bottom">Kích thước</h4>
+                    <div class="color-detail">
+                        <img class="img-responsive" src="/themes/img/mau2.jpg" alt="màu xám">
+                        <div class="caption">
+                            <p class="text-color">màu xám</p>
+                        </div>
                     </div>
+                    <div class="color-detail">
+                        <img class="img-responsive" src="/themes/img/mau3.jpg" alt="màu nâu">
+                        <div class="caption">
+                            <p class="text-color">màu nâu</p>
+                        </div>
+                    </div>
+                    <div class="color-detail">
+                        <img class="img-responsive" src="/themes/img/mau5.jpg" alt="sồi nhạt">
+                        <div class="caption">
+                            <p class="text-color">sồi nhạt</p>
+                        </div>
+                    </div>
+                    <div class="color-detail">
+                        <img class="img-responsive" src="/themes/img/mau4.jpg" alt="màu vàng">
+                        <div class="caption">
+                            <p class="text-color">màu vàng</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="size-produt border-solid-left">
+                    <h4 class="font-bold margin-top-bottom">Kích thước</h4>
+                </div>
 
-                    <div class="detail-size">
-                        <%if(dataSizeProduct.length>0){%>
-                            <span> Dài x Rộng x Cao:</span>
-                            <select id="sizeList" name="sizeselectproduct">
-                                <%dataSizeProduct.forEach(function(item){ %>
-                                    <option value="<%= item._id%>">
-                                        <%= item.sizeLength%> x
-                                          <%= item.sizeWidth%> x
-                                              <%= item.sizeHeight%>
-                                 </option>
-                                 <%})%>
-                             </select>
-                            <%}%>
-                                <!-- <select name="" id="">
+                <div class="detail-size">
+                    <%if(dataSizeProduct.length>0){%>
+                    <span> Dài x Rộng x Cao:</span>
+                    <select id="sizeList" name="sizeselectproduct">
+                        <%dataSizeProduct.forEach(function(item){ %>
+                        <option value="<%= item._id%>">
+                            <%= item.sizeLength%> x
+                            <%= item.sizeWidth%> x
+                            <%= item.sizeHeight%>
+                        </option>
+                        <%})%>
+                    </select>
+                    <%}%>
+                    <!-- <select name="" id="">
                               <option value="1">số một</option>
                               <option value="2">số 2</option>
                           </select> -->
-                    </div>
-
-
                 </div>
 
+
             </div>
-            <div class="row">
-                <div class="col-lg-5 col-md-5 col-xs-12 all-cate-type">
-                    <div class="text-type-cate border-solid-left"><span> Sản phẩm đồng bộ</span></div>
 
-                    <% if(productSync.length>0){productSync.forEach(function(item){%>
-                        <div class="product-cate-type">
-                            <div class="img-cate-type">
-                                <img width="100%" src="/upload/product/<%=item.imageProduct%>" />
-                            </div>
-                            <div class="img-detail-type caption">
-                                <span class="text-name-prosync"><%=item.nameProduct%></span><br/>
-                                <span class="price-prosync"><%=item.priceProduct.toLocaleString()%> ₫</span><br/>
-                                <label><input type="checkbox" class="check-buy-product" value="<%=item._id%>"/> Chọn mua
-                                <!-- <input type="hidden" name="productsync"  class="productsync"> -->
-                                
-                                </label>
-                            </div>
-                        </div>
-                        <%})}else{%>
-                            <span>---Không có sản phẩm nào cho mục này---</span>
-                            <%}%>
+        </div>
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-xs-12 all-cate-type">
+                <div class="text-type-cate border-solid-left"><span> Sản phẩm đồng bộ</span></div>
+
+                <% if(productSync.length>0){productSync.forEach(function(item){%>
+                <div class="product-cate-type">
+                    <div class="img-cate-type">
+                        <img width="100%" src="/upload/product/<%=item.imageProduct%>" />
+                    </div>
+                    <div class="img-detail-type caption">
+                        <span class="text-name-prosync">
+                            <%=item.nameProduct%></span><br />
+                        <span class="price-prosync">
+                            <%=item.priceProduct.toLocaleString()%> ₫</span><br />
+                        <label><input type="checkbox" class="check-buy-product" value="<%=item._id%>" /> Chọn mua
+                            <!-- <input type="hidden" name="productsync"  class="productsync"> -->
+
+                        </label>
+                    </div>
+                </div>
+                <%})}else{%>
+                <span>---Không có sản phẩm nào cho mục này---</span>
+                <%}%>
 
 
-                                <!-- <div class="product-cate-type">
+                <!-- <div class="product-cate-type">
                         <div class="img-cate-type">
                             <img width="100%" src="product/sp2.jpg" />
                         </div>
@@ -163,173 +171,186 @@
                         </div>
                     </div> -->
 
-                </div>
-                <input type="hidden" value="<%=dataOneProduct.priceProduct%>" name="priceproduct" id="priceproductbysize" />
-                <input type="hidden" value="" name="idsizeproduct" id="idsizeproduct" />
-                <input type="hidden" value="" name="priceproductsync" id="priceproductsync" />
-                <input type="hidden" value="" name="idproductsync" id="idproductsync" />
-                <input type="hidden" value="<%=dataOneProduct.priceProduct%>" name="sumarymoney" id="sumarymoney" />
-                <input type="hidden" value="<%=dataOneProduct._id%>" name="idproduct" id="idproduct" />
-                <input type="hidden" value="" name="colorproduct" id="colorproduct" />
-
-                <div class="col-lg-7 col-md-7 col-xs-12 order-product">
-                    <div class="header-order">
-                        <ul class="list-help-product">
-                            <li><i class="fa fa-arrow-circle-right color-icon-arrow" aria-hidden="true"></i>&nbsp;<span>Tìm hiểu: </span></li>
-                            <li><a href="/cach-mua-hang"><span>[Đặt hàng]</span></a></li>
-                            <li><a href="/huong-dan-thanh-toan"><span>[Thanh toán]</span></a></li>
-                            <li><a href="/giao-hang"><span>[Giao hàng]</span></a></li>
-                            <li><a href="/bao-hanh"><span>[Bảo hành]</span></a></li>
-                        </ul>
-                    </div>
-
-                    <div class="order-detail">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td>Màu sắc</td>
-                                    <td>
-                                        <select>
-                                            <option>Sồi Nâu</option>
-                                            <option>Sồi đỏ</option>
-                                            <option>Sồi trắng</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Số lượng:</td>
-                                    <td>
-                                        <input type="number" name="soluong" value="1" id="soluongsanpham" required min="1" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Đơn giá:</td>
-                                    <td>
-                                        <span id="dongiasanpham"><%=dataOneProduct.priceProduct.toLocaleString()%> </span><span> ₫</span>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Bảo hành:</td>
-                                    <td>
-                                        <span class="text-bao-hanh">12 tháng</span>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Giao hàng:</td>
-                                    <td>
-                                        <span class="text-bao-hanh">Giao ngay/ giao hàng sau 05 ngày...</span>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tổng tiền hàng:</td>
-                                    <td><span class="gia-sanpham" id="tongtiendonhang"><%=dataOneProduct.priceProduct.toLocaleString()%> </span> ₫<span></span>
-                                        <input type="hidden" name="giasanpham" id="giasanpham" value="<%=dataOneProduct.priceProduct%>" />
-                                        <br /><span>(Đã bao gồm phí vận chuyển)</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <a href="javascript:void(0)" class="btn-order" id="btn-order-buy-product">
-                                            <span>Đặt hàng online</span>&nbsp;
-                                            <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
-                                        </a><br>
-                                        <span>Hỗ trợ trực tuyến:  093 6361 789/ 0913 112289</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
+            <input type="hidden" value="<%=dataOneProduct.priceProduct%>" name="priceproduct" id="priceproductbysize" />
+            <input type="hidden" value="" name="idsizeproduct" id="idsizeproduct" />
+            <input type="hidden" value="" name="priceproductsync" id="priceproductsync" />
+            <input type="hidden" value="" name="idproductsync" id="idproductsync" />
+            <input type="hidden" value="<%=dataOneProduct.priceProduct%>" name="sumarymoney" id="sumarymoney" />
+            <input type="hidden" value="<%=dataOneProduct._id%>" name="idproduct" id="idproduct" />
+            <input type="hidden" value="" name="colorproduct" id="colorproduct" />
 
-            <div class="row">
-                <div class="title-form-require">
-                    <span class="text-title-require">Đặt hàng theo yêu cầu</span>
+            <div class="col-lg-7 col-md-7 col-xs-12 order-product">
+                <div class="header-order">
+                    <ul class="list-help-product">
+                        <li><i class="fa fa-arrow-circle-right color-icon-arrow" aria-hidden="true"></i>&nbsp;<span>Tìm
+                                hiểu: </span></li>
+                        <li><a href="/cach-mua-hang"><span>[Đặt hàng]</span></a></li>
+                        <li><a href="/huong-dan-thanh-toan"><span>[Thanh toán]</span></a></li>
+                        <li><a href="/giao-hang"><span>[Giao hàng]</span></a></li>
+                        <li><a href="/bao-hanh"><span>[Bảo hành]</span></a></li>
+                    </ul>
                 </div>
-                <div class="content-require ">
-                    <form class="form" action="/order-on-request" method="post" enctype="multipart/form-data">
-                        <div class="row ">
 
-                            <div class="col-md-6">
-                                <div class="form-group has-feedback input-error">
-                                    <label class="control-label"> Họ tên</label>
-                                    <input class="form-control input-form-info" placeholder="Họ tên" type="text" displaytext="Họ tên" id="name" name="name" value="" required />
+                <div class="order-detail">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Màu sắc</td>
+                                <td>
+                                    <select>
+                                        <option>Sồi Nâu</option>
+                                        <option>Sồi đỏ</option>
+                                        <option>Sồi trắng</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Số lượng:</td>
+                                <td>
+                                    <input type="number" name="soluong" value="1" id="soluongsanpham" required min="1" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Đơn giá:</td>
+                                <td>
+                                    <span id="dongiasanpham">
+                                        <%=dataOneProduct.priceProduct.toLocaleString()%> </span><span> ₫</span>
 
-                                </div>
-                                <div class="form-group has-feedback input-error">
-                                    <label class=" control-label"> Email </label>
-                                    <div class="">
-                                        <input class="form-control input-form-info" type="text" placeholder="Email" displaytext="Email " required id="emailname" name="email" value="" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bảo hành:</td>
+                                <td>
+                                    <span class="text-bao-hanh">12 tháng</span>
 
-                                    </div>
-                                </div>
-                                <div class="form-group has-feedback input-error">
-                                    <label class=" control-label"> Số điện thoại </label>
-                                    <div class="">
-                                        <input class="form-control input-form-info" type="text" id="phonenumber" placeholder="Số điện thoại" required displaytext="Số điện thoại" name="phonenumber" value="" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Giao hàng:</td>
+                                <td>
+                                    <span class="text-bao-hanh">Giao ngay/ giao hàng sau 05 ngày...</span>
 
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6">
-
-                                <div class="form-group has-feedback input-error">
-                                    <label class=" control-label"> File ảnh </label>
-                                    <div class="">
-                                        <input class="form-control input-form-info" type="file" id="image" placeholder="File ảnh" displaytext="File ảnh" name="image" value="" />
-
-                                    </div>
-                                </div>
-                                <div class="form-group has-feedback input-error">
-                                    <label class=" control-label"> Nội dung</label>
-                                    <div class="">
-                                        <textarea class="form-control input-form-info" rows="5" cols="" name="content" placeholder="- Nội dung"></textarea>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="form-group div-btn-infobuild">
-                                    <div class="">
-                                        <!-- <input type="button"  value="Build android" class="btn btn-primary"> -->
-                                        <!-- onclick="send_ajax_build_android()" -->
-                                        <button type="submit" id="btn-deploy-android" class="btn btn-lg btn-info btn-infobuild">Gửi yêu cầu</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tổng tiền hàng:</td>
+                                <td><span class="gia-sanpham" id="tongtiendonhang">
+                                        <%=dataOneProduct.priceProduct.toLocaleString()%> </span> ₫<span></span>
+                                    <input type="hidden" name="giasanpham" id="giasanpham" value="<%=dataOneProduct.priceProduct%>" />
+                                    <br /><span>(Đã bao gồm phí vận chuyển)</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <a href="javascript:void(0)" class="btn-order" id="btn-order-buy-product">
+                                        <span>Đặt hàng online</span>&nbsp;
+                                        <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+                                    </a><br>
+                                    <span>Hỗ trợ trực tuyến: 093 6361 789/ 0913 112289</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-xs-12">
-            <div class="panel panel-info ">
-                <div class="panel-heading panel-detail-right">
-                    <span class="title-product-invo">Sản phẩm cùng loại</span>
-                </div>
-                <%productInvolve.forEach(function(item){%>
-                    <div class="panel-body">
-                        <div class="product-involve">
-                            <a href="/san-pham/<%=item.aliasUrl%>"> <img src="/upload/product/<%=item.imageProduct%>" alt="<%=item.nameProduct%>" class="img-reponsive" width="100%" /></a>
+
+        <div class="row">
+            <div class="title-form-require">
+                <span class="text-title-require">Đặt hàng theo yêu cầu</span>
+            </div>
+            <div class="content-require ">
+                <form class="form" action="/order-on-request" method="post" enctype="multipart/form-data">
+                    <div class="row ">
+
+                        <div class="col-md-6">
+                            <div class="form-group has-feedback input-error">
+                                <label class="control-label"> Họ tên</label>
+                                <input class="form-control input-form-info" placeholder="Họ tên" type="text"
+                                    displaytext="Họ tên" id="name" name="name" value="" required />
+
+                            </div>
+                            <div class="form-group has-feedback input-error">
+                                <label class=" control-label"> Email </label>
+                                <div class="">
+                                    <input class="form-control input-form-info" type="text" placeholder="Email"
+                                        displaytext="Email " required id="emailname" name="email" value="" />
+
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback input-error">
+                                <label class=" control-label"> Số điện thoại </label>
+                                <div class="">
+                                    <input class="form-control input-form-info" type="text" id="phonenumber"
+                                        placeholder="Số điện thoại" required displaytext="Số điện thoại" name="phonenumber"
+                                        value="" />
+
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="name-product-involve">
-                            <a href="/san-pham/<%=item.aliasUrl%>"> <span><%=item.nameProduct%></span></a>
+                        <div class="col-md-6">
+
+                            <div class="form-group has-feedback input-error">
+                                <label class=" control-label"> File ảnh </label>
+                                <div class="">
+                                    <input class="form-control input-form-info" type="file" id="image" placeholder="File ảnh"
+                                        displaytext="File ảnh" name="image" value="" />
+
+                                </div>
+                            </div>
+                            <div class="form-group has-feedback input-error">
+                                <label class=" control-label"> Nội dung</label>
+                                <div class="">
+                                    <textarea class="form-control input-form-info" rows="5" cols="" name="content"
+                                        placeholder="- Nội dung" required></textarea>
+
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="price-product-involve">
-                            <span><%=item.priceProduct.toLocaleString()%> ₫</span>
+
+                        <div class="col-md-12">
+                            <div class="form-group div-btn-infobuild">
+                                <div class="">
+                                    <!-- <input type="button"  value="Build android" class="btn btn-primary"> -->
+                                    <!-- onclick="send_ajax_build_android()" -->
+                                    <button type="submit" id="btn-deploy-android" class="btn btn-lg btn-info btn-infobuild">Gửi
+                                        yêu cầu</span></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <%})%>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-xs-12">
+        <div class="panel panel-info ">
+            <div class="panel-heading panel-detail-right">
+                <span class="title-product-invo">Sản phẩm cùng loại</span>
+            </div>
+            <%productInvolve.forEach(function(item){%>
+            <div class="panel-body">
+                <div class="product-involve">
+                    <a href="/san-pham/<%=item.aliasUrl%>"> <img src="/upload/product/<%=item.imageProduct%>" alt="<%=item.nameProduct%>"
+                            class="img-reponsive" width="100%" /></a>
+                </div>
+                <div class="name-product-involve">
+                    <a href="/san-pham/<%=item.aliasUrl%>"> <span>
+                            <%=item.nameProduct%></span></a>
+                </div>
+                <div class="price-product-involve">
+                    <span>
+                        <%=item.priceProduct.toLocaleString()%> ₫</span>
+                </div>
+            </div>
+            <%})%>
 
 
-                        <!-- <div class="panel-body">
+            <!-- <div class="panel-body">
                     <div class="product-involve">
                         <img src="product/sp2.jpg" alt="" class="img-reponsive" width="100%" />
                     </div>
@@ -377,8 +398,8 @@
                     </div>
                 </div> -->
 
-            </div>
         </div>
     </div>
+</div>
 
-    <%include ../font-end/layout/footer.ejs%>
+<%include ../font-end/layout/footer.ejs%>
