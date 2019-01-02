@@ -24,17 +24,26 @@
         </div>
     </div>
 
-    <div class="panel info-footer">
-        <div class="row">
-            <div class="col-lg-6 col-xs-6"><span class="text-right name-company">CÔNG TY CỔ PHẦN WOODEN VINA</span></div>
-            <div class="col-lg-6 col-xs-6 text-right"><span class="text-right"><span class="text-left">Copyright ©2016</span><span
-                        class="name-website"> Goxinh.net</span></span>
-            </div>
+    <div class="panel info-footer div-box">
+        <div class="menu-footer-left">
+            <ul class="" id="menu-footer">
+                <li><a href="/ban-quyen-thuong-hieu">Bản quyền và thương hiệu</a></li>
+                <li><a href="/bao-ve-thong-tin-ca-nhan">Bảo vệ thông tin cá nhân</a></li>
+                <li><a href="/lien-he">Liên hệ</a></li>
+                <li><a href="/">Trang chủ</a></li>
+            </ul>
+        </div>
+        <!-- <div class="col-lg-6 col-xs-6"><span class="text-right name-company">CÔNG TY CỔ PHẦN WOODEN VINA</span></div> -->
+        <div class="footer-copyright">
+            <span class="text-right">
+                <span class="text-left">Copyright ©2016</span>
+                <span class="name-website"> Goxinh.net</span>
+            </span>
         </div>
     </div>
 
     <!-- Footer -->
-    <div class="link-info-footer">
+    <!-- <div class="link-info-footer">
         <div class="nav-b clearfix">
             <div class="menu-menu-footer-container">
                 <ul class="" id="menu-footer">
@@ -45,12 +54,12 @@
                 </ul>
             </div>
         </div>
-    </div>
+    </div> -->
 
 </div>
 <script>
     $(document).ready(() => {
-        $.post( 
+        $.post(
             "/category/get-category-children", {},
             function (data) {
                 if (data.status) {

@@ -590,7 +590,7 @@ aside {
 
 .sp-it-ft-name {
   padding: 0px 0px 0px 5px;
-  height: 45px;
+  height: 25px;
 }
 
 .sp-it-ft-name h3 {
@@ -704,4 +704,41 @@ aside {
   padding-top: 10px;
   float: left;
   width: 100%;
+}
+
+.footer-copyright {
+  float: left;
+  width: 50%;
+  text-align: right;
+  padding: 3px 0px;
+}
+
+.div-box {
+  float: left;
+  width: 100%;
+}
+
+.menu-footer-left {
+  float: left;
+  width: 50%;
+  text-align: left;
+  padding: 3px 0px;
+  background-color: #fff;
+  border-radius: 3px;
+}
+
+#menu-footer li {
+  display: inline-block;
+  padding-right: 8px;
+  border-right: 1px solid #a9a4a4;
+}
+
+#menu-footer li:first-child {
+  border-left: 1px solid #a9a4a4;
+  padding-left: 8px
+}
+
+.menu-footer-left ul {
+  margin: 0px;
+  padding-left: 10px;
 }

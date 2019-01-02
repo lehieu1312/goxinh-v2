@@ -258,7 +258,7 @@ a:hover {
 }
 
 .info-footer {
-    padding: 10px 10px;
+    padding: 6px 5px;
     color: #fff;
 }
 
@@ -681,7 +681,7 @@ span.belowtext {
 
 .btn-order {
     background: #de5d5d;
-    background: -webkit-gradient( linear, 0 0, 0 bottom, from(#de5d5d), to(#d82c2c));
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#de5d5d), to(#d82c2c));
     background: -moz-linear-gradient(#de5d5d, #d82c2c);
     background: linear-gradient(#de5d5d, #d82c2c);
     border: solid 1px #de5d5d;
@@ -821,7 +821,7 @@ span.price {
 
 .single_add_to_cart_button {
     background: #de5d5d !important;
-    background: -webkit-gradient( linear, 0 0, 0 bottom, from(#de5d5d), to(#d82c2c)) !important;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#de5d5d), to(#d82c2c)) !important;
     background: -moz-linear-gradient(#de5d5d, #d82c2c);
     background: linear-gradient(#de5d5d, #d82c2c);
     border: solid 1px #de5d5d !important;
