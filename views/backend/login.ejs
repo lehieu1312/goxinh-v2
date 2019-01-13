@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goxinh.net | Login</title>
+    <link href="/themes/backend/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/themes/backend/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/themes/backend/css/animate.css" rel="stylesheet">
+    <link href="/themes/backend/css/style.css" rel="stylesheet">
+    <link href="/themes/backend/css/main.css" rel="stylesheet">
+</head>
+
+<body class="gray-bg">
+    <div>
+        <h1 class="logo-name text-center">GoXinh.Net</h1>
+    </div>
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <% if(error != ''){%>
+            <div class="alert alert-danger">
+                <%= error%>
+            </div>
+            <%}%>
+            <h3>Welcome to administrator GoXinh.Net</h3>
+
+            <p>Login in. To see it in action.</p>
+            <form class="m-t" method="POST" action="">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email" placeholder="Username" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required="">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+            </form>
+        </div>
+    </div>
+    <!-- Mainly scripts -->
+    <script src="/themes/backend/js/jquery-3.1.1.min.js"></script>
+    <script src="/themes/backend/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -53,19 +53,19 @@ mongoose.connect("mongodb://127.0.0.1/goxinh", {
 });
 var dbMongo = mongoose.connection;
 
-dbMongo.on("error", function(err) {
+dbMongo.on("error", function (err) {
   console.log(err);
 });
-dbMongo.on("open", function() {
+dbMongo.on("open", function () {
   console.log("Mongodb conected");
 });
 
-io.on("connection", function(socket) {
+io.on("connection", function (socket) {
   console.log(
     "co nguoi ket noi: " +
-      socket.id +
-      " ---> " +
-      moment(Date.now()).format("DD-MM-YYYY, HH:mm:ss")
+    socket.id +
+    " ---> " +
+    moment(Date.now()).format("DD-MM-YYYY, HH:mm:ss")
   );
 });
 
@@ -79,16 +79,20 @@ io.on("connection", function(socket) {
 // dbMongo.once('open', function() {
 //     console.log('MongoDb connected');
 // });
-var index = require("./routes/index");
-var admin = require("./routes/admin/index");
-var product = require("./routes/admin/product");
-var productorder = require("./routes/admin/productorder");
-var category = require("./routes/admin/category");
-var banner = require("./routes/admin/banner");
-var news = require("./routes/admin/news");
-var sizeproduct = require("./routes/admin/sizeproduct");
-var cart = require("./routes/admin/orderbuyproduct");
-var appRouter = require("./routes/font-end/app");
+var index = require("./routes/font-end/index");
+
+
+
+
+// var admin = require("./routes/admin/index");
+// var product = require("./routes/admin/product");
+// var productorder = require("./routes/admin/productorder");
+// var category = require("./routes/admin/category");
+// var banner = require("./routes/admin/banner");
+// var news = require("./routes/admin/news");
+// var sizeproduct = require("./routes/admin/sizeproduct");
+// var cart = require("./routes/admin/orderbuyproduct");
+// var appRouter = require("./routes/font-end/app");
 
 // view engine setup
 // let Customer = require('./models/customer');
@@ -105,7 +109,9 @@ function haltOnTimedout(req, res, next) {
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
@@ -119,7 +125,7 @@ app.use(
 );
 app.use(
   expressValidator({
-    errorFormatter: function(param, msg, value) {
+    errorFormatter: function (param, msg, value) {
       var namespace = param.split("."),
         root = namespace.shift(),
         formParam = root;
@@ -140,7 +146,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 // app.use(passport.session());
 app.use(flash());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.success_msg = req.flash("success_msg");
   res.locals.error_msg = req.flash("error_msg");
   res.locals.error = req.flash("error");
@@ -151,35 +157,46 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(session({ resave: true, saveUninitialized: true, secret: "webgovn" }));
-app.use("/", index);
-app.use("/admin", admin);
-app.use("/admin/product", product);
-app.use("/admin/product-order", productorder);
-app.use("/admin/category", category);
-app.use("/admin/banner", banner);
-app.use("/admin/news", news);
-app.use("/admin/cart", cart);
-app.use("/admin/size-product", sizeproduct);
-app.use("/", appRouter);
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: "webgovn"
+}));
+// Import router fontend and backend
+let routerFontEnd = require("./routes/router");
+app.use("/", routerFontEnd);
+// app.use("/", index);
+// app.use("/admin", admin);
+// app.use("/admin/product", product);
+// app.use("/admin/product-order", productorder);
+// app.use("/admin/category", category);
+// app.use("/admin/banner", banner);
+// app.use("/admin/news", news);
+// app.use("/admin/cart", cart);
+// app.use("/admin/size-product", sizeproduct);
+// app.use("/", appRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error("Not Found");
   err.status = 404;
   err.message = 404;
   // next(err);
-  res.render("404", { title: "Page Not Found" });
+  res.render("404", {
+    title: "Page Not Found"
+  });
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
   // render the error page
   res.status(err.status || 500);
-  res.render("error", { title: "Page Not Found" });
+  res.render("error", {
+    title: "Page Not Found"
+  });
 });
 
 function normalizePort(val) {

@@ -1349,6 +1349,7 @@ router.post("/getprice-productsync", (req, res) => {
     }
   });
 });
+
 router.get("/order-product", (req, res) => {
   var idProduct, idProductSync, idSizeProduct, soLuong, sumMoney;
   idProduct = req.query.idp;

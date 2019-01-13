@@ -58,70 +58,7 @@
                 </div>
                 <div class="detail-info">
                     <%-dataOneProduct.detailProduct%>
-                    <!-- <p>
-                            - Bàn học kết hợp giá sách rất thuận tiện cho việc sử dụng,giúp góc học tập trở nên gọn gàng.<br/> - Vật liệu: Ván MDF loại 1 nhập từ phủ lớp melamin vân gỗ chống trầy xước.<br/> - Sản phẩm sản xuất tại Việt Nam xuất qua thị
-                            trường Nhật Bản.<br/>
-                        </p> -->
                 </div>
-                <div class="color-product border-solid-left">
-                    <h4 class="font-bold">Màu sắc vật liệu</h4>
-                </div>
-                <div class="color-product">
-                    <div class="color-detail">
-                        <img class="img-responsive" src="/themes/img/mau1.jpg" alt="màu trắng">
-                        <div class="caption">
-                            <p class="text-color">màu trắng</p>
-                        </div>
-                    </div>
-                    <div class="color-detail">
-                        <img class="img-responsive" src="/themes/img/mau2.jpg" alt="màu xám">
-                        <div class="caption">
-                            <p class="text-color">màu xám</p>
-                        </div>
-                    </div>
-                    <div class="color-detail">
-                        <img class="img-responsive" src="/themes/img/mau3.jpg" alt="màu nâu">
-                        <div class="caption">
-                            <p class="text-color">màu nâu</p>
-                        </div>
-                    </div>
-                    <div class="color-detail">
-                        <img class="img-responsive" src="/themes/img/mau5.jpg" alt="sồi nhạt">
-                        <div class="caption">
-                            <p class="text-color">sồi nhạt</p>
-                        </div>
-                    </div>
-                    <div class="color-detail">
-                        <img class="img-responsive" src="/themes/img/mau4.jpg" alt="màu vàng">
-                        <div class="caption">
-                            <p class="text-color">màu vàng</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="size-produt border-solid-left">
-                    <h4 class="font-bold margin-top-bottom">Kích thước</h4>
-                </div>
-
-                <div class="detail-size">
-                    <%if(dataSizeProduct.length>0){%>
-                    <span> Dài x Rộng x Cao:</span>
-                    <select id="sizeList" name="sizeselectproduct">
-                        <%dataSizeProduct.forEach(function(item){ %>
-                        <option value="<%= item._id%>">
-                            <%= item.sizeLength%> x
-                            <%= item.sizeWidth%> x
-                            <%= item.sizeHeight%>
-                        </option>
-                        <%})%>
-                    </select>
-                    <%}%>
-                    <!-- <select name="" id="">
-                              <option value="1">số một</option>
-                              <option value="2">số 2</option>
-                          </select> -->
-                </div>
-
-
             </div>
 
         </div>
@@ -148,28 +85,6 @@
                 <%})}else{%>
                 <span>---Không có sản phẩm nào cho mục này---</span>
                 <%}%>
-
-
-                <!-- <div class="product-cate-type">
-                        <div class="img-cate-type">
-                            <img width="100%" src="product/sp2.jpg" />
-                        </div>
-                        <div class="img-detail-type caption">
-                            <span>Đèn bàn</span><br/>
-                            <span>540.000đ</span><br/>
-                            <label><input type="checkbox"> Chọn mua</label>
-                        </div>
-                    </div>
-                    <div class="product-cate-type">
-                        <div class="img-cate-type">
-                            <img width="100%" src="product/sp4.jpg" />
-                        </div>
-                        <div class="img-detail-type caption">
-                            <span>Đèn bàn</span><br/>
-                            <span>540.000đ</span><br/>
-                            <label><input type="checkbox"> Chọn mua</label>
-                        </div>
-                    </div> -->
 
             </div>
             <input type="hidden" value="<%=dataOneProduct.priceProduct%>" name="priceproduct" id="priceproductbysize" />
@@ -199,9 +114,9 @@
                                 <td>Màu sắc</td>
                                 <td>
                                     <select>
-                                        <option>Sồi Nâu</option>
-                                        <option>Sồi đỏ</option>
-                                        <option>Sồi trắng</option>
+                                        <option value="mau-trang">Màu Trắng</option>
+                                        <option value="mau-go-tu-nhien">Màu Gỗ Tự Nhiên</option>
+                                        <option value="mau-canh-gian">Màu Cánh Gián</option>
                                     </select>
                                 </td>
                             </tr>
@@ -223,13 +138,17 @@
                                 <td>Bảo hành:</td>
                                 <td>
                                     <span class="text-bao-hanh">12 tháng</span>
-
                                 </td>
                             </tr>
                             <tr>
                                 <td>Giao hàng:</td>
                                 <td>
-                                    <span class="text-bao-hanh">Giao ngay/ giao hàng sau 05 ngày...</span>
+                                    <select>
+                                        <option value="1">1 Ngày</option>
+                                        <option value="3">3 Ngày</option>
+                                        <option value="5">5 Ngày</option>
+                                        <option value="7">7 Ngày</option>
+                                    </select>
 
                                 </td>
                             </tr>

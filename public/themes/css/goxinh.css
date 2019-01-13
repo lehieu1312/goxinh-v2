@@ -656,6 +656,7 @@ span.belowtext {
 .list-help-product {
     list-style-type: none;
     display: block;
+    padding-left: 40px;
 }
 
 .list-help-product li {
