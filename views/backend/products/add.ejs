@@ -30,7 +30,7 @@
                         <%= error_msg%>
                     </div>
                     <%}%>
-                    <% if(errors && errors!='') { %>
+                    <% if(errors && errors!=='') { %>
                     <div class="alert alert-danger errors">
                         <% errors.forEach(function(e){ %>
                         <%= e.msg %> <br />
@@ -51,142 +51,142 @@
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group"><label class="col-sm-2 control-label">Mã</label>
-                                        <div class="col-sm-4"><input type="text" required name="code" class="form-control"
+                                        <div class="col-sm-4"><input type="text" required name="codeProduct" class="form-control"
                                                 required value="<%=data.codeProduct%>"></div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group"><label class="col-sm-2 control-label">Đơn vị</label>
-                                        <div class="col-sm-4"><input type="number" required name="unitProduct" class="form-control"
+                                        <div class="col-sm-4"><input type="text" required name="unitProduct" class="form-control"
                                                 required value="<%=data.unitProduct%>"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group"><label class="col-sm-2 control-label">Giá</label>
-                                        <div class="col-sm-4"><input type="number" name="price" class="form-control"
+                                        <div class="col-sm-4"><input type="number" name="priceProduct" class="form-control"
                                                 required value="<%=(data.priceProduct)?data.priceProduct:0%>"></div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group"><label class="col-sm-2 control-label">Thông tin sản phẩm</label>
-                                        <div class="col-sm-4"><input type="text" required name="detailProduct" class="form-control"
-                                                required value="<%=data.detailProduct%>"></div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12  col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Danh mục</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control" required id="category" name="category">
-                                                <% categories.forEach(function(item){ %>
-                                                <%if(data.categoryID){%>
-                                                <option value="<%= item._id%>" <%=item._id.toString()===data.categoryID.toString()
-                                                    ? 'selected' : '' %>>
-                                                    <%= item.nameCategory%>
-                                                </option>
-                                                <%}else{%>
-                                                <option value="<%= item._id%>">
-                                                    <%= item.nameCategory%>
-                                                </option>
-                                                <%}})%>
-                                            </select>
+                                            <textarea id="detailProduct" class="form-control" name="detailProduct"><%=data.detailProduct%> </textarea>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Ảnh</label>
-                                        <span class="desc"></span><br>
-                                        <%if(data.image){%> <img src="/upload/products/<%=data.codeProduct%>/<%= data.imageProduct%>"
-                                            width="150px">
-                                        <%}%>
-                                        <div class="col-sm-4"><input type="file" name="image" class="form-control"
-                                                accept="image/*"></div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Thư viện ảnh</label>
-                                        <div class="col-sm-4"><input type="file" multiple name="libary" class="form-control"></div>
-                                        <%if(data.codeProduct){%>
-                                        <a href="javascript:void(0)" id="viewgallery" class="col-sm-1 control-label text-left btn btn-info">Hiện
-                                            thư viện</a>
-                                        <%}%>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <!-- <a href="javascript:void(0)" id="delimagelibary" class="col-sm-offset-1 col-sm-1 control-label text-center btn-del-image btn btn-danger">Xóa</a> -->
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <div class="gallery">
-                                            <input type="hidden" value="<%=arrLibary%>" name="arrLibary" class="arrLibary">
-                                            <input type="hidden" value="" name="arrLibaryRemove" class="arrLibaryRemove">
-                                            <ul class="file-gallery">
-                                                <% arrLibary.forEach(function(item,index){%>
-                                                <li id="li-<%=index%>">
-                                                    <div class="card-gallery-image">
-                                                        <div class="card-body">
-                                                            <img src="/upload/products/<%=data.codeProduct%>/<%=item%>"
-                                                                alt="" width="100px" height="100px">
-                                                        </div>
-                                                        <div class="card-footer">
-                                                            <span>
-                                                                <a href="javascript:void(0)" class="btn-del-image" id="<%=index%>"
-                                                                    valid="<%=item%>">Xóa</a>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <%})%>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="col-xs-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12  col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Danh mục</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control" required id="categoryID" name="categoryID">
+                                                    <% categories.forEach(function(item){ %>
+                                                    <%if(data.categoryID){%>
+                                                    <option value="<%= item._id%>" <%=item._id.toString()===data.categoryID.toString()
+                                                        ? 'selected' : '' %>>
+                                                        <%= item.nameCategory%>
+                                                    </option>
+                                                    <%}else{%>
+                                                    <option value="<%= item._id%>">
+                                                        <%= item.nameCategory%>
+                                                    </option>
+                                                    <%}})%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Ảnh</label>
+                                            <span class="desc"></span><br>
+                                            <%if(data.imageProduct){%> <img src="/upload/product/<%=data.codeProduct%>/<%= data.imageProduct%>"
+                                                width="150px">
+                                            <%}%>
+                                            <div class="col-sm-4"><input type="file" name="image" class="form-control"
+                                                    accept="image/*"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Thư viện ảnh</label>
+                                            <div class="col-sm-4"><input type="file" multiple name="libary" class="form-control"></div>
+                                            <%if(data.codeProduct){%>
+                                            <a href="javascript:void(0)" id="viewgallery" class="col-sm-1 control-label text-left btn btn-info">Hiện
+                                                thư viện</a>
+                                            <%}%>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Thuộc sản phẩm</label>
+                                        <!-- <a href="javascript:void(0)" id="delimagelibary" class="col-sm-offset-1 col-sm-1 control-label text-center btn-del-image btn btn-danger">Xóa</a> -->
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <div class="gallery">
+                                                <input type="hidden" value="<%=arrLibary%>" name="arrLibary" class="arrLibary">
+                                                <input type="hidden" value="" name="arrLibaryRemove" class="arrLibaryRemove">
+                                                <ul class="file-gallery">
+                                                    <% arrLibary.forEach(function(item,index){%>
+                                                    <li id="li-<%=index%>">
+                                                        <div class="card-gallery-image">
+                                                            <div class="card-body">
+                                                                <img src="/upload/product/<%=data.codeProduct%>/<%=item%>"
+                                                                    alt="" width="100px" height="100px">
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <span>
+                                                                    <a href="javascript:void(0)" class="btn-del-image"
+                                                                        id="<%=index%>" valid="<%=item%>">Xóa</a>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <%})%>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12  col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Thuộc sản phẩm</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control" required id="productIDSync" name="productIDSync">
+                                                    <option value="0" selected>--- Không ---</option>
+                                                    <% dataProduct.forEach(function(item){ %>
+                                                    <%if(data.productIDSync){%>
+                                                    <option value="<%= item._id%>" <%=item._id.toString()===data.productIDSync.toString()
+                                                        ? 'selected' : '' %>>
+                                                        <%= item.nameProduct%>
+                                                    </option>
+                                                    <%}else{%>
+                                                    <option value="<%= item._id%>">
+                                                        <%= item.nameProduct%>
+                                                    </option>
+                                                    <%}})%>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Trạng thái</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control" required id="productIDSync" name="productIDSync">
-                                                <option value="0" selected>--- Không ---</option>
-                                                <% dataProduct.forEach(function(item){ %>
-                                                <%if(data.productIDSync){%>
-                                                <option value="<%= item._id%>" <%=item._id.toString()===data.productIDSync.toString()
-                                                    ? 'selected' : '' %>>
-                                                    <%= item.nameProduct%>
-                                                </option>
-                                                <%}else{%>
-                                                <option value="<%= item._id%>">
-                                                    <%= item.nameProduct%>
-                                                </option>
-                                                <%}})%>
-                                            </select>
+                                            <div><label> <input type="radio" <% if(data.status){ %> checked="checked"
+                                                    <% } %> value="true" name="status">Hoạt động </label></div>
+                                            <div><label> <input type="radio" value="false" name="status" <%
+                                                        if(!data.status){ %> checked="checked"
+                                                    <% } %>>Không hoạt động</label></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Trạng thái</label>
-                                    <div class="col-sm-4">
-                                        <div><label> <input type="radio" <% if(data.status){ %> checked="checked"
-                                                <% } %> value="true" name="status">Hoạt động </label></div>
-                                        <div><label> <input type="radio" value="false" name="status" <%
-                                                    if(!data.status){ %> checked="checked"
-                                                <% } %>>Không hoạt động</label></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <div class="col-sm-4 col-sm-offset-10">
-                                            <a href="/admin/products" class="btn btn-default "><i class="fa fa-times"></i>&nbsp;&nbsp;Hủy</a>
-                                            <button class="btn btn-primary" type="submit" id="btn-submit"><i class="fa fa-save"></i>&nbsp;&nbsp;Lưu</button>
+                                <div class="hr-line-dashed"></div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-4 col-sm-offset-10">
+                                                <a href="/admin/products" class="btn btn-default "><i class="fa fa-times"></i>&nbsp;&nbsp;Hủy</a>
+                                                <button class="btn btn-primary" type="submit" id="btn-submit"><i class="fa fa-save"></i>&nbsp;&nbsp;Lưu</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </form>
                 </div>
             </div>
