@@ -452,6 +452,92 @@ router.post(
     }
   }
 );
+router.get("/products/move", async (req, res) => {
+  console.log("vao....");
+  let data = await productModel.find({ codeProduct: "SP8" }).exec();
+  (async () => {
+    for (let i = 0; i < data.length; i++) {
+      let pathCode = path.join(
+        appRoot,
+        "public",
+        "upload",
+        "product",
+        data[i].codeProduct
+      );
+      if (!fs.existsSync(pathCode)) {
+        fs.mkdirSync(pathCode);
+      }
+      let imageP, image1, image2, image3, image4, image5;
+      if (data[i].imageProduct)
+        imageP = path.join(
+          appRoot,
+          "public",
+          "upload",
+          "product",
+          data[i].imageProduct
+        );
+      if (data[i].imageOne)
+        image1 = path.join(
+          appRoot,
+          "public",
+          "upload",
+          "product",
+          data[i].imageOne
+        );
+      if (data[i].imageTwo)
+        image2 = path.join(
+          appRoot,
+          "public",
+          "upload",
+          "product",
+          data[i].imageTwo
+        );
+      if (data[i].imageThree)
+        image3 = path.join(
+          appRoot,
+          "public",
+          "upload",
+          "product",
+          data[i].imageThree
+        );
+      if (data[i].imageFour)
+        image4 = path.join(
+          appRoot,
+          "public",
+          "upload",
+          "product",
+          data[i].imageFour
+        );
+      if (data[i].imageFive)
+        image5 = path.join(
+          appRoot,
+          "public",
+          "upload",
+          "product",
+          data[i].imageFive
+        );
+
+      if (fs.existsSync(imageP))
+        fse.moveSync(imageP, path.join(pathCode, data[i].imageProduct));
+
+      if (fs.existsSync(image1))
+        fse.moveSync(image1, path.join(pathCode, data[i].imageOne));
+
+      if (fs.existsSync(image2))
+        fse.moveSync(image2, path.join(pathCode, data[i].imageTwo));
+
+      if (fs.existsSync(image3))
+        fse.moveSync(image3, path.join(pathCode, data[i].imageThree));
+
+      if (fs.existsSync(image4))
+        fse.moveSync(image4, path.join(pathCode, data[i].imageFour));
+
+      if (fs.existsSync(image5))
+        fse.moveSync(image5, path.join(pathCode, data[i].imageFive));
+    }
+  })();
+  res.redirect("/admin/products");
+});
 /// Delete one or multi product search
 router.post("/products/del", checkAdmin, multipartMiddleware, (req, res) => {
   try {

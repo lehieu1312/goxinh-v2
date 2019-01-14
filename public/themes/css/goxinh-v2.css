@@ -742,3 +742,7 @@ aside {
   margin: 0px;
   padding-left: 10px;
 }
+
+.img-thumb-lib-detail {
+  width: 100%;
+}

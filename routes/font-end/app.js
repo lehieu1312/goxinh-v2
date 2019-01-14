@@ -955,6 +955,7 @@ router.get("/tim-kiem", async (req, res) => {
 });
 
 router.get("/san-pham/:alias", (req, res) => {
+  console.log('aaaaa');
   var sAliasUrl = req.params.alias;
   try {
     CategoryModel.find({
@@ -1016,6 +1017,14 @@ router.get("/san-pham/:alias", (req, res) => {
                       })
                       .limit(3)
                       .then(productSync => {
+                        let libImage = [];
+                        let libImageTmp = [];
+                        let pathImage = path.join(appRoot, 'public', 'upload', 'product', dataOneProduct.codeProduct);
+                        console.log(pathImage);
+                        if (fs.existsSync(pathImage)) {
+                          libImageTmp = fs.readdirSync(pathImage);
+                          libImage = libImageTmp.slice();
+                        }
                         if (productSync) {
                           res.render("font-end/product", {
                             title: dataOneProduct.nameProduct,
@@ -1024,6 +1033,7 @@ router.get("/san-pham/:alias", (req, res) => {
                             productInvolve: productInvolve,
                             dataCateParent: dataCateParent,
                             dataSizeProduct: dataSizeProduct,
+                            libImage,
                             dataCateChildren: dataCateChildren,
                             descriptions: dataOneProduct.nameProduct +
                               ", " +
@@ -1043,13 +1053,17 @@ router.get("/san-pham/:alias", (req, res) => {
                             })
                             .limit(3)
                             .then(productSync => {
-                              // console.log('productSync: ' + productSync);
+
+
+
+
                               res.render("font-end/product", {
                                 title: dataOneProduct.nameProduct,
                                 dataOneProduct: dataOneProduct,
                                 productSync: productSync,
                                 productInvolve: productInvolve,
                                 dataCateParent: dataCateParent,
+                                libImage,
                                 dataCateChildren: dataCateChildren,
                                 descriptions: dataOneProduct.nameProduct +
                                   ", " +

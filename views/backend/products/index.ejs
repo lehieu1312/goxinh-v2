@@ -11,6 +11,8 @@
                     <div class="ibox-tools">
                         <a href="/admin/products/add" class="btn btn-success btn-plus" type="button"><i class="fa fa-plus"></i>&nbsp;&nbsp;<span
                                 class="bold">Thêm</span></a>
+                        <a href="/admin/products/move" class="btn btn-success btn-plus" type="button"><i class="fa fa-plus"></i>&nbsp;&nbsp;<span
+                                class="bold">Move</span></a>
                         <a href="javascript:void(0)" id="deleteManyProducts" class="btn btn-danger btn-plus" type="button"><i
                                 class="fa fa-remove"></i>&nbsp;&nbsp;<span class="bold">Xóa</span></a>
                     </div>
@@ -48,8 +50,8 @@
                                 <td>
                                     <%=dem%>
                                 </td>
-                                <td><input type="checkbox" id="<%=item._id%>" class="i-checks checkboxAdminProduct" name="name[]"
-                                        value="<%=item.id%>"></td>
+                                <td><input type="checkbox" id="<%=item._id%>" class="i-checks checkboxAdminProduct"
+                                        name="name[]" value="<%=item.id%>"></td>
                                 <td>
                                     <a href="/admin/products/edit/<%=item._id%>" title="Sửa">
                                         <%=item.nameProduct%></a>

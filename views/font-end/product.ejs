@@ -10,7 +10,17 @@
                     <%=dataOneProduct.unitProduct%>)</span>
             </div>
             <div class="col-lg-7 col-md-7 col-xs-7">
-                <div class="img-large-product">
+                <ul id="slide-lib-img-product-detail">
+                    <%libImage.forEach((item, index)=>{%>
+                    <li>
+                        <a href="javascription:void(0)" class="view-img-lib">
+                            <img src="/upload/product/<%=dataOneProduct.codeProduct%>/<%=item%>" alt="<%=dataOneProduct.nameProduct%>"
+                                class="img-thumb-lib-detail" ></a>
+                    </li>
+                    <%})%>
+                </ul>
+
+                <!-- <div class="img-large-product">
                     <img id="img-main-product" width="100%" src="/upload/product/<%=dataOneProduct.imageProduct%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>" /><br />
                 </div>
                 <div class=" margintop-10 img-parent">
@@ -48,7 +58,7 @@
                         <%}%>
 
                     </div>
-                </div>
+                </div> -->
             </div>
 
 
@@ -322,3 +332,16 @@
 </div>
 
 <%include ../font-end/layout/footer.ejs%>
+<script>
+    $(document).ready(function () {
+        $("#slide-lib-img-product-detail").lightSlider({
+            loop: true,
+            keyPress: true,
+            auto: true,
+            speed: 1000,
+            vertical: false,
+            pager: false,
+            item: 1,
+        });
+    })
+</script>
