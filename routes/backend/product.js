@@ -454,7 +454,7 @@ router.post(
 );
 router.get("/products/move", async (req, res) => {
   console.log("vao....");
-  let data = await productModel.find({ codeProduct: "SP8" }).exec();
+  let data = await productModel.find().exec();
   (async () => {
     for (let i = 0; i < data.length; i++) {
       let pathCode = path.join(

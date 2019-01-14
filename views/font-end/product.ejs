@@ -15,7 +15,7 @@
                     <li>
                         <a href="javascription:void(0)" class="view-img-lib">
                             <img src="/upload/product/<%=dataOneProduct.codeProduct%>/<%=item%>" alt="<%=dataOneProduct.nameProduct%>"
-                                class="img-thumb-lib-detail" ></a>
+                                class="img-thumb-lib-detail"></a>
                     </li>
                     <%})%>
                 </ul>
@@ -79,7 +79,7 @@
                 <% if(productSync.length>0){productSync.forEach(function(item){%>
                 <div class="product-cate-type">
                     <div class="img-cate-type">
-                        <img width="100%" src="/upload/product/<%=item.imageProduct%>" />
+                        <img width="100%" src="/upload/product/<%=item.codeProduct%>/<%=item.imageProduct%>" />
                     </div>
                     <div class="img-detail-type caption">
                         <span class="text-name-prosync">
@@ -264,8 +264,8 @@
             <%productInvolve.forEach(function(item){%>
             <div class="panel-body">
                 <div class="product-involve">
-                    <a href="/san-pham/<%=item.aliasUrl%>"> <img src="/upload/product/<%=item.imageProduct%>" alt="<%=item.nameProduct%>"
-                            class="img-reponsive" width="100%" /></a>
+                    <a href="/san-pham/<%=item.aliasUrl%>"> <img src="/upload/product/<%=item.codeProduct%>/<%=item.imageProduct%>"
+                            alt="<%=item.nameProduct%>" class="img-reponsive" width="100%" /></a>
                 </div>
                 <div class="name-product-involve">
                     <a href="/san-pham/<%=item.aliasUrl%>"> <span>
