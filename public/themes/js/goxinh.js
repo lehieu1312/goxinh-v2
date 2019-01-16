@@ -1,35 +1,29 @@
 $('#myModal').modal('show');
 $(document).ready(function () {
     $('#btn-order-buy-product').click(() => {
-        var idProduct, idSizeProduct, idProductSync, soLuong, sumaryMoney;
+        var idProduct, idSizeProduct, idProductSync, soLuong, sumaryMoney, slGiaoHang, slMauSac;
         idProduct = $('#idproduct').val();
-        idSizeProduct = $('#idsizeproduct').val();
         idProductSync = $('#idproductsync').val();
         soLuong = $('#soluongsanpham').val();
+        slGiaoHang = $('#slGiaohang').val();
+        slMauSac = $('#slMausac').val();
         sumaryMoney = $('#sumarymoney').val();
-        console.log('idProduct: ' + idProduct);
-        console.log('idSizeProduct: ' + idSizeProduct);
-        console.log('idProductSync: ' + idProductSync);
-        // alert('sumaryMoney: ' + sumaryMoney);
+
         location.href = "/order-product?idp=" + idProduct + '&idps=' + idProductSync + '&idsip=' + idSizeProduct + '&sl=' + soLuong + '&su=' + sumaryMoney;
         // $.post(
         //     '/order-product', {
-        //         idProduct: idProduct,
-        //         idSizeProduct: idSizeProduct,
-        //         idProductSync: idProductSync
-
+        //         idProduct,
+        //         idProductSync,
+        //         soLuong: soLuong,
+        //         slGiaoHang,
+        //         slMauSac,
+        //         sumaryMoney,
         //     },
-        // function(data) {
-        //     if (data.status == 1) {
-        //         // console.log('data: ' + JSON.stringify(data));
-        //         // console.log(data.data.priceProduct);
-        //         $('#priceproductbysize').val(data.data.priceProduct);
-        //         $('#idsizeproduct').val(data.data._id);
-        //         $('#dongiasanpham').html(data.data.priceProduct.toLocaleString());
-        //         var tongtien = tinhtongtien();
-        //         $('#tongtiendonhang').html(tongtien.toLocaleString());
+        //     function (data) {
+        //         if (data.status === true) {
+        //             console.log('ccc');
+        //         }
         //     }
-        // }
         // )
     });
     // $("#list").attr( "selectedIndex", -1 );
@@ -56,8 +50,6 @@ $(document).ready(function () {
         )
     });
     $('#soluongsanpham').on('change', function () {
-        // alert('234');
-        // alert($('#soluongsanpham').val());
         var tong = tinhtongtien();
         $('#tongtiendonhang').html(tong.toLocaleString());
         $('#sumarymoney').val(tong);
