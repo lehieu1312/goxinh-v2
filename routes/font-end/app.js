@@ -1640,7 +1640,7 @@ router.post("/order-product", async (req, res) => {
   } catch (error) {
     console.log(error);
     req.flash("error_msg", "Lỗi: " + error + "");
-    return res.redirect("/admin/product/edit.html");
+    return res.redirect("/admin/product/checkok");
   }
 });
 
