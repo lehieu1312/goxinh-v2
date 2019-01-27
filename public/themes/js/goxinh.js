@@ -7,24 +7,27 @@ $(document).ready(function () {
         soLuong = $('#soluongsanpham').val();
         slGiaoHang = $('#slGiaohang').val();
         slMauSac = $('#slMausac').val();
-        sumaryMoney = $('#sumarymoney').val();
+        if(soLuong<1){
+            
+        }
+        // sumaryMoney = $('#sumarymoney').val();
 
-        location.href = "/order-product?idp=" + idProduct + '&idps=' + idProductSync + '&idsip=' + idSizeProduct + '&sl=' + soLuong + '&su=' + sumaryMoney;
-        // $.post(
-        //     '/order-product', {
-        //         idProduct,
-        //         idProductSync,
-        //         soLuong: soLuong,
-        //         slGiaoHang,
-        //         slMauSac,
-        //         sumaryMoney,
-        //     },
-        //     function (data) {
-        //         if (data.status === true) {
-        //             console.log('ccc');
-        //         }
-        //     }
-        // )
+        // location.href = "/order-product?idp=" + idProduct + '&idps=' + idProductSync + '&idsip=' + idSizeProduct + '&sl=' + soLuong + '&su=' + sumaryMoney;
+        $.post(
+            '/order-product', {
+                idProduct,
+                idProductSync,
+                soLuong: soLuong,
+                slGiaoHang,
+                slMauSac,
+                sumaryMoney,
+            },
+            function (data) {
+                if (data.status === true) {
+                    console.log('ccc');
+                }
+            }
+        )
     });
     // $("#list").attr( "selectedIndex", -1 );
     $("#sizeList").change(function () {
