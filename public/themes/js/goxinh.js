@@ -14,7 +14,7 @@ $(document).ready(function () {
 
         // location.href = "/order-product?idp=" + idProduct + '&idps=' + idProductSync + '&idsip=' + idSizeProduct + '&sl=' + soLuong + '&su=' + sumaryMoney;
         $.post(
-            '/order-product', {
+            '/on-order-product', {
                 idProduct,
                 idProductSync,
                 soLuong: soLuong,

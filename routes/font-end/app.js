@@ -1364,124 +1364,13 @@ router.post("/getprice-productsync", (req, res) => {
   });
 });
 
-// router.post("/order-product", (req, res) => {
-//   console.log(req.body);
+router.post("/on-order-product", (req, res) => {
+  console.log(req.body);
 
-//   res.json({
-//     status: true,
-//     msg: 'success'
-//   });
-// });
-
-router.get("/order-product", (req, res) => {
-  var idProduct, idProductSync, idSizeProduct, soLuong, sumMoney;
-  idProduct = req.query.idp;
-  console.log(idProduct);
-  idSizeProduct = req.query.idsip;
-  console.log(idSizeProduct);
-  idProductSync = req.query.idps;
-  console.log(idProductSync);
-  soLuong = req.query.sl;
-  sumMoney = req.query.su;
-
-  if (!idProduct || !soLuong) {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
-          });
-        }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-            return res.render("font-end/checkok", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              error_msg: "Không có sản phẩm để đặt hàng",
-              errors: null
-            });
-          }
-        );
-      }
-    );
-  } else {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
-          });
-        }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            console.log("dataCateChildren: " + dataCateChildren);
-
-            res.render("font-end/info-order", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              idProduct,
-              idSizeProduct,
-              soLuong,
-              sumMoney,
-              idProductSync
-            });
-          }
-        );
-      }
-    );
-  }
-  // res.render('font-end/info-order', { idProduct, idSizeProduct, soLuong, idProductSync });
+  res.json({
+    status: true,
+    msg: 'success'
+  });
 });
 
 router.get("/order-product", (req, res) => {
@@ -1592,6 +1481,7 @@ router.get("/order-product", (req, res) => {
       }
     );
   }
+  // res.render('font-end/info-order', { idProduct, idSizeProduct, soLuong, idProductSync });
 });
 
 
