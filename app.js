@@ -25,11 +25,7 @@ var passport = require("passport");
 var app = express();
 var server = http.Server(app);
 var io = require("socket.io")(server);
-// io.on('connection', function(socket) {
-//     console.log('co nguoi ket noi: ' + socket.id);
-//     //io.sockets.emit
-//     io.sockets.emit('SERVER-SEND-DATA', 'server');
-// });
+
 var port = normalizePort(process.env.PORT || "3018");
 app.set("port", port);
 // app.set('devMode', true);

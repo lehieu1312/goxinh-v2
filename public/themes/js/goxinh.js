@@ -8,19 +8,17 @@ $(document).ready(function () {
         slGiaoHang = $('#slGiaohang').val();
         slMauSac = $('#slMausac').val();
         if(soLuong<1){
-            
+            return alert('Số lượng tối thiểu là 1. Vui lòng chọn lại số lượng');
         }
-        // sumaryMoney = $('#sumarymoney').val();
 
         // location.href = "/order-product?idp=" + idProduct + '&idps=' + idProductSync + '&idsip=' + idSizeProduct + '&sl=' + soLuong + '&su=' + sumaryMoney;
         $.post(
             '/on-order-product', {
                 idProduct,
                 idProductSync,
-                soLuong: soLuong,
+                soLuong,
                 slGiaoHang,
                 slMauSac,
-                sumaryMoney,
             },
             function (data) {
                 if (data.status === true) {
