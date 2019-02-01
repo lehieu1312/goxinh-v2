@@ -1102,7 +1102,6 @@ router.get("/san-pham/:alias", (req, res) => {
 });
 
 router.post("/order-on-request", multipartMiddleware, (req, res) => {
-  console.log("==================da vao================");
   try {
     // console.log(req.files);
     var imageOrder = req.files.image;
@@ -1128,14 +1127,12 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
         },
         function (err, dataCateParent) {
           if (err) {
-            console.log("1");
-            // console.log(err);
+            console.log(err);
             return res.render("error", {
               title: "Error Get Data",
               error: err
             });
           }
-          console.log("dataCateParent: " + dataCateParent);
           CategoryModel.find({
               $and: [{
                 categoryParent: {
@@ -1165,8 +1162,6 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
           );
         }
       );
-      // req.flash('errors', errors);
-      // return res.render('admin/product/add', { errors: errors });
     } else {
       if (imageOrder.size > 8000000) {
         CategoryModel.find({
@@ -1494,17 +1489,12 @@ router.post("/order-product", async (req, res) => {
 
     var cartProduct = [];
     var giaSanPham;
-
-   let dataProductOne =await  ProductModel.findById(dataBody.idproduct).exec();
-      console.log(
-        "dataProductOne.priceProduct: " + dataProductOne.priceProduct
-      );
-      // giaSanPham = dataProductOne.priceProduct;
+    console.log(sess.cart);
+   let dataProductOne =await  ProductModel.findById(sess.cart.idproduct).exec();
+     
       cartProduct = [{
         id: dataBody.idproduct,
         name: dataProductOne.nameProduct,
-        idSize: idsizep,
-        size: sizeProduct,
         price: dataProductOne.priceProduct,
         image: dataProductOne.imageProduct,
         quanlity: dataBody.soluong,
