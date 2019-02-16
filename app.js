@@ -69,33 +69,8 @@ io.on("connection", function (socket) {
   );
 });
 
-// delFolderNotExist();
-
-// delFolderApp();
-
-// mongoose.connect('mongodb://localhost/buildapp');
-// var dbMongo = mongoose.connection;
-// dbMongo.on('error', console.error.bind(console, 'connection error:'));
-// dbMongo.once('open', function() {
-//     console.log('MongoDb connected');
-// });
 var index = require("./routes/font-end/index");
 
-
-
-
-// var admin = require("./routes/admin/index");
-// var product = require("./routes/admin/product");
-// var productorder = require("./routes/admin/productorder");
-// var category = require("./routes/admin/category");
-// var banner = require("./routes/admin/banner");
-// var news = require("./routes/admin/news");
-// var sizeproduct = require("./routes/admin/sizeproduct");
-// var cart = require("./routes/admin/orderbuyproduct");
-// var appRouter = require("./routes/font-end/app");
-
-// view engine setup
-// let Customer = require('./models/customer');
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -152,8 +127,8 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash("error");
   res.locals.errors = req.flash("errors");
   res.locals.title = "Goxinh.net";
-  res.locals.descriptions =
-    "Gỗ Xinh,Gỗ nội thất,gỗ xuất khẩu,Đồ gỗ nội thất,nội thất trang trí,goxinh.net";
+  res.locals.descriptions ="Gỗ Xinh,Gỗ nội thất,gỗ xuất khẩu,Đồ gỗ nội thất,nội thất trang trí,goxinh.net";
+  sess=req.session;
   next();
 });
 
@@ -162,19 +137,11 @@ app.use(session({
   saveUninitialized: true,
   secret: "webgovn"
 }));
+
 // Import router fontend and backend
 let routerFontEnd = require("./routes/router");
 app.use("/", routerFontEnd);
-// app.use("/", index);
-// app.use("/admin", admin);
-// app.use("/admin/product", product);
-// app.use("/admin/product-order", productorder);
-// app.use("/admin/category", category);
-// app.use("/admin/banner", banner);
-// app.use("/admin/news", news);
-// app.use("/admin/cart", cart);
-// app.use("/admin/size-product", sizeproduct);
-// app.use("/", appRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

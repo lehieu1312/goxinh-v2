@@ -1,30 +1,29 @@
 $('#myModal').modal('show');
 $(document).ready(function () {
     $('#btn-order-buy-product').click(() => {
-        var idProduct, idSizeProduct, idProductSync, soLuong, sumaryMoney, slGiaoHang, slMauSac;
+        var idProduct, idProductSync, soLuong, slGiaoHang, slMauSac;
         idProduct = $('#idproduct').val();
         idProductSync = $('#idproductsync').val();
         soLuong = $('#soluongsanpham').val();
         slGiaoHang = $('#slGiaohang').val();
         slMauSac = $('#slMausac').val();
-        if(soLuong<1){
-            
+        if (soLuong < 1) {
+            return alert('Số lượng sản phẩm phải lớn hơn 0.');
         }
-        // sumaryMoney = $('#sumarymoney').val();
-
         // location.href = "/order-product?idp=" + idProduct + '&idps=' + idProductSync + '&idsip=' + idSizeProduct + '&sl=' + soLuong + '&su=' + sumaryMoney;
         $.post(
-            '/order-product', {
+            '/order-cart', {
                 idProduct,
                 idProductSync,
-                soLuong: soLuong,
+                soLuong,
                 slGiaoHang,
-                slMauSac,
-                sumaryMoney,
+                slMauSac
             },
             function (data) {
                 if (data.status === true) {
-                    console.log('ccc');
+                    location.href='/cart';
+                }else{
+                    alert(data.msg);
                 }
             }
         )

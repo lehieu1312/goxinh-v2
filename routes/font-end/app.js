@@ -955,7 +955,6 @@ router.get("/tim-kiem", async (req, res) => {
 });
 
 router.get("/san-pham/:alias", (req, res) => {
-  console.log('aaaaa');
   var sAliasUrl = req.params.alias;
   try {
     CategoryModel.find({
@@ -1364,238 +1363,49 @@ router.post("/getprice-productsync", (req, res) => {
   });
 });
 
-// router.post("/order-product", (req, res) => {
-//   console.log(req.body);
 
-//   res.json({
-//     status: true,
-//     msg: 'success'
-//   });
-// });
+router.post("/order-cart", async (req, res) => {
+  let dataBody = req.body;
+  var idProduct, idProductSync, soLuong, ngayGiaoHang, mauSac;
 
-router.get("/order-product", (req, res) => {
-  var idProduct, idProductSync, idSizeProduct, soLuong, sumMoney;
-  idProduct = req.query.idp;
-  console.log(idProduct);
-  idSizeProduct = req.query.idsip;
-  console.log(idSizeProduct);
-  idProductSync = req.query.idps;
-  console.log(idProductSync);
-  soLuong = req.query.sl;
-  sumMoney = req.query.su;
-
+  idProduct = dataBody.idProduct;
+  idProductSync = dataBody.idProductSync;
+  soLuong = dataBody.soLuong;
+  ngayGiaoHang = dataBody.slGiaoHang;
+  mauSac = dataBody.slMauSac;
+  sess.cart={
+    idProduct,
+    idProductSync,
+    soLuong,
+    ngayGiaoHang,
+    mauSac
+  };
+  console.info(sess.cart);
   if (!idProduct || !soLuong) {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
-          });
-        }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-            return res.render("font-end/checkok", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              error_msg: "Không có sản phẩm để đặt hàng",
-              errors: null
-            });
-          }
-        );
-      }
-    );
+   res.json({status:false,msg:'Vui lòng chọn sản phẩm và số lượng.'})
   } else {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
-          });
-        }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            console.log("dataCateChildren: " + dataCateChildren);
-
-            res.render("font-end/info-order", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              idProduct,
-              idSizeProduct,
-              soLuong,
-              sumMoney,
-              idProductSync
-            });
-          }
-        );
-      }
-    );
-  }
-  // res.render('font-end/info-order', { idProduct, idSizeProduct, soLuong, idProductSync });
-});
-
-router.get("/order-product", (req, res) => {
-  var idProduct, idProductSync, idSizeProduct, soLuong, sumMoney;
-  idProduct = req.query.idp;
-  console.log(idProduct);
-  idSizeProduct = req.query.idsip;
-  console.log(idSizeProduct);
-  idProductSync = req.query.idps;
-  console.log(idProductSync);
-  soLuong = req.query.sl;
-  sumMoney = req.query.su;
-
-  if (!idProduct || !soLuong) {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
-          });
-        }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-            return res.render("font-end/checkok", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              error_msg: "Không có sản phẩm để đặt hàng",
-              errors: null
-            });
-          }
-        );
-      }
-    );
-  } else {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
-          });
-        }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            console.log("dataCateChildren: " + dataCateChildren);
-
-            res.render("font-end/info-order", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              idProduct,
-              idSizeProduct,
-              soLuong,
-              sumMoney,
-              idProductSync
-            });
-          }
-        );
-      }
-    );
+    res.json({status:true,msg:'success'});
   }
 });
 
+router.get('/cart',async (req,res)=>{
+  if(sess.cart){
+    let dataCateParent = await CategoryModel.find({$and:[{categoryParent: null}, {status: true}]}).exec();
+    let dataCateChildren = await CategoryModel.find({$and:[{categoryParent:{$ne:null}},{status:true}]}).exec();
+  
+    res.render('font-end/info-order',{
+      title:'Thông tin đặt hàng',
+      dataCateParent,
+      dataCateChildren
+    });
+  }else{
+    res.redirect('/');
+  }
+  
 
-router.post("/order-product", async (req, res) => {
+});
+
+router.post("/order-cart", async (req, res) => {
   try {
     let dataBody = req.body;
     req.checkBody("name", "Tên không được để trống").notEmpty();
@@ -1607,24 +1417,12 @@ router.post("/order-product", async (req, res) => {
       .checkBody("phonenumber", "Số điện thoại không được để trống")
       .isNumeric();
     req.checkBody("address", "Địa chỉ không được để trống").notEmpty();
-    req.checkBody("idproduct", "Chưa chọn sản phẩm").notEmpty();
-    req.checkBody("soluong", "chưa chọn số lượng").notEmpty();
-    // req.checkBody('priceproduct', 'chưa chọn giá sản phẩm').notEmpty();
 
     var errors = req.validationErrors();
     if (errors) {
       console.log(JSON.stringify(errors));
       req.flash("errors", errors);
-      return res.redirect(
-        "/order-product?idp=" +
-        dataBody.idproduct +
-        "&idps=" +
-        dataBody.idproductsync +
-        "&idsip=" +
-        dataBody.idsizeproduc +
-        "&sl=" +
-        dataBody.soluong
-      );
+      return res.redirect("/cart");
     }
 
     var getProduct = (id, arrID) => {
@@ -1645,7 +1443,6 @@ router.post("/order-product", async (req, res) => {
 
           arrID.push(tmpProduct);
           resolve("success");
-          // console.log('arrIDProduct---: ' + JSON.stringify(arrIDProduct));
         } catch (error) {
           reject(error);
         }
@@ -1712,7 +1509,8 @@ router.post("/order-product", async (req, res) => {
 
           var mainOptions = { // thiết lập đối tượng, nội dung gửi mail
             from: 'Thông báo từ goxinh.net',
-            to: 'woodenvina@gmail.com', //woodenvina@gmail.com
+            // to: 'woodenvina@gmail.com',
+            to: 'hieu.ric@gmail.com',
             subject: 'Bạn có đơn hàng mới từ goxinh.net.Vui lòng kiểm tra đơn hàng',
             text: `Bạn có đơn hàng mới trị giá:  ${totalPrice} từ ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng`,
             html: `<b>Bạn có đơn hàng mới trị giá:  ${totalPrice} từ ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng</b>`
