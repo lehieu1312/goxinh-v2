@@ -28,7 +28,6 @@ $(document).ready(function () {
             }
         )
     });
-    // $("#list").attr( "selectedIndex", -1 );
     $("#sizeList").change(function () {
         var sizeID = $("#sizeList option:selected").val();
         // console.log(sizeID);

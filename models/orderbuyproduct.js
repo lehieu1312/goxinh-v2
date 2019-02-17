@@ -14,6 +14,7 @@ var orderProduct = new Schema({
     idSizeProduct: ObjectId,
     idProductSync: Array,
     quanlity: Number,
+    delivery:Number,
     dateCreate: Date,
     statusOrder: Number,
     status: Boolean
