@@ -1517,6 +1517,7 @@ router.post("/order", async (req, res) => {
       });
       orderBuyProductModel.save().then(async () => {
         await sendLinkMail(dataBody.sumarymoney, dataBody.name, dataBody.phonenumber, dataBody.email);
+        sess.cart=null;
         return res.redirect('/order-success');
       });
    
@@ -1528,6 +1529,9 @@ router.post("/order", async (req, res) => {
 });
 
 router.get("/order-success", async (req, res) => {
+  if(!sess.cart){
+    return res.redirect('/');
+  }
   let dataCateParent = await CategoryModel.find({$and:[{categoryParent: null}, {status: true}]}).exec();
   let dataCateChildren = await CategoryModel.find({$and:[{categoryParent:{$ne:null}},{status:true}]}).exec();
 
