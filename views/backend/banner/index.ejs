@@ -33,6 +33,7 @@
                                     <th><input type="checkbox" id="checkboxall" class="checkboxAdminProduct"></th>
                                     <th>Tên </th>
                                     <th>Ảnh</th>
+                                    <th>Vị trí</th>
                                     <th>Thứ tự</th>
                                     <th>Trạng thái</th>
                                     <th>Hành động</th>
@@ -45,15 +46,18 @@
                                     <td>
                                         <%=dem%>
                                     </td>
-                                    <td><input type="checkbox" id="<%=item.id%>" class="i-checks checkboxAdminProduct" name="name[]" value="<%=item.id%>"></td>
+                                    <td><input type="checkbox" id="<%=item._id%>" class="i-checks checkboxAdminProduct" name="name[]" value="<%=item._id%>"></td>
                                     <td>
-                                        <%=item.name%>
+                                        <a href="/admin/banner/edit/<%=item._id%>" title="Sửa"> <%=item.nameBanner%></a>
                                     </td>
                                     <td>
-                                        <img src="/upload/banner/<%=(item.image)?item.image:'no-image.png'%>" alt="news" width="50px">
+                                        <img src="/upload/banner/<%=(item.imageBanner)?item.imageBanner:'no-image.png'%>" alt="news" width="50px">
                                     </td>
                                     <td>
-                                        <%=item.number%>
+                                        <%=item.locationBanner%>
+                                    </td>
+                                    <td>
+                                        <%=item.numberOrder%>
                                     </td>
                                     <td>
                                         <%if(item.status==true){%>
@@ -63,7 +67,7 @@
                                         <%}%>
                                     </td>
                                     <td class="text-center">
-                                        <a href="/admin/banner/edit/<%=item.id%>" title="Sửa"> <i class="fa fa-edit color-navi fa-lg"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0)" onclick="delBanner('<%=item.id%>')" title="Xóa ">
+                                        <a href="/admin/banner/edit/<%=item._id%>" title="Sửa"> <i class="fa fa-edit color-navi fa-lg"></i></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0)" onclick="delBanner('<%=item.id%>')" title="Xóa ">
                                             <i class="fa fa-trash color-red fa-lg "></i></a>
                                     </td>
                                 </tr>

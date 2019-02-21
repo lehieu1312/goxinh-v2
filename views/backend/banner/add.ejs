@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <%if(!data.id){%>
+                    <%if(!data.nameBanner){%>
                     <h5>Thêm banner</h5>
                     <%}else{%>
                     <h5>Sửa banner</h5>
@@ -36,36 +36,49 @@
                         <%});%>
                     </div>
                     <% };%>
-                    <%if(!data.id){%>
+                    <%if(!data.nameBanner){%>
                     <form method="post" class="form-horizontal" enctype="multipart/form-data">
                         <%}else{%>
-                        <form method="post" action="/admin/banner/edit/<%=data.id%>" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="post" action="/admin/banner/edit/<%=data._id%>" class="form-horizontal" enctype="multipart/form-data">
                             <%}%>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group"><label class="col-sm-2 control-label">Tên</label>
-                                        <div class="col-sm-4"><input type="text" required name="name" class="form-control" required value="<%=data.name%>"></div>
+                                        <div class="col-sm-4"><input type="text" required name="nameBanner" class="form-control" required value="<%=data.nameBanner%>"></div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Ảnh</label>
                                         <span class="desc"></span><br>
-                                        <%if(data.image){%>
-                                        <img src="/upload/banner/<%= data.image%>" width="200px">
+                                        <%if(data.imageBanner){%>
+                                        <img src="/upload/banner/<%= data.imageBanner%>" width="200px">
                                         <%}%>
                                         <div class="col-sm-4"><input type="file" name="image" class="form-control" accept="image/*"></div>
-                                        <!-- <a href="" class="col-sm-2 control-label text-left">View libary</a> -->
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <div class="form-group"><label class="col-sm-2 control-label">Url</label>
-                                        <div class="col-sm-4"><input type="text" required name="url" class="form-control" required value="<%=data.url%>"></div>
+                                    <div class="form-group"><label class="col-sm-2 control-label">link</label>
+                                        <div class="col-sm-4"><input type="text" required name="linkBanner" class="form-control" required value="<%=data.linkBanner%>"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12  col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Vị trí</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control" required id="locationBanner" name="locationBanner">
+                                                <option value="0" <%=data.numberOrder===0 ? 'selected' : '' %> selected >Slider</option>
+                                                <option value="1" <%=data.numberOrder===1 ? 'selected' : '' %>>Banner bên phải - trên</option>
+                                                <option value="2" <%=data.numberOrder===2 ? 'selected' : '' %>>Banner bên phải - giữa</option>
+                                                <option value="3" <%=data.numberOrder===3 ? 'selected' : '' %>>Banner bên phải - dưới</option>
+                                                <option value="4" <%=data.numberOrder===4 ? 'selected' : '' %>>Banner bên dưới</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group"><label class="col-sm-2 control-label">Thứ tự</label>
-                                        <div class="col-sm-4"><input type="number" required name="number" class="form-control" required value="<%=data.number%>"></div>
+                                        <div class="col-sm-4"><input type="number" required name="numberOrder" min="1" class="form-control" required value="<%=data.numberOrder%>"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
