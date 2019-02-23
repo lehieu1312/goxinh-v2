@@ -35,8 +35,7 @@ passport.use(
     },
 
     function (username, password, done) {
-      userModel
-        .findOne({
+      userModel.findOne({
           $and: [{
             email: username
           }, {
