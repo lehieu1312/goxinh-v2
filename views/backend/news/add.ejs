@@ -9,7 +9,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <%if(!newsData.id){%>
+                    <%if(!data.nameNews){%>
                     <h5>Thêm bài viết</h5>
                     <%}else{%>
                     <h5>Sửa bài viết</h5>
@@ -37,35 +37,23 @@
                         <%});%>
                     </div>
                     <% };%>
-                    <%if(!newsData.id){%>
+                    <%if(!data.nameNews){%>
                     <form method="post" class="form-horizontal" enctype="multipart/form-data">
                         <%}else{%>
-                        <form method="post" action="/admin/news/edit/<%=newsData.id%>" class="form-horizontal" enctype="multipart/form-data">
+                        <form method="post" action="/admin/news/edit/<%=data._id%>" class="form-horizontal" enctype="multipart/form-data">
                             <%}%>
                             <div class="row">
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group"><label class="col-sm-2 control-label">Tên</label>
-                                        <div class="col-sm-4"><input type="text" required name="title" class="form-control"
-                                                required value="<%=newsData.title%>"></div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-md-12 col-lg-12">
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">Ảnh</label>
-                                        <span class="desc"></span><br>
-                                        <%if(newsData.image){%>
-                                        <img src="/upload/news/<%= newsData.image%>" width="200px">
-                                        <%}%>
-                                        <div class="col-sm-4"><input type="file" name="image" class="form-control"
-                                                accept="image/*"></div>
-                                        <!-- <a href="" class="col-sm-2 control-label text-left">View libary</a> -->
+                                        <div class="col-sm-4"><input type="text" required name="nameNews" class="form-control"
+                                                required value="<%=data.nameNews%>"></div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Mô tả </label>
                                         <div class="col-sm-8">
-                                            <textarea id="description" class="form-control" name="description"><%=newsData.description%></textarea>
+                                            <textarea id="description" class="form-control" name="descriptionNews"><%=data.descriptionNews%></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +61,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Nội dung </label>
                                         <div class="col-sm-8">
-                                            <textarea id="content" class="form-control" name="content"><%=newsData.content%> </textarea>
+                                            <textarea id="content" class="form-control" name="detailNews"><%=data.detailNews%> </textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -81,22 +69,15 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Loại tin tức</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control" id="type" name="type">
-                                                <% if(newsData.id){%>
-                                                <option value="0" <%=(newsData.type==0) ? 'selected=\"selected\"' : ''
-                                                    %> >Tin tức</option>
-                                                <option value="3" <%=(newsData.type==3) ? 'selected=\"selected\"' : ''
-                                                    %> >Tuyển dụng</option>
-                                                <option value="1" <%=(newsData.type==1) ? 'selected=\"selected\"' : ''
-                                                    %> >Thông tin công ty</option>
-                                                <option value="2" <%=(newsData.type==2) ? 'selected=\"selected\"' : ''
-                                                    %> >Hình ảnh hoạt động</option>
-                                                <%}else{%>
-                                                <option value="0" selected>Tin tức</option>
-                                                <option value="3">Tuyển dụng</option>
-                                                <option value="1">Thông tin công ty</option>
-                                                <option value="2">Hình ảnh hoạt động</option>
-                                                <%}%>
+                                            <select class="form-control" id="typeNews" name="typeNews">
+                                                <option value="0" <%=data.typeNews===0 ? 'selected' : '' %> selected>Tin tức</option>
+                                                <option value="1" <%=data.typeNews===1 ? 'selected' : '' %> >Giới thiệu</option>
+                                                <option value="2" <%=data.typeNews===2 ? 'selected' : '' %> >Cách mua hàng</option>
+                                                <option value="3" <%=data.typeNews===3 ? 'selected' : '' %>>Hướng dẫn thanh toán</option>
+                                                <option value="4" <%=data.typeNews===4 ? 'selected' : '' %> >Giao hàng</option>
+                                                <option value="5" <%=data.typeNews===5 ? 'selected' : '' %> >Bảo hành</option>
+                                                <option value="6" <%=data.typeNews===6 ? 'selected' : '' %> >Bản quyền và thương hiệu</option>
+                                                <option value="7" <%=data.typeNews===7 ? 'selected' : '' %> >Bảo vệ thông tin cá nhân</option>
                                             </select>
                                         </div>
                                     </div>
@@ -104,10 +85,10 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Trạng thái</label>
                                     <div class="col-sm-4">
-                                        <div><label> <input type="radio" <% if(newsData.status){ %> checked="checked"
+                                        <div><label> <input type="radio" <% if(data.status){ %> checked="checked"
                                                 <% } %> value="true" name="status">Hoạt động </label></div>
                                         <div><label> <input type="radio" value="false" name="status" <%
-                                                    if(!newsData.status){ %> checked="checked"
+                                                    if(!data.status){ %> checked="checked"
                                                 <% } %>>Không hoạt động</label></div>
                                     </div>
                                 </div>

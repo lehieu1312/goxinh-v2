@@ -12,7 +12,6 @@ var bannerSchema = new Schema({
     locationBanner: Number,
     numberOrder: Number,
     status: Boolean
-
 }, { collection: 'banners' });
 
 module.exports = mongoose.model('banner', bannerSchema);

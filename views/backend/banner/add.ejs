@@ -1,7 +1,6 @@
 <% include ../layout/header.ejs %>
 <link href="/themes/backend/css/plugins/select/select2.min.css" rel="stylesheet">
 <script src="/themes/backend/js/ckeditor/ckeditor.js"></script>
-<!-- <script src="https://cdn.ckeditor.com/4.8.0/standard-all/ckeditor.js"></script> -->
 <% include ../layout/menu-left.ejs %>
 <% include ../layout/top.ejs %>
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -67,18 +66,18 @@
                                         <label class="col-sm-2 control-label">Vị trí</label>
                                         <div class="col-sm-4">
                                             <select class="form-control" required id="locationBanner" name="locationBanner">
-                                                <option value="0" <%=data.numberOrder===0 ? 'selected' : '' %> selected >Slider</option>
-                                                <option value="1" <%=data.numberOrder===1 ? 'selected' : '' %>>Banner bên phải - trên</option>
-                                                <option value="2" <%=data.numberOrder===2 ? 'selected' : '' %>>Banner bên phải - giữa</option>
-                                                <option value="3" <%=data.numberOrder===3 ? 'selected' : '' %>>Banner bên phải - dưới</option>
-                                                <option value="4" <%=data.numberOrder===4 ? 'selected' : '' %>>Banner bên dưới</option>
+                                                <option value="0" <%=data.locationBanner===0 ? 'selected' : '' %> selected> Slider</option>
+                                                <option value="1" <%=data.locationBanner===1 ? 'selected' : '' %>>Banner bên phải - trên</option>
+                                                <option value="2" <%=data.locationBanner===2 ? 'selected' : '' %>>Banner bên phải - giữa</option>
+                                                <option value="3" <%=data.locationBanner===3 ? 'selected' : '' %>>Banner bên phải - dưới</option>
+                                                <option value="4" <%=data.locationBanner===4 ? 'selected' : '' %>>Banner bên dưới</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-md-12 col-lg-12">
                                     <div class="form-group"><label class="col-sm-2 control-label">Thứ tự</label>
-                                        <div class="col-sm-4"><input type="number" required name="numberOrder" min="1" class="form-control" required value="<%=data.numberOrder%>"></div>
+                                        <div class="col-sm-4"><input type="number" required name="numberOrder" min="1" class="form-control" required value="<%= (data.numberOrder)?data.numberOrder:1 %>"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -32,7 +32,6 @@
                                     <th>#</th>
                                     <th><input type="checkbox" id="checkboxall" class="checkboxAdminProduct"></th>
                                     <th>Tên bài viết</th>
-                                    <th>Ảnh</th>
                                     <th>Loại tin</th>
                                     <th>Trạng thái</th>
                                     <th>Hành động</th>
@@ -40,25 +39,32 @@
                             </thead>
                             <tbody>
                                 <% var dem=1;%>
-                                <% newsData.forEach(function(item){ %>
+                                <% data.forEach(function(item){ %>
                                 <tr>
                                     <td>
                                         <%=dem%>
                                     </td>
-                                    <td><input type="checkbox" id="<%=item.id%>" class="i-checks checkboxAdminProduct" name="name[]" value="<%=item.id%>"></td>
+                                    <td><input type="checkbox" id="<%=item._id%>" class="i-checks checkboxAdminProduct" name="name[]" value="<%=item._id%>"></td>
                                     <td>
-                                        <%=item.title%>
+                                            <a href="/admin/news/edit/<%=item._id%>" title="Sửa">  <%=item.nameNews%> </a>
                                     </td>
                                     <td>
-                                        <img src="/upload/news/<%=(item.image)?item.image:'no-image.png'%>" alt="news" width="50px">
-                                    </td>
-                                    <td>
-                                        <%if(item.type==1){%>
-                                        <span>Thông tin công ty</span>
-                                        <%}else if(item.type==2){%>
-                                        <span>Hình ảnh hoạt động</span>
+                                        <%if(item.typeNews==0){%>
+                                            <span>Tin tức</span>
+                                        <%}else if(item.typeNews==1){%>
+                                            <span>Giới thiệu</span>
+                                        <%}else if(item.typeNews==2){%>
+                                            <span>Cách mua hàng</span>
+                                        <%}else if(item.typeNews==3){%>
+                                            <span>Hướng dẫn thanh toán</span>
+                                        <%}else if(item.typeNews==4){%>
+                                                <span>Giao Hàng</span>
+                                        <%}else if(item.typeNews==5){%>
+                                            <span>Bảo hành</span>
+                                        <%}else if(item.typeNews==6){%>
+                                            <span>Bản quyền thương hiệu</span>
                                         <%}else{%>
-                                        <span>Tin tức</span>
+                                        <span>Bảo vệ thông tin cá nhân</span>
                                         <%}%>
                                     </td>
                                     <td>
@@ -69,7 +75,7 @@
                                         <%}%>
                                     </td>
                                     <td class="text-center">
-                                        <a href="/admin/news/edit/<%=item.id%>" title="Sửa"> <i class="fa fa-edit color-navi fa-lg"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0)" onclick="delNews('<%=item.id%>')" title="Xóa ">
+                                        <a href="/admin/news/edit/<%=item._id%>" title="Sửa"> <i class="fa fa-edit color-navi fa-lg"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0)" onclick="delNews('<%=item.id%>')" title="Xóa ">
                                             <i class="fa fa-trash color-red fa-lg "></i></a>
                                     </td>
                                 </tr>

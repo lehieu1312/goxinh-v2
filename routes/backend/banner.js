@@ -4,6 +4,8 @@ var fs = require("fs");
 var path = require("path");
 var bannerModel = require("../../models/banner");
 let checkAdmin = require("../../common/helper");
+var appRoot = require('app-root-path');
+appRoot = appRoot.toString();
 var multer = require("multer");
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -68,50 +70,21 @@ router.get("/banner/edit/:id", checkAdmin, async  (req, res, next)=> {
       data
     });
 });
-router.post("/edit/:id", checkAdmin, upload.single("hinh"), function (
-  req,
-  res,
-  next
-) {
-  console.log(req.body.name);
-  req.checkBody("name", 'Giá Trị "Tên" không được để trống').notEmpty();
-  req.checkBody("title", 'Giá Trị "Tiêu đề" không được để trống').notEmpty();
-  req
-    .checkBody("numberorder", 'Giá Trị "Thứ tự" không được để trống')
-    .notEmpty();
-  // req.checkBody('hinh', 'Giá Trị "hinh" không được rổng').notEmpty();
+router.post("/banner/edit/:id", checkAdmin, upload.single("image"), async (req,res,next) => {
+  let id = req.params.id;
+  req.checkBody("nameBanner", 'Giá Trị "Tên" không được để trống').notEmpty();
+  req.checkBody("numberOrder", 'Giá Trị "Thứ tự" không được để trống').notEmpty();
 
-  // req.checkBody('name', 'Name 5 đến 32 ký tự').isLength({ min: 3, max: 32 });
   var errors = req.validationErrors();
   console.log(errors);
   if (errors) {
-    BannerModel.findById({
-      _id: req.params.id
-    }, function (err, data) {
-      if (err) {
-        console.log(err);
-        req.flash("error_msg", "Lỗi triết xuất dữ liệu");
-        return res.redirect("/admin/banner/list.html");
-      }
+    let data= await bannerModel.findById(id).exec();
       res.render("admin/banner/edit", {
         errors: errors,
         data: data
       });
-    });
-    // res.render('admin/banner/edit', { errors: errors });
   } else {
-    // console.log(req.file);
-    // if (req.file != null) {
-    //     upload.single('hinh');
-    // }
-    BannerModel.findById({
-      _id: req.params.id
-    }, function (err, dataBanner) {
-      if (err) {
-        console.log(err);
-        req.flash("error_msg", "Error find Database");
-        return res.redirect("/admin/banner/edit/" + req.params.id);
-      }
+   let dataBanner = await bannerModel.findById(id).exec();
       if (req.file != null) {
         var file = path.join(
           __dirname,
@@ -121,37 +94,46 @@ router.post("/edit/:id", checkAdmin, upload.single("hinh"), function (
         );
         if (fs.existsSync(file)) fs.unlinkSync(file);
       }
-      dataBanner.nameBanner = req.body.name;
-      dataBanner.titleBanner = req.body.title;
-      dataBanner.linkBanner = req.body.link;
+      dataBanner.nameBanner = req.body.nameBanner;
+      dataBanner.linkBanner = req.body.linkBanner;
       if (req.file != null) {
         dataBanner.imageBanner = req.file.filename;
       }
-      dataBanner.locationBanner = req.body.location;
-      dataBanner.numberOrder = req.body.numberorder;
-      dataBanner.status = req.body.statusradio;
+      dataBanner.locationBanner = req.body.locationBanner;
+      dataBanner.numberOrder = req.body.numberOrder;
+      dataBanner.status = req.body.status;
       dataBanner.save();
       req.flash("success_msg", "Đã Sửa Thành Công");
-      res.redirect("/admin/banner/list.html");
-    });
+      res.redirect("/admin/banner");
   }
 });
-router.get("/del/:id", checkAdmin, function (req, res) {
+router.post("/banner/del", checkAdmin, function (req, res) {
   try {
-    BannerModel.findById(req.params.id, function (err, data) {
-      var file = "./public/upload/" + data.imageBanner;
-      fs.unlink(file, function (e) {
-        if (e) throw e;
-      });
-      data.remove(function () {
-        req.flash("success_msg", "Đã Xoá Thành Công");
-        res.redirect("/admin/banner/list.html");
-      });
-    });
-  } catch (error) {
-    req.flash("error_msg", "Xoá Không Thành Công: " + error + "");
-    res.redirect("/admin/banner/list.html");
-  }
+        var arrId = req.body;
+        (async () => {
+            arrId.forEach(async item => {
+                let data = await bannerModel.findById(item);
+                if (data) {
+                    var file = path.join(appRoot, 'public', 'upload', 'banner', data.imageBanner);
+                    if(fs.existsSync(file))
+                      fs.unlinkSync(file);
+                    bannerModel.findById(item).deleteOne()
+                        .then(() => {
+                            console.log("Deleted: " + item);
+                        });
+                }
+            });
+        })();
+        return res.json({
+            status: true,
+            msg: "Success"
+        });
+    } catch (error) {
+        return res.json({
+            status: false,
+            msg: error + ""
+        });
+    }
 });
 
 module.exports = router;
