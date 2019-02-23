@@ -1,46 +1,41 @@
 $('#myModal').modal('show');
-$(document).ready(function() {
+$(document).ready(function () {
     $('#btn-order-buy-product').click(() => {
-            var idProduct, idSizeProduct, idProductSync, soLuong, sumaryMoney;
-            idProduct = $('#idproduct').val();
-            idSizeProduct = $('#idsizeproduct').val();
-            idProductSync = $('#idproductsync').val();
-            soLuong = $('#soluongsanpham').val();
-            sumaryMoney = $('#sumarymoney').val();
-            console.log('idProduct: ' + idProduct);
-            console.log('idSizeProduct: ' + idSizeProduct);
-            console.log('idProductSync: ' + idProductSync);
-            // alert('sumaryMoney: ' + sumaryMoney);
-            location.href = "/order-product?idp=" + idProduct + '&idps=' + idProductSync + '&idsip=' + idSizeProduct + '&sl=' + soLuong + '&su=' + sumaryMoney;
-            // $.post(
-            //     '/order-product', {
-            //         idProduct: idProduct,
-            //         idSizeProduct: idSizeProduct,
-            //         idProductSync: idProductSync
-
-            //     },
-            // function(data) {
-            //     if (data.status == 1) {
-            //         // console.log('data: ' + JSON.stringify(data));
-            //         // console.log(data.data.priceProduct);
-            //         $('#priceproductbysize').val(data.data.priceProduct);
-            //         $('#idsizeproduct').val(data.data._id);
-            //         $('#dongiasanpham').html(data.data.priceProduct.toLocaleString());
-            //         var tongtien = tinhtongtien();
-            //         $('#tongtiendonhang').html(tongtien.toLocaleString());
-            //     }
-            // }
-            // )
-        })
-        // $("#list").attr( "selectedIndex", -1 );
-    $("#sizeList").change(function() {
+        var idProduct, idProductSync, soLuong, slGiaoHang, slMauSac;
+        idProduct = $('#idproduct').val();
+        idProductSync = $('#idproductsync').val();
+        soLuong = $('#soluongsanpham').val();
+        slGiaoHang = $('#slGiaohang').val();
+        slMauSac = $('#slMausac').val();
+        if (soLuong < 1) {
+            return alert('Số lượng sản phẩm phải lớn hơn 0.');
+        }
+        // location.href = "/order-product?idp=" + idProduct + '&idps=' + idProductSync + '&idsip=' + idSizeProduct + '&sl=' + soLuong + '&su=' + sumaryMoney;
+        $.post(
+            '/order-cart', {
+                idProduct,
+                idProductSync,
+                soLuong,
+                slGiaoHang,
+                slMauSac
+            },
+            function (data) {
+                if (data.status === true) {
+                    location.href='/cart';
+                }else{
+                    alert(data.msg);
+                }
+            }
+        )
+    });
+    $("#sizeList").change(function () {
         var sizeID = $("#sizeList option:selected").val();
         // console.log(sizeID);
         $.post(
             '/getprice-sizeproduct', {
                 idSizeProduct: sizeID
             },
-            function(data) {
+            function (data) {
                 if (data.status == 1) {
                     // console.log('data: ' + JSON.stringify(data));
                     // console.log(data.data);
@@ -55,22 +50,20 @@ $(document).ready(function() {
             }
         )
     });
-    $('#soluongsanpham').on('change', function() {
-        // alert('234');
-        // alert($('#soluongsanpham').val());
+    $('#soluongsanpham').on('change', function () {
         var tong = tinhtongtien();
         $('#tongtiendonhang').html(tong.toLocaleString());
         $('#sumarymoney').val(tong);
     });
 
-    $('.check-buy-product').change(function() {
+    $('.check-buy-product').change(function () {
         if (this.checked) {
             var idProduct = $(this).val();
             $.post(
                 '/getprice-productsync', {
                     idProductSync: idProduct
                 },
-                function(data) {
+                function (data) {
                     if (data.status == 1) {
                         // console.log('data: ' + JSON.stringify(data));
                         // console.log(data.data.priceProduct);
@@ -98,7 +91,7 @@ $(document).ready(function() {
                 '/getprice-productsync', {
                     idProductSync: idProduct
                 },
-                function(data) {
+                function (data) {
                     if (data.status == 1) {
                         // console.log('data: ' + JSON.stringify(data));
                         // console.log(data.data.priceProduct);
@@ -147,7 +140,7 @@ function changeimageclick(event) {
     // console.log(JSON.stringify($(this)));
     // console.log(srcImg);
 }
-$(window).on("load", function() {
+$(window).on("load", function () {
     // alert('1');
     var sizeID = $("#sizeList option:selected").val();
     // console.log(sizeID);
@@ -155,7 +148,7 @@ $(window).on("load", function() {
         '/getprice-sizeproduct', {
             idSizeProduct: sizeID
         },
-        function(data) {
+        function (data) {
             // console.log(data.data.priceProduct);
             if (data.status == 1) {
                 // console.log(data.data);

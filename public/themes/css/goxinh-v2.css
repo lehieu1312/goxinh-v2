@@ -742,3 +742,22 @@ aside {
   margin: 0px;
   padding-left: 10px;
 }
+
+.img-thumb-lib-detail {
+  width: 100%;
+}
+
+.gia-sanpham {
+  font-size: 18px;
+  color: #154e77;
+  font-weight: bold;
+}
+
+#dongiasanpham {
+  color: #d43b17;
+  font-size: 16px;
+}
+
+#slGiaohang {
+  padding: 2px 8px;
+}

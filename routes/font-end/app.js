@@ -1016,6 +1016,14 @@ router.get("/san-pham/:alias", (req, res) => {
                       })
                       .limit(3)
                       .then(productSync => {
+                        let libImage = [];
+                        let libImageTmp = [];
+                        let pathImage = path.join(appRoot, 'public', 'upload', 'product', dataOneProduct.codeProduct);
+                        console.log(pathImage);
+                        if (fs.existsSync(pathImage)) {
+                          libImageTmp = fs.readdirSync(pathImage);
+                          libImage = libImageTmp.slice();
+                        }
                         if (productSync) {
                           res.render("font-end/product", {
                             title: dataOneProduct.nameProduct,
@@ -1024,6 +1032,7 @@ router.get("/san-pham/:alias", (req, res) => {
                             productInvolve: productInvolve,
                             dataCateParent: dataCateParent,
                             dataSizeProduct: dataSizeProduct,
+                            libImage,
                             dataCateChildren: dataCateChildren,
                             descriptions: dataOneProduct.nameProduct +
                               ", " +
@@ -1043,13 +1052,17 @@ router.get("/san-pham/:alias", (req, res) => {
                             })
                             .limit(3)
                             .then(productSync => {
-                              // console.log('productSync: ' + productSync);
+
+
+
+
                               res.render("font-end/product", {
                                 title: dataOneProduct.nameProduct,
                                 dataOneProduct: dataOneProduct,
                                 productSync: productSync,
                                 productInvolve: productInvolve,
                                 dataCateParent: dataCateParent,
+                                libImage,
                                 dataCateChildren: dataCateChildren,
                                 descriptions: dataOneProduct.nameProduct +
                                   ", " +
@@ -1088,7 +1101,6 @@ router.get("/san-pham/:alias", (req, res) => {
 });
 
 router.post("/order-on-request", multipartMiddleware, (req, res) => {
-  console.log("==================da vao================");
   try {
     // console.log(req.files);
     var imageOrder = req.files.image;
@@ -1114,14 +1126,12 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
         },
         function (err, dataCateParent) {
           if (err) {
-            console.log("1");
-            // console.log(err);
+            console.log(err);
             return res.render("error", {
               title: "Error Get Data",
               error: err
             });
           }
-          console.log("dataCateParent: " + dataCateParent);
           CategoryModel.find({
               $and: [{
                 categoryParent: {
@@ -1151,8 +1161,6 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
           );
         }
       );
-      // req.flash('errors', errors);
-      // return res.render('admin/product/add', { errors: errors });
     } else {
       if (imageOrder.size > 8000000) {
         CategoryModel.find({
@@ -1349,211 +1357,112 @@ router.post("/getprice-productsync", (req, res) => {
     }
   });
 });
-router.get("/order-product", (req, res) => {
-  var idProduct, idProductSync, idSizeProduct, soLuong, sumMoney;
-  idProduct = req.query.idp;
-  console.log(idProduct);
-  idSizeProduct = req.query.idsip;
-  console.log(idSizeProduct);
-  idProductSync = req.query.idps;
-  console.log(idProductSync);
-  soLuong = req.query.sl;
-  sumMoney = req.query.su;
 
-  if (!idProduct || !soLuong) {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
-          });
-        }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-            return res.render("font-end/checkok", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              error_msg: "Không có sản phẩm để đặt hàng",
-              errors: null
-            });
-          }
-        );
-      }
-    );
-  } else {
-    CategoryModel.find({
-        $and: [{
-          categoryParent: null
-        }, {
-          status: true
-        }]
-      },
-      function (err, dataCateParent) {
-        if (err) {
-          console.log(err);
-          return res.render("error", {
-            title: "Error Get Data",
-            error: err
-          });
-        }
-        console.log("dataCateParent: " + dataCateParent);
-        CategoryModel.find({
-            $and: [{
-              categoryParent: {
-                $ne: null
-              }
-            }, {
-              status: true
-            }]
-          },
-          function (error, dataCateChildren) {
-            if (error) {
-              console.log(error);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: error
-              });
-            }
-            console.log("dataCateChildren: " + dataCateChildren);
 
-            res.render("font-end/info-order", {
-              title: "Đặt hàng",
-              dataCateParent: dataCateParent,
-              dataCateChildren: dataCateChildren,
-              idProduct,
-              idSizeProduct,
-              soLuong,
-              sumMoney,
-              idProductSync
-            });
-          }
-        );
-      }
-    );
+router.post("/order-cart", async (req, res) => {
+  let dataBody = req.body;
+  var idProduct, idProductSync, soLuong, ngayGiaoHang, mauSac;
+
+  req.checkBody("soLuong", "Số lượng phải là số").isNumeric();
+  var errors = req.validationErrors();
+  if (errors) {
+    console.log(JSON.stringify(errors));
+    return  res.json({status:false,msg:'Số lượng phải là số.'});
   }
-  // res.render('font-end/info-order', { idProduct, idSizeProduct, soLuong, idProductSync });
+  idProduct = dataBody.idProduct;
+  idProductSync = dataBody.idProductSync;
+  soLuong = dataBody.soLuong;
+  ngayGiaoHang = dataBody.slGiaoHang;
+  mauSac = dataBody.slMauSac;
+  
+  sess.cart={
+    idProduct,
+    idProductSync,
+    soLuong,
+    ngayGiaoHang,
+    mauSac
+  };
+  if (!idProduct || !soLuong) {
+   res.json({status:false,msg:'Vui lòng chọn sản phẩm và số lượng.'})
+  } else {
+    res.json({status:true,msg:'success'});
+  }
 });
-router.post("/order-product", async (req, res) => {
+
+router.get('/cart',async (req,res)=>{
+  if(sess.cart){
+    let dataCateParent = await CategoryModel.find({$and:[{categoryParent: null}, {status: true}]}).exec();
+    let dataCateChildren = await CategoryModel.find({$and:[{categoryParent:{$ne:null}},{status:true}]}).exec();
+  
+    res.render('font-end/info-order',{
+      title:'Thông tin đặt hàng',
+      dataCateParent,
+      dataCateChildren
+    });
+  }else{
+    res.redirect('/');
+  }
+  
+
+});
+
+router.post("/order", async (req, res) => {
   try {
     let dataBody = req.body;
     req.checkBody("name", "Tên không được để trống").notEmpty();
     req.checkBody("email", "Email không được để trống").notEmpty();
-    req
-      .checkBody("phonenumber", "Số điện thoại không được để trống")
-      .notEmpty();
-    req
-      .checkBody("phonenumber", "Số điện thoại không được để trống")
-      .isNumeric();
+    req.checkBody("phonenumber", "Số điện thoại không được để trống").notEmpty();
     req.checkBody("address", "Địa chỉ không được để trống").notEmpty();
-    req.checkBody("idproduct", "Chưa chọn sản phẩm").notEmpty();
-    req.checkBody("soluong", "chưa chọn số lượng").notEmpty();
-    // req.checkBody('priceproduct', 'chưa chọn giá sản phẩm').notEmpty();
 
     var errors = req.validationErrors();
     if (errors) {
       console.log(JSON.stringify(errors));
       req.flash("errors", errors);
-      return res.redirect(
-        "/order-product?idp=" +
-        dataBody.idproduct +
-        "&idps=" +
-        dataBody.idproductsync +
-        "&idsip=" +
-        dataBody.idsizeproduc +
-        "&sl=" +
-        dataBody.soluong
-      );
+      return res.redirect("/cart");
     }
 
-    var getProduct = (id, arrID) => {
+    var getProduct = (id) => {
       return new Promise(async (resolve, reject) => {
         try {
           var dataProductSync = await ProductModel.findById(id).exec();
-          console.log("dataProductSync: " + dataProductSync);
           var tmpProduct = {
             id: dataProductSync._id,
             name: dataProductSync.nameProduct,
-            idSize: null,
-            size: null,
             price: dataProductSync.priceProduct,
             image: dataProductSync.imageProduct,
             quanlity: 1,
             money: dataProductSync.priceProduct
           };
 
-          arrID.push(tmpProduct);
-          resolve("success");
-          // console.log('arrIDProduct---: ' + JSON.stringify(arrIDProduct));
+          resolve(tmpProduct);
         } catch (error) {
-          reject(error);
+          reject({});
         }
       });
     };
 
-    var idsizep = null;
-    var sizeProduct = "";
-    if (dataBody.idsizeproduct != 0 && dataBody.idsizeproduct != "") {
-      idsizep = dataBody.idsizeproduct;
-      var dataProductsize = await SizeProductModel.findById(idsizep).exec();
-      sizeProduct =
-        dataProductsize.sizeLength +
-        "x" +
-        dataProductsize.sizeWidth +
-        "x" +
-        dataProductsize.sizeHeight;
-    }
-
     var cartProduct = [];
     var giaSanPham;
-    ProductModel.findById(dataBody.idproduct).then(async dataProductOne => {
-      console.log(
-        "dataProductOne.priceProduct: " + dataProductOne.priceProduct
-      );
+
+    let dataProductOne= await ProductModel.findById(sess.cart.idProduct).exec();
       // giaSanPham = dataProductOne.priceProduct;
       cartProduct = [{
-        id: dataBody.idproduct,
+        id: sess.cart.idProduct,
         name: dataProductOne.nameProduct,
-        idSize: idsizep,
-        size: sizeProduct,
         price: dataProductOne.priceProduct,
         image: dataProductOne.imageProduct,
-        quanlity: dataBody.soluong,
-        money: dataBody.soluong * dataProductOne.priceProduct
+        color:sess.cart.mauSac,
+        quanlity: sess.cart.soLuong,
+        money:  parseInt(sess.cart.soLuong) * dataProductOne.priceProduct
       }];
+      let productSync={};
       if (dataBody.idproductsync) {
         var checkArrproduct = dataBody.idproductsync.split(";");
 
-        for (let kq of checkArrproduct) {
-          console.log("kq 1: " + kq);
-          // console.log('kq: ' + checkArrproduct[kq]);
-          if (kq) {
-            await getProduct(kq, cartProduct);
+        for (let id of checkArrproduct) {
+          if (id) {
+             productSync=await getProduct(id);
+            cartProduct.push(productSync);
           }
         }
       }
@@ -1576,7 +1485,8 @@ router.post("/order-product", async (req, res) => {
 
           var mainOptions = { // thiết lập đối tượng, nội dung gửi mail
             from: 'Thông báo từ goxinh.net',
-            to: 'woodenvina@gmail.com', //woodenvina@gmail.com
+            // to: 'woodenvina@gmail.com',
+            to: 'hieu.ric@gmail.com',
             subject: 'Bạn có đơn hàng mới từ goxinh.net.Vui lòng kiểm tra đơn hàng',
             text: `Bạn có đơn hàng mới trị giá:  ${totalPrice} từ ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng`,
             html: `<b>Bạn có đơn hàng mới trị giá:  ${totalPrice} từ ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng</b>`
@@ -1585,16 +1495,13 @@ router.post("/order-product", async (req, res) => {
             if (err) {
               return reject(err);
             }
-            console.log('info mail: ' + info);
-            console.log('info mail 2: ' + JSON.stringify(info));
+            console.log('info mail: ' + JSON.stringify(info));
             return resolve('Message sent: ' + info.response);
 
           });
         });
       }
 
-      console.log("arrIDProduct: " + cartProduct);
-      console.log("arrIDProduct: " + JSON.stringify(cartProduct));
       var orderBuyProductModel = new OrderBuyProductModel({
         name: dataBody.name,
         email: dataBody.email,
@@ -1602,48 +1509,36 @@ router.post("/order-product", async (req, res) => {
         address: dataBody.address,
         notes: dataBody.notes,
         cartProduct: cartProduct,
-        summaryMoney: dataBody.sumarymoney,
+        delivery:sess.cart.ngayGiaoHang,
+        summaryMoney:productSync.money?productSync.money:0 + (sess.cart.soLuong * dataProductOne.priceProduct),
         dateCreate: moment(Date.now()).format(),
         statusOrder: 0,
         status: false
       });
       orderBuyProductModel.save().then(async () => {
-        console.log('abc');
         await sendLinkMail(dataBody.sumarymoney, dataBody.name, dataBody.phonenumber, dataBody.email);
+        sess.cart=null;
         return res.redirect('/order-success');
       });
-    });
+   
   } catch (error) {
     console.log(error);
     req.flash("error_msg", "Lỗi: " + error + "");
-    return res.redirect("/admin/product/edit.html");
+    return res.redirect("/cart");
   }
 });
 
 router.get("/order-success", async (req, res) => {
-  let dataCateParent = await CategoryModel.find({
-    $and: [{
-      categoryParent: null
-    }, {
-      status: true
-    }]
-  }).exec();
+  if(!sess.cart){
+    return res.redirect('/');
+  }
+  let dataCateParent = await CategoryModel.find({$and:[{categoryParent: null}, {status: true}]}).exec();
+  let dataCateChildren = await CategoryModel.find({$and:[{categoryParent:{$ne:null}},{status:true}]}).exec();
 
-  let dataCateChildren = await CategoryModel.find({
-    $and: [{
-      categoryParent: {
-        $ne: null
-      }
-    }, {
-      status: true
-    }]
-  }).exec();
-
-  console.log('vao dat hang');
   return res.render("font-end/checkok", {
     title: "Đặt hàng",
-    dataCateParent: dataCateParent,
-    dataCateChildren: dataCateChildren,
+    dataCateParent,
+    dataCateChildren,
     success_msg: "Bạn đã đặt hàng thành công",
     errors: ''
   });

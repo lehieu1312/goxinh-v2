@@ -1,0 +1,146 @@
+<% include ../layout/header.ejs %>
+<% include ../layout/menu-left.ejs %>
+<% include ../layout/top.ejs %>
+<!-- Content administrator -->
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5> Danh sách user</h5>
+                    <div class="ibox-tools">
+                        <a href="/admin/users/add" class="btn btn-success btn-plus" type="button"><i class="fa fa-plus"></i>&nbsp;&nbsp;<span class="bold">Thêm</span></a>
+                        <a href="javascript:void(0)" id="deletemultiuser" class="btn btn-danger btn-plus" type="button"><i class="fa fa-remove"></i>&nbsp;&nbsp;<span class="bold">Xóa</span></a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <% if(success_msg != ''){ %>
+                        <div class="alert alert-success">
+                            <%= success_msg%>
+                        </div>
+                        <% } %>
+                        <% if(error_msg != ''){ %>
+                        <div class="alert alert-danger">
+                            <%= error_msg%>
+                        </div>
+                        <% } %>
+                        <input type="hidden" name="id[]" value="">
+                        <table id="users-table" class="table table-striped table-bordered table-hover dataTables-category">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th><input type="checkbox" id="checkboxall" class="checkboxAdminProduct"></th>
+                                    <th>Tài khoản</th>
+                                    <th>Họ tên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% var dem=1;%>
+                                <% usersData.forEach(function(item){ %>
+                                <tr>
+                                    <td>
+                                        <%=dem%>
+                                    </td>
+                                    <td><input type="checkbox" id="<%=item.id%>" class="i-checks checkboxAdminProduct" name="name[]" value="<%=item.id%>"></td>
+                                    <td>
+                                        <%=item.email%>
+                                    </td>
+                                    <td>
+                                        <%=item.fullName%>
+                                    </td>
+                                    <td>
+                                        <%=item.phoneNumber%>
+                                    </td>
+                                    <td>
+                                        <%=item.address%>
+                                    </td>
+                                    <td>
+                                        <%if(item.status==true){%>
+                                        <a href="javascript:void(0)" class="btn btn-primary btn-rounded">Hoạt động</a>
+                                        <%}else{%>
+                                        <a href="javascript:void(0)" class="btn btn-danger btn-rounded">Tạm ngừng</a>
+                                        <%}%>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/admin/users/edit/<%=item.id%>" title="Sửa"> <i class="fa fa-edit color-navi fa-lg"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="javascript:void(0)" onclick="delProduct('<%=item.id%>')" title="Xóa ">
+                                            <i class="fa fa-trash color-red fa-lg "></i></a>
+                                    </td>
+                                </tr>
+                                <% dem++;})%>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Content administrator -->
+<% include ../layout/footer.ejs %>
+<script src="/themes/backend/js/plugins/dataTables/datatables.min.js "></script>
+<script>
+    function delProduct(id) {
+        var arrId = [id];
+        var rep = confirm("Bạn có chắc chắn muốn xóa user này?");
+        if (rep == true) {
+            $.ajax({
+                url: '/admin/users/del',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: "json",
+                data: JSON.stringify(arrId),
+                success: function (response) {
+                    if (response.status == 1) {
+                        alert('Đã xóa thành công.');
+                        location.reload();
+                    } else {
+                        alert(response.msg);
+                    }
+                }
+            });
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $('.dataTables-category').DataTable({
+            pageLength: 25,
+            responsive: true,
+            dom: '<"html5buttons "B>lTfgitp',
+            buttons: [{
+                extend: 'copy',
+                className: 'btn btn-info'
+            }, {
+                extend: 'csv'
+            }, {
+                extend: 'excel',
+                title: 'ExampleFile'
+            }, {
+                extend: 'pdf',
+                title: 'ExampleFile'
+            }, {
+                extend: 'print',
+                customize: function (win) {
+                    $(win.document.body).addClass('white-bg');
+                    $(win.document.body).css('font-size', '10px');
+                    $(win.document.body).find('table').addClass('compact').css('font-size', 'inherit');
+                }
+            }]
+        });
+        ///////////////////Check box//////////////
+        $("#checkboxall").change(() => {
+            var checkboxes = document.getElementsByName('name[]');
+            var checkboxall = document.getElementById('checkboxall');
+            var chkBox = checkboxall.checked;
+            // alert(chkBox);
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = chkBox;
+            }
+        });
+    });
+</script>

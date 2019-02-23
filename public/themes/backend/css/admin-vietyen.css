@@ -1,0 +1,61 @@
+.form-group input[type="checkbox"] {
+    display: none;
+}
+
+
+.form-group input[type="checkbox"]+.btn-group>label span {
+    width: 20px;
+}
+
+.form-group input[type="checkbox"]+.btn-group>label span:first-child {
+    display: none;
+}
+
+.form-group input[type="checkbox"]+.btn-group>label span:last-child {
+    display: inline-block;
+}
+
+.form-group input[type="checkbox"]:checked+.btn-group>label span:first-child {
+    display: inline-block;
+}
+
+.form-group input[type="checkbox"]:checked+.btn-group>label span:last-child {
+    display: none;
+}
+
+.th-order-permision {
+    width: 50px;
+    text-align: center
+}
+
+.th-check-permision {
+    width: 100px;
+    text-align: center
+}
+
+.th-action-permision {
+    width: 400px;
+    text-align: center
+}
+
+.th-name-permision {
+    text-align: center
+}
+
+.title-group-permision {
+    height: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+.box-search {
+    padding-bottom: 10px;
+}
+
+.text-record-display {
+    margin: 20px 0;
+}
+
+.box-pagination {
+    height: 50px;
+}
