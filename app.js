@@ -18,8 +18,7 @@ var async = require("async");
 var debug = require("debug")("appbuild:server");
 var appRoot = require("app-root-path");
 appRoot = appRoot.toString();
-var CounterID = require("./models/countersid");
-var CategoryModel = require("./models/category");
+
 
 var passport = require("passport");
 var app = express();
