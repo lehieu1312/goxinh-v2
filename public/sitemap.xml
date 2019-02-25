@@ -9,292 +9,192 @@
 
 <url>
   <loc>https://goxinh.net/</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/gioi-thieu</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/danh-muc/noi-that-phong-khach</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/cach-mua-hang</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/danh-muc/noi-that-phong-ngu</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/huong-dan-thanh-toan</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/danh-muc/noi-that-nha-bep</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/giao-hang</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/bao-hanh</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/phong-khach</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/phong-ngu</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/nha-bep</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/ham-ruou</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/danh-muc/trang-tri-ham-ruou</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://goxinh.net/danh-muc/do-go-xuat-khau</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/phong-tho</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/danh-muc/noi-that-phong-tho</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://goxinh.net/lien-he</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/gio-hang</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/gioi-thieu</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/forgot-password</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/cach-mua-hang</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ham-ruou-model-005-hr-005</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/huong-dan-thanh-toan</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ham-ruou-model-003-hr-003</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/giao-hang</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ke-ti-vi-001-ktv001</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/bao-hanh</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ham-ruou-model-001-hr-001</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-3t45-kd345</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ham-ruou-model-002-hr-002</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-5t45-kd545</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ke-ti-vi-002-ktv002</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-4t80-kd480</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ke-tivi-003-ktv003</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-4t60-kd460</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ke-tivi-005-ktv005</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-4t45-kd445</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ke-tivi-004-ktv004</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-3t80-kd380</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ke-tivi-006-ktv006</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-3t60-kd360</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/tin-tuc/tinh-hinh-xuat-nhap-khau-go-va-san-pham-go-8-thang-2017</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-5t60-kd560</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/tin-tuc/loi-ich-tu-tre</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-5t80-kd580</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/tin-tuc/lap-dat-san-go-cong-nghiep</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-6t80-kd680</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/ke-ti-vi</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-dep-7t80-kd780</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/ban-tho-dung</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-sach-4t80-ks480</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/ban-tho-treo</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-sach-4t60-ks460</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/do-tho-dep</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-sach-3t60-ks360</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/trong-ruou</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-sach-3t90-ks390</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/ke-ruou</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-vi-song-4-tang-kvs4t</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/hop-ruou</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ban-cafe-mat-lien-bcf3</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/danh-muc/tuu-do</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/ke-go-xinh</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/ke-am-thanh</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/ban-ghe-phong-khach</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/go-trang-tri</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/giuong-ngu</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/tu-quan-ao</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/tap-dau-giuong</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/ban-trang-diem</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/ban-ghe-an</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/do-dung-nha-bep</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/trang-tri-nha-bep</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/ban-tra</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/ban-hoc-sinh</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/san-go</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/go-che-tac</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://goxinh.net/danh-muc/khong-gian-ruou</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ghe-cafe-nan-nho-gcf1</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://goxinh.net/ban-quyen-thuong-hieu</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://goxinh.net/bao-ve-thong-tin-ca-nhan</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ke-sach-ks001</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ke-vi-song-3-tang-kvs3t</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/ke-dia-kd001</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ban-laptop-blt001</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/san-pham/den-ban-hoc-dbh001</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ban-tra-2-tang-bt002</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
-  <loc>https://goxinh.net/tin-tuc/lien-he</loc>
-  <lastmod>2018-02-26T04:08:49+00:00</lastmod>
+  <loc>https://goxinh.net/san-pham/ghe-cafe-mat-lien-gcf3</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://goxinh.net/san-pham/ghe-cafe-nan-cao-gcf2</loc>
+  <lastmod>2018-11-28T07:25:15+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 
