@@ -12,6 +12,6 @@ var orderProduct = new Schema({
     dateCreate: Date,
     status: Boolean
 
-}, { collection: 'orderproduct' });
+}, { collection: 'order-required' });
 
-module.exports = mongoose.model('orderproduct', orderProduct);
+module.exports = mongoose.model('order-required', orderProduct);

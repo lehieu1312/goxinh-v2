@@ -1,15 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
-var OrderBuyProductModel = require('../../models/orderbuyproduct');
+let checkAdmin = require('../../common/helper');
+var CartModel = require('../../models/carts');
 
-router.get('/list.html', checkAdmin, (req, res) => {
+router.get('/carts', checkAdmin, (req, res) => {
     try {
-        OrderBuyProductModel.find().sort({
+        CartModel.find().sort({
             dateCreate: -1
         }).then((data) => {
             console.log(data);
-            res.render('admin/cart/list', {
+            res.render('backend/carts', {
                 title: 'Đơn hàng',
                 data,
                 moment
@@ -24,7 +25,7 @@ router.get('/list.html', checkAdmin, (req, res) => {
 router.get('/view/:id', checkAdmin, (req, res) => {
     try {
 
-        OrderBuyProductModel.findOne({
+        CartModel.findOne({
             _id: req.params.id
         }).then((data) => {
             console.log('data: ' + data);
@@ -49,10 +50,10 @@ router.get('/view/:id', checkAdmin, (req, res) => {
 });
 router.get('/del/:id', checkAdmin, function (req, res) {
     try {
-        OrderBuyProductModel.findById(req.params.id, function (err, data) {
+        CartModel.findById(req.params.id, function (err, data) {
             data.remove(function () {
                 req.flash('success_msg', 'Đã Xoá Thành Công');
-                res.redirect('/admin/cart/list.html');
+                res.redirect('/admin/carts');
             })
         });
 
@@ -63,12 +64,4 @@ router.get('/del/:id', checkAdmin, function (req, res) {
 
 });
 
-function checkAdmin(req, res, next) {
-
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.redirect('/admin/login');
-    }
-}
 module.exports = router;

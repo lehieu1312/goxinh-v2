@@ -1,22 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var moment = require('moment');
-var OrderProductModel = require('../../models/orderproduct');
+var OrderRequiredModel = require('../../models/order-required');
 
-router.get('/list.html', checkAdmin, checkAdmin, (req, res) => {
+router.get('/order-required', checkAdmin, checkAdmin, (req, res) => {
     try {
-        OrderProductModel.find().sort({ dateCreate: -1 }).then((data) => {
+        OrderRequiredModel.find().sort({ dateCreate: -1 }).then((data) => {
             console.log(data);
-            res.render('admin/productorder/list', { data: data });
+            res.render('backend/productorder/list', { data: data });
         })
     } catch (error) {
         console.log(error);
         res.render('errror', { title: 'Error Data', error: error });
     }
 });
-router.get('/edit/:id', checkAdmin, (req, res, next) => {
+
+router.get('/order-required/edit/:id', checkAdmin, (req, res, next) => {
     try {
-        OrderProductModel.findOne({ _id: req.params.id }).then(function(dataOne) {
+        OrderRequiredModel.findOne({ _id: req.params.id }).then(function(dataOne) {
             console.log(dataOne);
             // req.flash('success_msg', 'Đã Xoá Thành Công');
             res.render('admin/productorder/edit', { errors: null, dataOne: dataOne, moment: moment });
@@ -25,9 +26,8 @@ router.get('/edit/:id', checkAdmin, (req, res, next) => {
         console.log(error);
         res.render('errror', { title: 'Error Data', error: error });
     }
-
 });
-router.post('/edit/:id', checkAdmin, (req, res) => {
+router.post('/order-required/edit/:id', checkAdmin, (req, res) => {
     try {
         req.checkBody('name', 'Giá trị tên không được để trống').notEmpty();
         req.checkBody('email', 'Giá trị tiêu đề không được để trống').notEmpty();
@@ -39,12 +39,12 @@ router.post('/edit/:id', checkAdmin, (req, res) => {
         var errors = req.validationErrors();
         if (errors) {
             console.log(errors);
-            OrderProductModel.find().then((data) => {
+            OrderRequiredModel.find().then((data) => {
                 console.log(data);
                 res.render('admin/productorder/edit', { errors: errors, data: data });
             })
         }
-        OrderProductModel.findById(req.params.id).then((dataOne) => {
+        OrderRequiredModel.findById(req.params.id).then((dataOne) => {
             console.log(dataOne);
             dataOne.name = req.body.name;
             dataOne.email = req.body.email;
@@ -65,7 +65,7 @@ router.post('/edit/:id', checkAdmin, (req, res) => {
 });
 router.get('/del/:id', checkAdmin, (req, res, next) => {
     try {
-        OrderProductModel.findOne({ _id: req.params.id }).remove(function() {
+        OrderRequiredModel.findOne({ _id: req.params.id }).remove(function() {
             req.flash('success_msg', 'Đã Xoá Thành Công');
             res.redirect('/admin/product-order/list.html');
         });

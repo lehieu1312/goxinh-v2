@@ -11,8 +11,8 @@ var NewsModel = require("../../models/news");
 var ProductModel = require("../../models/product");
 var CategoryModel = require("../../models/category");
 var BannerModel = require("../../models/banner");
-var OrderProductModel = require("../../models/orderproduct");
-var OrderBuyProductModel = require("../../models/orderbuyproduct");
+var OrderRequiredModel = require("../../models/order-required");
+var cartModel = require("../../models/carts");
 var SizeProductModel = require("../../models/sizeproduct");
 var multer = require("multer");
 var multipart = require("connect-multiparty");
@@ -78,7 +78,6 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
       status: true
     }).exec();
     if (dataCate) {
-
       dataProduct = await CategoryModel.aggregate([{
             $match: {
               $or: [{
@@ -1255,7 +1254,7 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
         console.log("dataImage: " + dataImage);
         fs.writeFileSync(path.join(pathUpload, nameImage), dataImage);
       }
-      var orderProduct = new OrderProductModel({
+      var orderRequired = new OrderRequiredModel({
         name: dataBody.name,
         email: dataBody.email,
         phoneNumber: dataBody.phonenumber,
@@ -1264,7 +1263,7 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
         dateCreate: Date.now(),
         status: false
       });
-      orderProduct.save().then(async () => {
+      orderRequired.save().then(async () => {
         await sendLinkMail(dataBody.name, dataBody.phonenumber, dataBody.email);
         // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
         return res.redirect('/order-success');
@@ -1502,7 +1501,7 @@ router.post("/order", async (req, res) => {
         });
       }
 
-      var orderBuyProductModel = new OrderBuyProductModel({
+      var cartData = new cartModel({
         name: dataBody.name,
         email: dataBody.email,
         phoneNumber: dataBody.phonenumber,
@@ -1515,9 +1514,8 @@ router.post("/order", async (req, res) => {
         statusOrder: 0,
         status: false
       });
-      orderBuyProductModel.save().then(async () => {
+      cartData.save().then(async () => {
         await sendLinkMail(dataBody.sumarymoney, dataBody.name, dataBody.phonenumber, dataBody.email);
-        sess.cart=null;
         return res.redirect('/order-success');
       });
    
@@ -1534,7 +1532,7 @@ router.get("/order-success", async (req, res) => {
   }
   let dataCateParent = await CategoryModel.find({$and:[{categoryParent: null}, {status: true}]}).exec();
   let dataCateChildren = await CategoryModel.find({$and:[{categoryParent:{$ne:null}},{status:true}]}).exec();
-
+  sess.cart=null;
   return res.render("font-end/checkok", {
     title: "Đặt hàng",
     dataCateParent,

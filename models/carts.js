@@ -19,11 +19,6 @@ var orderProduct = new Schema({
     statusOrder: Number,
     status: Boolean
 
-}, { collection: 'orderbuyproduct' });
-// {
-//     idProduct: ObjectId,
-//     idSize: ObjectId,
-//     price: Number,
-//     quanlity: Number,
-// },
-module.exports = mongoose.model('orderbuyproduct', orderProduct);
+}, { collection: 'carts' });
+
+module.exports = mongoose.model('carts', orderProduct);
