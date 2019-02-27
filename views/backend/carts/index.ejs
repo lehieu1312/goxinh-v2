@@ -52,7 +52,7 @@
                                     <td><input type="checkbox" id="<%=item._id%>" class="i-checks checkboxAdminProduct"
                                             name="name[]" value="<%=item._id%>"></td>
                                     <td>
-                                        <a href="/admin/carts/edit/<%=item._id%>" title="Sửa"><%=item.name%></a>
+                                        <a href="/admin/carts/view/<%=item._id%>" title="Sửa"><%=item.name%></a>
                                     </td>
                                     <td>
                                         <%=item.phoneNumber%>
@@ -79,7 +79,7 @@
                                         <%}%>
                                     </td>
                                     <td class="text-center">
-                                        <a href="/admin/carts/edit/<%=item._id%>" title="Sửa"> <i class="fa fa-edit color-navi fa-lg"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="/admin/carts/view/<%=item._id%>" title="Sửa"> <i class="fa fa-edit color-navi fa-lg"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a href="javascript:void(0)" onclick="delProduct('<%=item._id%>')" title="Xóa ">
                                             <i class="fa fa-trash color-red fa-lg "></i></a>
                                     </td>

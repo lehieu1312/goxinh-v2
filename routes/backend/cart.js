@@ -22,24 +22,20 @@ router.get('/carts', checkAdmin, (req, res) => {
 
 });
 
-router.get('/view/:id', checkAdmin, (req, res) => {
+router.get('/carts/view/:id', checkAdmin, async (req, res) => {
     try {
 
-        CartModel.findOne({
-            _id: req.params.id
-        }).then((data) => {
-            console.log('data: ' + data);
-            if (data)
-                res.render('admin/cart/view', {
-                    title: 'Chi tiết đơn hàng',
-                    data,
-                    moment
-                });
-            else
-                res.render('404', {
-                    title: 'Not data'
-                });
-        })
+    let data = await CartModel.findById(req.params.id).exec();
+        if (data)
+            res.render('backend/carts/view', {
+                title: 'Chi tiết đơn hàng',
+                data,
+                moment
+            });
+        else
+            res.render('404', {
+                title: 'Not data'
+            });
     } catch (error) {
         console.log('error: ' + error);
         res.render('404', {
