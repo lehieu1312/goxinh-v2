@@ -223,6 +223,7 @@ router.post(
         dataBody.nameProduct + " " + dataBody.codeProduct
       );
       dataBody.imageProduct = nameImage;
+      dataBody.viewCounter=0;
       dataBody.search = bodauTiengViet(
         dataBody.nameProduct +
           " " +

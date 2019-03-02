@@ -978,11 +978,7 @@ router.get("/san-pham/:alias", (req, res) => {
           aliasUrl: sAliasUrl
         }).then(dataOneProduct => {
           // console.log('dataOneProduct.viewCounter: ' + dataOneProduct.viewCounter);
-          if (
-            typeof dataOneProduct.viewCounter == "undefined" ||
-            dataOneProduct.viewCounter == null
-          )
-            dataOneProduct.viewCounter = 0;
+        
           dataOneProduct.viewCounter = parseInt(dataOneProduct.viewCounter) + 1;
           SizeProductModel.find({
             idProduct: dataOneProduct._id
