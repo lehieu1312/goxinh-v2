@@ -36,6 +36,9 @@ var upload = multer({
   limits: limit
 });
 
+// let mailTo = 'hieu.ric@gmail.com';
+let mailTo = 'woodenvina@gmail.com';
+  
 function bodauTiengViet(str) {
   str = str.toLowerCase();
   str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -1221,7 +1224,7 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
 
           var mainOptions = { // thiết lập đối tượng, nội dung gửi mail
             from: 'Thông báo từ goxinh.net',
-            to: 'woodenvina@gmail.com', //woodenvina@gmail.com
+            to: mailTo,
             subject: 'Bạn có đơn hàng theo yêu cầu từ goxinh.net.Vui lòng kiểm tra đơn hàng',
             text: `Bạn có đơn hàng theo yêu cầu từ: ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng`,
             html: `<b>Bạn có đơn hàng theo yêu cầu từ: ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng</b>`
@@ -1484,8 +1487,7 @@ router.post("/order", async (req, res) => {
 
           var mainOptions = { // thiết lập đối tượng, nội dung gửi mail
             from: 'Thông báo từ goxinh.net',
-            // to: 'woodenvina@gmail.com',
-            to: 'hieu.ric@gmail.com',
+            to: mailTo,
             subject: 'Bạn có đơn hàng mới từ goxinh.net.Vui lòng kiểm tra đơn hàng',
             text: `Bạn có đơn hàng mới trị giá:  ${totalPrice} từ ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng`,
             html: `<b>Bạn có đơn hàng mới trị giá:  ${totalPrice} từ ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng</b>`

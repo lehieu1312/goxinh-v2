@@ -1,4 +1,6 @@
-function checkAdmin(req, res, next) {
+
+
+module.exports =  checkAdmin = (req, res, next)=> {
     // next();
     if (req.isAuthenticated()) {
         next();
@@ -6,4 +8,5 @@ function checkAdmin(req, res, next) {
         res.redirect("/admin/login");
     }
 }
-module.exports = checkAdmin;
+
+

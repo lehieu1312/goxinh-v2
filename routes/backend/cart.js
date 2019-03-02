@@ -26,7 +26,6 @@ router.get('/carts/view/:id', checkAdmin, async (req, res) => {
     try {
 
     let data = await CartModel.findById(req.params.id).exec();
-    console.log(data);
         if (data)
             res.render('backend/carts/view', {
                 title: 'Chi tiết đơn hàng',
