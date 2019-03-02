@@ -94,3 +94,7 @@ ul.file-gallery li {
     margin: 10px 5px 5px 15px;
     float: left;
 }
+
+.table-info-cart td{
+    padding: 5px;
+}
