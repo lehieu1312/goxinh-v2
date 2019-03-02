@@ -1484,8 +1484,8 @@ router.post("/order", async (req, res) => {
 
           var mainOptions = { // thiết lập đối tượng, nội dung gửi mail
             from: 'Thông báo từ goxinh.net',
-            to: 'woodenvina@gmail.com',
-            // to: 'hieu.ric@gmail.com',
+            // to: 'woodenvina@gmail.com',
+            to: 'hieu.ric@gmail.com',
             subject: 'Bạn có đơn hàng mới từ goxinh.net.Vui lòng kiểm tra đơn hàng',
             text: `Bạn có đơn hàng mới trị giá:  ${totalPrice} từ ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng`,
             html: `<b>Bạn có đơn hàng mới trị giá:  ${totalPrice} từ ${nameFrom} - ${phoneFrom} - ${mailForm} trên goxinh.net. Vui lòng kiểm tra đơn hàng</b>`
