@@ -122,7 +122,7 @@ app.use(function (req, res, next) {
   res.locals.error = req.flash("error");
   res.locals.errors = req.flash("errors");
   res.locals.title = "Goxinh.net";
-  res.locals.descriptions ="Gỗ Xinh,Gỗ nội thất,gỗ xuất khẩu,Đồ gỗ nội thất,nội thất trang trí,goxinh.net";
+  res.locals.descriptions ="Nội thất gỗ xinh, nội thất phòng khách, gỗ nội thất";
   sess=req.session;
   next();
 });

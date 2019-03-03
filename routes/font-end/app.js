@@ -166,7 +166,8 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
       pageCount,
       alias: "danh-muc/noi-that-phong-khach",
       titlePanel: "Nội thất phòng khách",
-      BannerSliderData
+      BannerSliderData,
+      description:'Nội thất phòng khách, noi that phong khach'
     });
   } catch (error) {
     console.log(error);
@@ -279,7 +280,8 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
       pageCount,
       alias: "danh-muc/noi-that-phong-ngu",
       titlePanel: "Nội thất phòng ngủ",
-      BannerSliderData
+      BannerSliderData,
+      description:'Nội thất phòng ngủ, noi that phong ngu'
     });
   } catch (error) {
     console.log(error);
@@ -384,7 +386,7 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
       .exec();
 
     res.render("font-end/category-menu", {
-      title: "Nội thất phòng nhà bếp",
+      title: "Nội thất nhà bếp",
       dataProduct,
       currentPage,
       totalData,
@@ -392,7 +394,8 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
       pageCount,
       alias: "danh-muc/noi-that-nha-bep",
       titlePanel: "Nội thất nhà bếp",
-      BannerSliderData
+      BannerSliderData,
+      description:'Nội thất nhà bếp, noi that nha bep'
     });
   } catch (error) {
     console.log(error);
@@ -505,7 +508,8 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
       pageCount,
       alias: "danh-muc/trang-tri-ham-ruou",
       titlePanel: "Trang trí hầm rượu",
-      BannerSliderData
+      BannerSliderData,
+      description:'Nội thất trang trí hầm rượu, noi that trang tri ham ruou'
     });
   } catch (error) {
     console.log(error);
@@ -618,7 +622,8 @@ router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
       pageCount,
       alias: "danh-muc/do-go-xuat-khau",
       titlePanel: "Đồ gỗ xuất khẩu",
-      BannerSliderData
+      BannerSliderData,
+      description:'Nội thất đồ gỗ xuất khẩu, noi that do go xuat khau'
     });
   } catch (error) {
     console.log(error);
@@ -730,7 +735,8 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
       pageCount,
       alias: "danh-muc/noi-that-phong-tho",
       titlePanel: "Nội thất phòng thờ",
-      BannerSliderData
+      BannerSliderData,
+      description:'Nội thất phòng thờ, noi that phong tho'
     });
   } catch (error) {
     console.log(error);

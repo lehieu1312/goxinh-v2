@@ -337,6 +337,7 @@ router.get("/lien-he", async (req, res) => {
     res.render("font-end/news", {
       title: "Liên hệ",
       data,
+      description: 'Liên hệ, lien he',
       BannerSliderData
     });
   } catch (error) {
