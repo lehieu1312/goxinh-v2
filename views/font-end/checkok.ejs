@@ -11,21 +11,21 @@
 
     <% } %>
     <% if(error_msg != ''){ %>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger error">
         <h4>
             <%= error_msg%>
         </h4>
         <a href="/">[Quay lại trang chủ]</a>
     </div>
     <% } %>
+
     <% if(errors) { %>
-    <div class="alert alert-danger">
+    <div class="alert alert-danger errors">
         <% errors.forEach(function(e){ %>
-
         <%= e.msg %> <br />
-        <%});%>
-
+        <%})%>
+        <a href="/">[Quay lại trang chủ]</a>
     </div>
-    <% };%>
+    <% }%>
 </div>
 <%include ../font-end/layout/footer.ejs%>

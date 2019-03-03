@@ -77,7 +77,7 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
       currentPage = +req.query.page;
     }
     let dataCate = await CategoryModel.findOne({
-      code: "phongkhach",
+      code: "PHONGKHACH",
       status: true
     }).exec();
     if (dataCate) {
@@ -188,7 +188,7 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
       currentPage = +req.query.page;
     }
     let dataCate = await CategoryModel.findOne({
-      code: "phongngu",
+      code: "PHONGNNGU",
       status: true
     }).exec();
     if (dataCate) {
@@ -299,7 +299,7 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
       currentPage = +req.query.page;
     }
     let dataCate = await CategoryModel.findOne({
-      code: "nhabep",
+      code: "NHABEP",
       status: true
     }).exec();
     if (dataCate) {
@@ -410,7 +410,7 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
       currentPage = +req.query.page;
     }
     let dataCate = await CategoryModel.findOne({
-      code: "hamruou",
+      code: "HAMRUOU",
       status: true
     }).exec();
     if (dataCate) {
@@ -521,7 +521,7 @@ router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
       currentPage = +req.query.page;
     }
     let dataCate = await CategoryModel.findOne({
-      code: "dogoxuatkhau",
+      code: "DOGOXUATKHAU",
       status: true
     }).exec();
     if (dataCate) {
@@ -631,7 +631,7 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
       currentPage = +req.query.page;
     }
     let dataCate = await CategoryModel.findOne({
-      code: "phongtho",
+      code: "PHONGTHO",
       status: true
     }).exec();
     if (dataCate) {
@@ -1098,7 +1098,7 @@ router.get("/san-pham/:alias", (req, res) => {
   }
 });
 
-router.post("/order-on-request", multipartMiddleware, (req, res) => {
+router.post("/dat-hang-theo-yeu-cau", multipartMiddleware, async (req, res) => {
   try {
     // console.log(req.files);
     var imageOrder = req.files.image;
@@ -1108,92 +1108,29 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
     // req.checkBody('email', 'Email nhập không đúng').isEmail();
     req
       .checkBody("phonenumber", "Số điện thoại không được để trống")
-      .notEmpty();
+      .notEmpty(); 
     // req.checkBody('phonenumber', 'Số điện thoại phải là số').isNumeric();
     req.checkBody("content", "Nội dung không được để trống").notEmpty();
 
     var errors = req.validationErrors();
     if (errors) {
       // console.log('1: ' + errors);
-      CategoryModel.find({
-          $and: [{
-            categoryParent: null
-          }, {
-            status: true
-          }]
-        },
-        function (err, dataCateParent) {
-          if (err) {
-            console.log(err);
-            return res.render("error", {
-              title: "Error Get Data",
-              error: err
-            });
-          }
-          CategoryModel.find({
-              $and: [{
-                categoryParent: {
-                  $ne: null
-                }
-              }, {
-                status: true
-              }]
-            },
-            function (error, dataCateChildren) {
-              if (error) {
-                console.log(error);
-                return res.render("error", {
-                  title: "Error Get Data",
-                  error: error
-                });
-              }
+      let dataCateParent= await  CategoryModel.find({$and: [{ categoryParent: null }, { status: true}]}).exec();
+      let dataCateChildren =await   CategoryModel.find({ $and: [{categoryParent: { $ne: null }}, {status: true}]}).exec();
               // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
               return res.render("font-end/checkok", {
                 title: "Đặt hàng yêu cầu",
                 dataCateParent: dataCateParent,
                 dataCateChildren: dataCateChildren,
                 error_msg: "Bạn đã đặt hàng không thành công",
-                errors: errors
+                errors: errors,
+                success_msg:''
               });
-            }
-          );
-        }
-      );
+            
     } else {
+      let dataCateParent= await  CategoryModel.find({$and: [{ categoryParent: null }, { status: true}]}).exec();
+      let dataCateChildren =await   CategoryModel.find({ $and: [{categoryParent: { $ne: null }}, {status: true}]}).exec();
       if (imageOrder.size > 8000000) {
-        CategoryModel.find({
-            $and: [{
-              categoryParent: null
-            }, {
-              status: true
-            }]
-          },
-          function (err, dataCateParent) {
-            if (err) {
-              console.log(err);
-              return res.render("error", {
-                title: "Error Get Data",
-                error: err
-              });
-            }
-            console.log("dataCateParent: " + dataCateParent);
-            CategoryModel.find({
-                $and: [{
-                  categoryParent: {
-                    $ne: null
-                  }
-                }, {
-                  status: true
-                }]
-              },
-              function (error, dataCateChildren) {
-                if (error) {
-                  console.log(error);
-                  return res.render("error", {
-                    title: "Error Get Data",
-                    error: error
-                  });
-                }
                 // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
                 return res.render("font-end/checkok", {
                   title: "Đặt hàng yêu cầu",
@@ -1201,10 +1138,6 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
                   dataCateChildren: dataCateChildren,
                   error_msg: "Bạn đã đặt hàng không thành công do tệp tải lên quá kích cỡ(8Mb)"
                 });
-              }
-            );
-          }
-        );
       }
       // Function send mail
       let sendLinkMail = (nameFrom, phoneFrom, mailForm) => {
@@ -1233,7 +1166,6 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
             if (err) {
               return reject(err);
             }
-            console.log('info mail: ' + info);
             console.log('info mail 2: ' + JSON.stringify(info));
             return resolve('Message sent: ' + info.response);
 
@@ -1248,9 +1180,7 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
         imageOrder.originalFilename != ""
       ) {
         nameImage = md5(Date.now()) + "." + imageOrder.name.split(".").pop();
-        console.log("ten: " + nameImage);
         var dataImage = fs.readFileSync(imageOrder.path);
-        console.log("dataImage: " + dataImage);
         fs.writeFileSync(path.join(pathUpload, nameImage), dataImage);
       }
       var orderRequired = new OrderRequiredModel({
@@ -1265,7 +1195,13 @@ router.post("/order-on-request", multipartMiddleware, (req, res) => {
       orderRequired.save().then(async () => {
         await sendLinkMail(dataBody.name, dataBody.phonenumber, dataBody.email);
         // req.flash('success_msg', 'Bạn đã đặt hàng thành công');
-        return res.redirect('/order-success');
+        return res.render("font-end/checkok", {
+          title: "Đặt hàng yêu cầu",
+          dataCateParent: dataCateParent,
+          dataCateChildren: dataCateChildren,
+          success_msg:'Đặt hàng thành công',
+          errors
+        });
       });
     }
   } catch (error) {

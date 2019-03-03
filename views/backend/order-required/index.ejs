@@ -7,11 +7,9 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5> Danh Sách Đơn hàng</h5>
+                    <h5> Danh Sách Hàng Theo Yêu Cầu</h5>
                     <div class="ibox-tools">
-                        <a href="/admin/carts/add" class="btn btn-success btn-plus" type="button"><i class="fa fa-plus"></i>&nbsp;&nbsp;<span
-                                class="bold">Thêm</span></a>
-                      
+                       
                     </div>
                 </div>
                 <div class="ibox-content">
@@ -34,7 +32,7 @@
                                     <th>Tên Khách hàng</th>
                                     <th>Số điện thoại</th>
                                     <th>Email</th>
-                                    <th>Tổng tiền</th>
+                                    <th>Ảnh</th>
                                     <th>Ngày</th>
                                     <th>Trạng thái</th>
                                     <th>Hành động</th>
@@ -47,9 +45,9 @@
                                     <td>
                                         <%=dem%>
                                     </td>
-                                   
+                                 
                                     <td>
-                                        <a href="/admin/carts/view/<%=item._id%>" title="Sửa"><%=item.name%></a>
+                                        <a href="/admin/order-required/edit/<%=item._id%>" title="Sửa"><%=item.name%></a>
                                     </td>
                                     <td>
                                         <%=item.phoneNumber%>
@@ -58,27 +56,24 @@
                                         <%=item.email%>
                                     </td>
                                     <td>
-                                        <%=item.summaryMoney%>
+                                        <img src="/upload/order/<%=item.image%>" alt="order" width="120px">
                                     </td>
                                     <td>
                                         <%=moment(item.dateCreate).format('DD-MM-YYYY, HH:mm:ss');%>
                                     </td>
 
                                     <td>
-                                        <%if(item.statusOrder==0){%>
-                                            <span>Mới</span>
-                                        <%}else if(item.statusOrder==1){%>
-                                            <span>Đang giao hàng</span>
-                                        <%}else if(item.statusOrder==2){%>
-                                            <span>Hoàn tất</span>
+                                        <%if(item.status==false){%>
+                                            <span class="btn-info">Chưa liên hệ</span>
                                         <%}else{%>
-                                            <span>Loại bỏ</span>
+                                            <span class="btn-default">Đã liên hệ</span>
                                         <%}%>
                                     </td>
                                     <td class="text-center">
-                                        <a href="/admin/carts/view/<%=item._id%>" title="Sửa" class="btn btn-info"> Sửa</i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <!-- <a href="javascript:void(0)" onclick="delProduct('<%=item._id%>')" title="Xóa ">
-                                            <i class="fa fa-trash color-red fa-lg "></i></a> -->
+                                        <a href="/admin/order-required/edit/<%=item._id%>" title="Sửa" class="btn btn-info">
+                                           Sửa
+                                        </a>
+                                        
                                     </td>
                                 </tr>
                                 <% dem++;})%>
@@ -99,7 +94,7 @@
         var rep = confirm("Bạn có chắc chắn muốn xóa danh mục này?");
         if (rep == true) {
             $.ajax({
-                url: '/admin/categories/del',
+                url: '/admin/order-required/del',
                 type: 'POST',
                 contentType: 'application/json',
                 dataType: "json",
@@ -143,7 +138,46 @@
                 }
             }]
         });
-      
-      
+        ///////////////////Check box//////////////
+        $("#checkboxall").change(() => {
+            var checkboxes = document.getElementsByName('name[]');
+            var checkboxall = document.getElementById('checkboxall');
+            var chkBox = checkboxall.checked;
+            // alert(chkBox);
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = chkBox;
+            }
+        });
+        /////////////////////////////////DELETE Many Categories//////////////////////////////////
+        $("#deleteManyOrder").click(function () {
+            var users_arr = [];
+            $("#carts-table input[type=checkbox]").each(function () {
+                if ($(this).is(":checked")) {
+                    var id = $(this).attr("id");
+                    users_arr.push(id);
+                }
+            });
+            if (users_arr.length > 0) {
+                var rep = confirm("Bạn có chắc chắn muốn xóa các 'Đơn hàng yêu cầu' đã chọn?");
+                if (rep == true) {
+                    $.ajax({
+                        url: "/admin/order-required/del",
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(users_arr),
+                        success: function (response) {
+                            if (response.status == true) {
+                                location.reload();
+                            } else {
+                                alert("Lỗi: " + response.msg);
+                            }
+                        }
+                    });
+                }
+            } else {
+                alert("Không có Danh mục nào được chọn để xóa");
+            }
+        });
     });
 </script>

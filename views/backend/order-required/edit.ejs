@@ -1,0 +1,112 @@
+<% include ../layout/header.ejs %>
+<link href="/themes/backend/css/plugins/select/select2.min.css" rel="stylesheet">
+<script src="/themes/backend/js/ckeditor/ckeditor.js"></script>
+<!-- <script src="https://cdn.ckeditor.com/4.8.0/standard-all/ckeditor.js"></script> -->
+<% include ../layout/menu-left.ejs %>
+<% include ../layout/top.ejs %>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Sửa Đơn hàng theo yêu cầu</h5>
+                    <div class="ibox-tools">
+                        <a href="/admin/order-required" class="btn btn-success btn-plus" type="button"><i class="fa fa-arrow-circle-left"></i>&nbsp;&nbsp;<span
+                                class="bold">Back</span></a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <% if(success_msg != ''){ %>
+                    <div class="alert alert-success">
+                        <%= success_msg%>
+                    </div>
+                    <% } %>
+                    <% if(error_msg != ''){%>
+                    <div class="alert alert-danger error_msg">
+                        <%= error_msg%>
+                    </div>
+                    <%}%>
+                    <% if(errors && errors!=='') { %>
+                    <div class="alert alert-danger errors">
+                        <% errors.forEach(function(e){ %>
+                        <%= e.msg %> <br />
+                        <%});%>
+                    </div>
+                    <% };%>
+                  
+                        <form method="post" action="/admin/order-required/edit/<%=data._id%>" class="form-horizontal" >
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                    <div class="form-group"><label class="col-sm-2 control-label">Tên</label>
+                                        <div class="col-sm-4"><input type="text" required name="name" class="form-control"
+                                                required value="<%=data.name%>"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                    <div class="form-group"><label class="col-sm-2 control-label">Email</label>
+                                        <div class="col-sm-4"><input type="text" required name="email" class="form-control"
+                                                required value="<%=data.email%>"></div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                    <div class="form-group"><label class="col-sm-2 control-label">Số điện thoại</label>
+                                        <div class="col-sm-4"><input type="text" required name="phoneNumber" class="form-control"
+                                                required value="<%=data.phoneNumber%>"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-12 col-lg-12">
+                                    <div class="form-group"><label class="col-sm-2 control-label">Ảnh</label>
+                                        <div class="col-sm-4">
+                                           <img src="/upload/order/<%=data.image%>" alt="Ảnh" width="150px"> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">Nội dung</label>
+                                    <div class="col-sm-4">
+                                        <textarea id="content" class="form-control" rows="10" name="content"><%=data.content%> </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label class="col-sm-2 control-label">Ghi chú</label>
+                                    <div class="col-sm-4">
+                                        <textarea id="content" class="form-control" rows="5" name="notes"><%=data.Notes%> </textarea>
+                                    </div>
+                                </div>
+                                 
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Trạng thái</label>
+                                    <div class="col-sm-4">
+                                        <div><label> <input type="radio" <% if(data.status){ %> checked="checked"
+                                                <% } %> value="true" name="status">Đã liên hệ </label></div>
+                                        <div><label> <input type="radio" value="false" name="status" <%
+                                                    if(!data.status){ %> checked="checked"
+                                                <% } %>>Chưa liên hệ</label></div>
+                                    </div>
+                                </div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-4 col-sm-offset-10">
+                                                <a href="/admin/order-required" class="btn btn-default "><i class="fa fa-times"></i>&nbsp;&nbsp;Hủy</a>
+                                                <button class="btn btn-primary" type="submit" id="btn-submit"><i class="fa fa-save"></i>&nbsp;&nbsp;Lưu</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<% include ../layout/footer.ejs %>
+<script>
+    CKEDITOR.replace('detailProduct', {
+        fullPage: true,
+        extraPlugins: 'imagebrowser',
+        imageBrowser_listUrl: "/admin/ckeditor/files",
+        allowedContent: true,
+        height: 320
+    });
+</script>
