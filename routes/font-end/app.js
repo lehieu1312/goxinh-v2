@@ -480,6 +480,7 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
           $count: "myCount"
         }
       ]).exec();
+      console.log('totalData: ',totalData);
       totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
