@@ -67,7 +67,7 @@ function makename() {
 router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
   try {
     var currentPage = 1,
-      totalData,
+      totalData=0,
       pageSize = 15,
       pageCount;
     var dataArray = [];
@@ -143,8 +143,8 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
           $count: "myCount"
         }
       ]).exec();
-
-      totalData = totalData[0].myCount;
+      if (totalData.length > 0) 
+        totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
@@ -180,7 +180,7 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
 router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
   try {
     var currentPage = 1,
-      totalData,
+      totalData=0,
       pageSize = 15,
       pageCount;
     var dataArray = [];
@@ -256,7 +256,8 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
           $count: "myCount"
         }
       ]).exec();
-      totalData = totalData[0].myCount;
+      if (totalData.length > 0) 
+        totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
@@ -292,7 +293,7 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
 router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
   try {
     var currentPage = 1,
-      totalData,
+      totalData=0,
       pageSize = 15,
       pageCount;
     var dataArray = [];
@@ -368,7 +369,8 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
           $count: "myCount"
         }
       ]).exec();
-      totalData = totalData[0].myCount;
+      if(totalData.length > 0) 
+        totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
@@ -404,7 +406,7 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
 router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
   try {
     var currentPage = 1,
-      totalData,
+      totalData=0,
       pageSize = 15,
       pageCount;
     var dataArray = [];
@@ -480,8 +482,8 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
           $count: "myCount"
         }
       ]).exec();
-      console.log('totalData: ',totalData);
-      totalData = totalData[0].myCount;
+      if(totalData.length>0)
+        totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
@@ -517,7 +519,7 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
 router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
   try {
     var currentPage = 1,
-      totalData,
+      totalData=0,
       pageSize = 15,
       pageCount;
     var dataArray = [];
@@ -593,7 +595,8 @@ router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
           $count: "myCount"
         }
       ]).exec();
-      totalData = totalData[0].myCount;
+      if(totalData.length>0)
+        totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
@@ -629,7 +632,7 @@ router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
 router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
   try {
     var currentPage = 1,
-      totalData,
+      totalData=0,
       pageSize = 15,
       pageCount;
 
@@ -704,8 +707,8 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
           $count: "myCount"
         }
       ]).exec();
-
-      totalData = totalData[0].myCount;
+      if(totalData.length>0)
+        totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
 
@@ -741,7 +744,7 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
 router.get("/danh-muc/:alias", async (req, res) => {
   try {
     var currentPage = 1,
-      totalData,
+      totalData=0,
       pageSize = 20,
       pageCount;
 
@@ -820,10 +823,9 @@ router.get("/danh-muc/:alias", async (req, res) => {
         }
       ]).exec();
       console.log(totalData);
-      if (totalData.length > 0) {
+      if (totalData.length > 0) 
         totalData = totalData[0].myCount;
-        pageCount = Math.ceil(totalData / pageSize).toFixed();
-      }
+      pageCount = Math.ceil(totalData / pageSize).toFixed();
 
     }
 
