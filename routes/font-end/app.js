@@ -143,6 +143,7 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
           $count: "myCount"
         }
       ]).exec();
+
       totalData = totalData[0].myCount;
       pageCount = Math.ceil(totalData / pageSize).toFixed();
     }
@@ -168,6 +169,7 @@ router.get("/danh-muc/noi-that-phong-khach", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
+    console.log(error);
     res.json({
       status: false,
       message: error + ""
@@ -188,7 +190,7 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
       currentPage = +req.query.page;
     }
     let dataCate = await CategoryModel.findOne({
-      code: "PHONGNNGU",
+      code: "PHONGNGU",
       status: true
     }).exec();
     if (dataCate) {
@@ -279,6 +281,7 @@ router.get("/danh-muc/noi-that-phong-ngu", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
+    console.log(error);
     res.json({
       status: false,
       message: error + ""
@@ -390,6 +393,7 @@ router.get("/danh-muc/noi-that-nha-bep", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
+    console.log(error);
     res.json({
       status: false,
       message: error + ""
@@ -501,6 +505,7 @@ router.get("/danh-muc/trang-tri-ham-ruou", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
+    console.log(error);
     res.json({
       status: false,
       message: error + ""
@@ -612,6 +617,7 @@ router.get("/danh-muc/do-go-xuat-khau", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
+    console.log(error);
     res.json({
       status: false,
       message: error + ""
@@ -723,6 +729,7 @@ router.get("/danh-muc/noi-that-phong-tho", async (req, res) => {
       BannerSliderData
     });
   } catch (error) {
+    console.log(error);
     res.json({
       status: false,
       message: error + ""
