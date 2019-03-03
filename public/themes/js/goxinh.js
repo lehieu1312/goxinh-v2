@@ -1,5 +1,18 @@
 $('#myModal').modal('show');
 $(document).ready(function () {
+
+    function tinhtongtien() {
+        var GiaSanPham, SoLuong, TongTien;
+        // GiaSanPham = $('#priceproductbysize').val();
+        // console.log(GiaSanPham);
+        // SoLuong = $('#soluongsanpham').val();
+        // console.log(SoLuong);
+        TongTien = Math.floor($('#priceproductbysize').val()) * Math.floor($('#soluongsanpham').val()) + Math.floor($('#priceproductsync').val());
+        // console.log(TongTien);
+        // alert(TongTien);
+        return TongTien;
+    }
+
     $('#btn-order-buy-product').click(() => {
         var idProduct, idProductSync, soLuong, slGiaoHang, slMauSac;
         idProduct = $('#idproduct').val();
@@ -50,12 +63,25 @@ $(document).ready(function () {
             }
         )
     });
-    $('#soluongsanpham').on('change', function () {
+
+    $('#soluongsanpham').prop('disabled', true);
+    $('#plus-btn').click(function(){
+        $('#soluongsanpham').val(parseInt($('#soluongsanpham').val()) + 1 );
+        var tong = tinhtongtien();
+        $('#tongtiendonhang').html(tong.toLocaleString());
+        $('#sumarymoney').val(tong);
+    });
+    $('#minus-btn').click(function(){
+        $('#soluongsanpham').val(parseInt($('#soluongsanpham').val()) - 1 );
+        if ($('#soluongsanpham').val() == 0) {
+            $('#soluongsanpham').val(1);
+        }
         var tong = tinhtongtien();
         $('#tongtiendonhang').html(tong.toLocaleString());
         $('#sumarymoney').val(tong);
     });
 
+    
     $('.check-buy-product').change(function () {
         if (this.checked) {
             var idProduct = $(this).val();
@@ -119,17 +145,7 @@ $(document).ready(function () {
 
 })
 
-function tinhtongtien() {
-    var GiaSanPham, SoLuong, TongTien;
-    // GiaSanPham = $('#priceproductbysize').val();
-    // console.log(GiaSanPham);
-    // SoLuong = $('#soluongsanpham').val();
-    // console.log(SoLuong);
-    TongTien = Math.floor($('#priceproductbysize').val()) * Math.floor($('#soluongsanpham').val()) + Math.floor($('#priceproductsync').val());
-    // console.log(TongTien);
-    // alert(TongTien);
-    return TongTien;
-}
+
 
 function changeimageclick(event) {
     // console.log(event);

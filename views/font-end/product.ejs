@@ -1,4 +1,12 @@
 <% include ../font-end/layout/header.ejs %>
+<style type="text/css">
+    input { 
+        text-align: center; 
+    }
+    .input-group{
+        display: flex;
+    }
+</style>
 <div class="row">
     <div class="col-lg-9 col-md-9 col-xs-12">
         <div class="row">
@@ -20,45 +28,7 @@
                     <%})%>
                 </ul>
 
-                <!-- <div class="img-large-product">
-                    <img id="img-main-product" width="100%" src="/upload/product/<%=dataOneProduct.imageProduct%>" alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>" /><br />
-                </div>
-                <div class=" margintop-10 img-parent">
-
-                    <div class="img-list-product">
-                        <% if(dataOneProduct.imageOne){%>
-                        <div class="color-detail">
-                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageOne%>"
-                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                        </div>
-                        <%}%>
-                        <% if(dataOneProduct.imageTwo){%>
-                        <div class="color-detail">
-                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageTwo%>"
-                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                        </div>
-                        <%}%>
-                        <% if(dataOneProduct.imageThree){%>
-                        <div class="color-detail">
-                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageThree%>"
-                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                        </div>
-                        <%}%>
-                        <% if(dataOneProduct.imageFour){%>
-                        <div class="color-detail">
-                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageFour%>"
-                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                        </div>
-                        <%}%>
-                        <% if(dataOneProduct.imageFive){%>
-                        <div class="color-detail">
-                            <img class="img-responsive" onclick="changeimageclick(this)" src="/upload/product/<%=dataOneProduct.imageFive%>"
-                                alt="<%=dataOneProduct.nameProduct%> <%=dataOneProduct.codeProduct%>">
-                        </div>
-                        <%}%>
-
-                    </div>
-                </div> -->
+              
             </div>
 
 
@@ -72,7 +42,7 @@
             </div>
 
         </div>
-        <div class="row">
+        <div class="row ">
             <div class="col-lg-5 col-md-5 col-xs-12 all-cate-type">
                 <div class="text-type-cate border-solid-left"><span> Sản phẩm đồng bộ</span></div>
 
@@ -133,7 +103,15 @@
                             <tr>
                                 <td>Số lượng:</td>
                                 <td>
-                                    <input type="number" name="soluong" value="1" id="soluongsanpham" required min="1" />
+                                       
+                                    <div class="row margin-0">
+                                        <div class="input-group">
+                                            <button class="btn btn-dark btn-sm" id="minus-btn"><i class="fa fa-minus"></i></button>
+                                            <input type="number" id="soluongsanpham" name="soluong" required class="form-control form-control-sm" value="1" min="1" style="width:100px">
+                                            <button class="btn btn-dark btn-sm" id="plus-btn"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                    </div>
+                                    <!-- <input type="number" name="soluong" value="1" id="soluongsanpham" required min="1" /> -->
                                 </td>
                             </tr>
                             <tr>
@@ -275,55 +253,6 @@
                 </div>
             </div>
             <%})%>
-
-
-            <!-- <div class="panel-body">
-                    <div class="product-involve">
-                        <img src="product/sp2.jpg" alt="" class="img-reponsive" width="100%" />
-                    </div>
-                    <div class="name-product">
-                        <span>Tủ treo tường</span>
-                    </div>
-                    <div class="price-product">
-                        <span>2.250.000đ</span>
-                    </div>
-
-                </div>
-                <div class="panel-body">
-                    <div class="product-involve">
-                        <img src="product/sp2.jpg" alt="" class="img-reponsive" width="100%" />
-                    </div>
-                    <div class="name-product">
-                        <span>Tủ treo tường</span>
-                    </div>
-                    <div class="price-product">
-                        <span>2.250.000đ</span>
-                    </div>
-
-                </div>
-                <div class="panel-body">
-                    <div class="product-involve">
-                        <img src="product/sp2.jpg" alt="" class="img-reponsive" width="100%" />
-                    </div>
-                    <div class="name-product">
-                        <span>Tủ treo tường</span>
-                    </div>
-                    <div class="price-product">
-                        <span>2.250.000đ</span>
-                    </div>
-
-                </div>
-                <div class="panel-body">
-                    <div class="product-involve">
-                        <img src="product/sp2.jpg" alt="" class="img-reponsive" width="100%" />
-                    </div>
-                    <div class="name-product">
-                        <span>Tủ treo tường</span>
-                    </div>
-                    <div class="price-product">
-                        <span>2.250.000đ</span>
-                    </div>
-                </div> -->
 
         </div>
     </div>
