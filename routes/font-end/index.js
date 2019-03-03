@@ -323,17 +323,20 @@ router.get("/bao-ve-thong-tin-ca-nhan", async (req, res) => {
 
 router.get("/lien-he", async (req, res) => {
   try {
+    let data = await NewsModel.findOne({
+      typeNews: 8,
+      status: true
+    }).exec();
     var BannerSliderData = await BannerModel.find({
         locationBanner: 0,
         status: true
-      })
-      .sort({
+      }).sort({
         numberOrder: -1
-      })
-      .exec();
+      }).exec();
 
-    res.render("font-end/contact", {
+    res.render("font-end/news", {
       title: "Liên hệ",
+      data,
       BannerSliderData
     });
   } catch (error) {
