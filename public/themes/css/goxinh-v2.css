@@ -773,3 +773,6 @@ aside {
 .margin-0{
   margin: 0px;
 }
+.font-weight-none{
+  font-weight: 100;
+}
