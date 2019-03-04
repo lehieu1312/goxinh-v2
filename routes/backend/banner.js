@@ -9,7 +9,7 @@ appRoot = appRoot.toString();
 var multer = require("multer");
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./public/upload/banner");
+    cb(null, "./public/upload");
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "_" + file.originalname);
@@ -114,7 +114,7 @@ router.post("/banner/del", checkAdmin, function (req, res) {
             arrId.forEach(async item => {
                 let data = await bannerModel.findById(item);
                 if (data) {
-                    var file = path.join(appRoot, 'public', 'upload', 'banner', data.imageBanner);
+                    var file = path.join(appRoot, 'public', 'upload', data.imageBanner);
                     if(fs.existsSync(file))
                       fs.unlinkSync(file);
                     bannerModel.findById(item).deleteOne()
