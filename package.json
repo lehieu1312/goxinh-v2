@@ -37,6 +37,6 @@
         "passport-local": "^1.0.0",
         "serve-favicon": "^2.4.5",
         "socket.io": "^2.0.3",
-        "xlsx": "^0.13.2"
+        "xlsx": "^0.17.0"
     }
 }
